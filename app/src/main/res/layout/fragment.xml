@@ -1,0 +1,255 @@
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:scrollbars="none"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <TableRow
+            android:id="@+id/row1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:text="08:40 a.m. - 09:35 a.m."
+                android:textSize="16sp"
+                android:paddingRight="20dp"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/first"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Subject"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/first_room"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Room"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:text="09:35 a.m. - 10:30 a.m."
+                android:textSize="16sp"
+                android:paddingRight="20dp"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/second"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Subject"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/second_room"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Room"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:text="10:30 a.m. - 11:25 a.m."
+                android:textSize="16sp"
+                android:paddingRight="20dp"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/third"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Subject"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/third_room"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Room"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:text="11:25 a.m. - 12:20 a.m."
+                android:textSize="16sp"
+                android:paddingRight="20dp"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/fourth"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Subject"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/fourth_room"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Room"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row_break"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:text="12:20 a.m. - 12:50 p.m."
+                android:textSize="16sp"
+                android:paddingRight="20dp"/>
+
+            <TextView
+                android:layout_gravity="center"
+                android:text="BREAK"
+                android:textSize="16sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:text="12:50 p.m. - 01:45 p.m."
+                android:textSize="16sp"
+                android:paddingRight="20dp"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/fifth"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Subject"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/fifth_room"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Room"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/row6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:text="01:45 p.m. - 02:40 p.m."
+                android:textSize="16sp"
+                android:paddingRight="20dp"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/sixth"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Subject"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/sixth_room"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="Room"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+
+    </TableLayout>
+</ScrollView>
