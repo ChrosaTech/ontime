@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -33,25 +34,32 @@ public class NotificationActivity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 //API level 11
-                Intent intent = new Intent("com.rj.notitfications.SECACTIVITY");
 
-                PendingIntent pendingIntent = PendingIntent.getActivity(NotificationActivity.this, 1, intent, 0);
+                Notification.Builder mBuilder =
+                        new Notification.Builder(NotificationActivity.this)
+                                .setSmallIcon(R.drawable.ic_launcher)
+                                .setContentTitle("Lecture")
+                                .setContentText("Room")
+                                .setAutoCancel(true);
 
-                Notification.Builder builder = new Notification.Builder(NotificationActivity.this);
+                Intent resultIntent = new Intent(NotificationActivity.this, MainActivity.class);
 
-                builder.setAutoCancel(false);
+                /*builder.setAutoCancel(false);
                 builder.setTicker("this is ticker text");
-                builder.setContentTitle("WhatsApp Notification");
-                builder.setContentText("You have a new message");
-                builder.setSmallIcon(R.drawable.ic_launcher);
-                builder.setContentIntent(pendingIntent);
-                builder.setOngoing(true);
                 builder.setSubText("This is subtext...");   //API level 16
                 builder.setNumber(100);
-                builder.build();
-
-                myNotication = builder.getNotification();
-                manager.notify(11, myNotication);
+                builder.build();*/
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(NotificationActivity.this);
+                stackBuilder.addParentStack(MainActivity.class);
+                stackBuilder.addNextIntent(resultIntent);
+                PendingIntent resultPendingIntent =
+                        stackBuilder.getPendingIntent(
+                                0,
+                                PendingIntent.FLAG_UPDATE_CURRENT
+                        );
+                mBuilder.setContentIntent(resultPendingIntent);
+                myNotication =   mBuilder.build();
+                manager.notify(1, myNotication);
 
             /*
             //API level 8
@@ -70,7 +78,7 @@ public class NotificationActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
-                manager.cancel(11);
+                manager.cancel(1);
             }
         });
     }
