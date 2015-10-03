@@ -22,7 +22,7 @@ public class LaunchActivity extends AppCompatActivity {
     private ActionBar actionBar;
     // private AutoCompleteTextView autoCompleteTextView;
     // String sample1[]={"IT","Cse","Ece","EEE"};
-    private Spinner spinner1,spinner2,spinner3;
+    private Spinner branch, group, year;
     private Button btnSubmit;
 
 
@@ -31,16 +31,12 @@ public class LaunchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.launch_activity);
 
-
-        NotificationManager nm;
-        nm=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        nm.cancel(3);
-        actionBar = getSupportActionBar();
+        /*actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.indigo)));
             actionBar.setElevation(0);
 
-        }
+        }*/
 
         // ArrayAdapter<String> adap=null;
         // adap = new ArrayAdapter<String>(getApplicationContext(),R.layout.autocomplete,sample1);
@@ -59,18 +55,18 @@ public class LaunchActivity extends AppCompatActivity {
     }
 
     public void addItemsOnSpinner2(){
-        spinner2=(Spinner) findViewById(R.id.spinner2);
+        group=(Spinner) findViewById(R.id.group);
         List<String> list=new ArrayList<String>();
         list.add("P1");
         list.add("P2");
         list.add("P3");
         ArrayAdapter<String> dataApdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,list);
         dataApdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner2.setAdapter(dataApdapter);
+        group.setAdapter(dataApdapter);
     }
 
     public void addItemsOnSpinner3(){
-        spinner2=(Spinner) findViewById(R.id.spinner2);
+        year=(Spinner) findViewById(R.id.year);
         List<String> list=new ArrayList<String>();
         list.add("First Year");
         list.add("Second Year");
@@ -78,12 +74,12 @@ public class LaunchActivity extends AppCompatActivity {
         list.add("Fourth Year");
         ArrayAdapter<String> dataApdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,list);
         dataApdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner3.setAdapter(dataApdapter);
+        year.setAdapter(dataApdapter);
     }
 
     public void addListnerOnSpinnerItemSelection(){
-        spinner1= (Spinner) findViewById(R.id.spinner1);
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        branch= (Spinner) findViewById(R.id.branch);
+        branch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -97,16 +93,16 @@ public class LaunchActivity extends AppCompatActivity {
     }
 
     public void addListnerOnButton(){
-        spinner1=(Spinner) findViewById(R.id.spinner1);
-        spinner2=(Spinner) findViewById(R.id.spinner2);
-        spinner3=(Spinner) findViewById(R.id.spinner3);
-        btnSubmit=(Button) findViewById(R.id.btnSubmit);
+        branch = (Spinner) findViewById(R.id.branch);
+        group = (Spinner) findViewById(R.id.group);
+        year = (Spinner) findViewById(R.id.year);
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LaunchActivity.this, "OnClickListner : " + "\nSpinner 1 : " + String.valueOf(spinner1.getSelectedItem()) +
-                        "\nSpinner 2:" + String.valueOf(spinner2.getSelectedItem()) + String.valueOf(spinner3.getSelectedItem()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LaunchActivity.this, "OnClickListner : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
+                        "\nSpinner 2:" + String.valueOf(group.getSelectedItem()) + String.valueOf(year.getSelectedItem()), Toast.LENGTH_SHORT).show();
             }
         });
     }

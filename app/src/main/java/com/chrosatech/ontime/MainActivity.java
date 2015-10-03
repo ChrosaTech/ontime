@@ -63,14 +63,16 @@ public class MainActivity extends AppCompatActivity {
 
         sharedpreferences = getPreferences(Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
+
         if(!sharedpreferences.contains(firstLaunch)){
             editor.putBoolean(firstLaunch, true);
             editor.commit();
         }
+
         if (sharedpreferences.getBoolean(firstLaunch, true)) {
             //the app is being launched for first time, do something
             Log.d("Comments", "First time");
-            Intent intent = new Intent(this, NotificationActivity.class);
+            Intent intent = new Intent(this, LaunchActivity.class);
             startActivity(intent);
             // first time task
 
