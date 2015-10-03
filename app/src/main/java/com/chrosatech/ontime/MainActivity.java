@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
@@ -18,6 +19,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Button last;
     private Button first;
     private ActionBar actionBar;
+    private TextView ID;
     private SharedPreferences sharedpreferences;
     private SharedPreferences.Editor editor;
     private String firstLaunch = "firstLaunch";
@@ -85,6 +90,12 @@ public class MainActivity extends AppCompatActivity {
         tabs.setViewPager(viewPager);
 
         setCurrentPage();
+
+        ID = (TextView) findViewById(R.id.idTest);
+        SelectionDatabase db = new SelectionDatabase(this);
+        Cursor cursor = db.getID();
+        String id = cursor.getString( cursor.getColumnIndex("ID") );
+       ID.setText(id);
 
     }
 

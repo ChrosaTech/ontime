@@ -25,4 +25,5 @@ dependencies {
     compile 'com.android.support:design:23.0.1'
    // compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.jpardogo.materialtabstrip:library:1.1.0'
+    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
 }

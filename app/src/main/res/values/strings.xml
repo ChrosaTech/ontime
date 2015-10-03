@@ -4,4 +4,20 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_notification">NotificationActivity</string>
+
+    <string name="country_prompt">Choose a country</string>
+
+    <string-array name="country_arrays">
+        <item>INFORMATION TECHNOLOGY</item>
+        <item>COMPUTER SCIENCES</item>
+        <item>ELECTRONICS AND COMMUNICATIONS</item>
+        <item>ELECTRICAL AND ELECTRONICS</item>
+        <item>INSTRUMENTATION AND CONTROL</item>
+
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="first">First</string>
+    <string name="last">Last</string>
+    <string name="title_activity_second">secondActivity</string>
 </resources>
