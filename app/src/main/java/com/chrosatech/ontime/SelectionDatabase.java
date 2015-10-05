@@ -19,14 +19,14 @@ public class SelectionDatabase extends SQLiteAssetHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public Cursor getID() {
+    public Cursor getID(String whereClause) {
 
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
         String [] sqlSelect = {"ID"};
         String sqlTables = "College";
-        String whereClause = "College = 'BVP' AND YEAR = 1 AND Branch = 'IT' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
+        //String whereClause = "College = 'BVP' AND YEAR = 1 AND Branch = 'IT' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
 
         qb.setTables(sqlTables);
         Cursor c = qb.query(db, sqlSelect, whereClause, null,

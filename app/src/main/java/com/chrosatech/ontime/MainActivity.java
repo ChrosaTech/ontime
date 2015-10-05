@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     private Button last;
     private Button first;
     private ActionBar actionBar;
-    private TextView ID;
     private SharedPreferences sharedpreferences;
     private SharedPreferences.Editor editor;
     private String firstLaunch = "firstLaunch";
@@ -93,11 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
         setCurrentPage();
 
-        ID = (TextView) findViewById(R.id.idTest);
-        SelectionDatabase db = new SelectionDatabase(this);
-        Cursor cursor = db.getID();
-        String id = cursor.getString( cursor.getColumnIndex("ID") );
-       ID.setText(id);
+
 
     }
 

@@ -1,6 +1,7 @@
 package com.chrosatech.ontime;
 
 import android.app.NotificationManager;
+import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class LaunchActivity extends AppCompatActivity {
     // String sample1[]={"IT","Cse","Ece","EEE"};
     private Spinner branch, group, year;
     private Button btnSubmit;
+    private TextView ID;
 
 
     @Override
@@ -31,6 +34,10 @@ public class LaunchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.launch_activity);
 
+        branch = (Spinner) findViewById(R.id.branch);
+        group = (Spinner) findViewById(R.id.group);
+        year = (Spinner) findViewById(R.id.year);
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
         /*actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.indigo)));
@@ -47,6 +54,7 @@ public class LaunchActivity extends AppCompatActivity {
 
 
         //Spinner
+        addItemsOnSpinner1();
         addItemsOnSpinner2();
         addListnerOnSpinnerItemSelection();
         addListnerOnButton();
@@ -54,8 +62,18 @@ public class LaunchActivity extends AppCompatActivity {
 
     }
 
+    public void addItemsOnSpinner1(){
+        List<String> list=new ArrayList<String>();
+        list.add("CSE");
+        list.add("IT");
+        list.add("ECE");
+        list.add("EEE");
+        ArrayAdapter<String> dataApdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,list);
+        dataApdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        branch.setAdapter(dataApdapter);
+    }
+
     public void addItemsOnSpinner2(){
-        group=(Spinner) findViewById(R.id.group);
         List<String> list=new ArrayList<String>();
         list.add("P1");
         list.add("P2");
@@ -66,7 +84,6 @@ public class LaunchActivity extends AppCompatActivity {
     }
 
     public void addItemsOnSpinner3(){
-        year=(Spinner) findViewById(R.id.year);
         List<String> list=new ArrayList<String>();
         list.add("First Year");
         list.add("Second Year");
@@ -78,7 +95,6 @@ public class LaunchActivity extends AppCompatActivity {
     }
 
     public void addListnerOnSpinnerItemSelection(){
-        branch= (Spinner) findViewById(R.id.branch);
         branch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -93,40 +109,43 @@ public class LaunchActivity extends AppCompatActivity {
     }
 
     public void addListnerOnButton(){
-        branch = (Spinner) findViewById(R.id.branch);
-        group = (Spinner) findViewById(R.id.group);
-        year = (Spinner) findViewById(R.id.year);
-        btnSubmit = (Button) findViewById(R.id.btnSubmit);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int yearInt = getYear();
+                String whereClause = "College = 'BVP' " +
+                        "AND YEAR = " + yearInt +
+                        " AND Branch = '"+String.valueOf(branch.getSelectedItem())+
+                        "' AND Shift = 1 AND Tutorial = '2' AND Practical = '2'";
+               // String whereClause = "College = 'BVP' AND YEAR = 3 AND Branch = 'IT' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
+
+                ID = (TextView) findViewById(R.id.idTest);
+                SelectionDatabase db = new SelectionDatabase(LaunchActivity.this);
+                Cursor cursor = db.getID(whereClause);
+                String id = cursor.getString(0);
+                ID.setText(id);
+
                 Toast.makeText(LaunchActivity.this, "OnClickListner : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
-                        "\nSpinner 2:" + String.valueOf(group.getSelectedItem()) + String.valueOf(year.getSelectedItem()), Toast.LENGTH_SHORT).show();
+                        "\nSpinner 2:" + String.valueOf(group.getSelectedItem()) + yearInt, Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    //spinner
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_launch, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    private int getYear() {
+        int yearInt;
+        switch (String.valueOf(year.getSelectedItem())){
+            case "First Year" : yearInt = 1;
+                break;
+            case "Second Year" : yearInt = 2;
+                break;
+            case "Third Year" : yearInt = 3;
+                break;
+            case "Fourth Year" : yearInt = 4;
+                break;
+            default: yearInt = 0;
         }
-
-        return super.onOptionsItemSelected(item);
+        return yearInt;
     }
+
 }
