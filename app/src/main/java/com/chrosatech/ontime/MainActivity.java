@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -22,6 +23,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     TabLayout tabLayout;
+    private Boolean exit = false;
 
     private static final int num_pages = 6;
 
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private Button last;
     private Button first;
     private ActionBar actionBar;
-    private SharedPreferences sharedpreferences;
+    public static SharedPreferences sharedpreferences;
     private SharedPreferences.Editor editor;
     private String firstLaunch = "firstLaunch";
     /*private float x1;
@@ -65,19 +68,22 @@ public class MainActivity extends AppCompatActivity {
 
         if(!sharedpreferences.contains(firstLaunch)){
             editor.putBoolean(firstLaunch, true);
-            editor.commit();
+            editor.apply();
         }
 
         if (sharedpreferences.getBoolean(firstLaunch, true)) {
             //the app is being launched for first time, do something
             Log.d("Comments", "First time");
             Intent intent = new Intent(this, LaunchActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
             // first time task
 
             // record the fact that the app has been started at least once
-            editor.putBoolean(firstLaunch, false);
-            editor.apply();
+          //  editor.putBoolean(firstLaunch, false);
+           // editor.apply();
         }
 
         toolbar = (Toolbar) findViewById(R.id.tabanim_toolbar);
@@ -129,7 +135,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*@Override
+    public void onBackPressed() {
+        if (exit) {
+            finish(); // finish activity
+        } else {
+            Toast.makeText(this, "Press Back again to Exit.",
+                    Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
 
+        }
+
+    }*/
 
 
 

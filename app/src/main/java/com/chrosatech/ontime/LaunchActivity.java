@@ -1,9 +1,13 @@
 package com.chrosatech.ontime;
 
 import android.app.NotificationManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -27,7 +31,9 @@ public class LaunchActivity extends AppCompatActivity {
     private Spinner branch, group, year;
     private Button btnSubmit;
     private TextView ID;
-
+    private SharedPreferences.Editor editor;
+    private String firstLaunch = "firstLaunch";
+    private Boolean exit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +60,16 @@ public class LaunchActivity extends AppCompatActivity {
 
 
         //Spinner
-        addItemsOnSpinner1();
-        addItemsOnSpinner2();
+        addItemsOnSpinnerBranch();
+        addItemsOnSpinnerBatch();
         addListnerOnSpinnerItemSelection();
-        addListnerOnButton();
-        addItemsOnSpinner3();
+        addItemsOnSpinnerYear();
+        btnSubmit.setOnClickListener(submitClick);
 
     }
 
-    public void addItemsOnSpinner1(){
+
+    public void addItemsOnSpinnerBranch(){
         List<String> list=new ArrayList<String>();
         list.add("CSE");
         list.add("IT");
@@ -73,7 +80,7 @@ public class LaunchActivity extends AppCompatActivity {
         branch.setAdapter(dataApdapter);
     }
 
-    public void addItemsOnSpinner2(){
+    public void addItemsOnSpinnerBatch(){
         List<String> list=new ArrayList<String>();
         list.add("P1");
         list.add("P2");
@@ -83,7 +90,7 @@ public class LaunchActivity extends AppCompatActivity {
         group.setAdapter(dataApdapter);
     }
 
-    public void addItemsOnSpinner3(){
+    public void addItemsOnSpinnerYear(){
         List<String> list=new ArrayList<String>();
         list.add("First Year");
         list.add("Second Year");
@@ -108,29 +115,36 @@ public class LaunchActivity extends AppCompatActivity {
         });
     }
 
-    public void addListnerOnButton(){
+    private View.OnClickListener submitClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int yearInt = getYear();
+            String whereClause = "College = 'BVP' " +
+                    "AND YEAR = " + yearInt +
+                    " AND Branch = '"+String.valueOf(branch.getSelectedItem())+
+                    "' AND Shift = 1 AND Tutorial = '2' AND Practical = '2'";
+            // String whereClause = "College = 'BVP' AND YEAR = 3 AND Branch = 'IT' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int yearInt = getYear();
-                String whereClause = "College = 'BVP' " +
-                        "AND YEAR = " + yearInt +
-                        " AND Branch = '"+String.valueOf(branch.getSelectedItem())+
-                        "' AND Shift = 1 AND Tutorial = '2' AND Practical = '2'";
-               // String whereClause = "College = 'BVP' AND YEAR = 3 AND Branch = 'IT' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
+            ID = (TextView) findViewById(R.id.idTest);
+            SelectionDatabase db = new SelectionDatabase(LaunchActivity.this);
+            Cursor cursor = db.getID(whereClause);
+            String id = cursor.getString(0);
+            ID.setText(id);
+            //MainActivity.sharedpreferences = getPreferences(Context.MODE_PRIVATE);
+            editor = MainActivity.sharedpreferences.edit();
+            editor.putBoolean(firstLaunch, false);
+            editor.commit();
 
-                ID = (TextView) findViewById(R.id.idTest);
-                SelectionDatabase db = new SelectionDatabase(LaunchActivity.this);
-                Cursor cursor = db.getID(whereClause);
-                String id = cursor.getString(0);
-                ID.setText(id);
+            Toast.makeText(LaunchActivity.this, "OnClickListner : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
+                    "\nSpinner 2:" + String.valueOf(group.getSelectedItem()) + yearInt, Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(LaunchActivity.this, "OnClickListner : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
-                        "\nSpinner 2:" + String.valueOf(group.getSelectedItem()) + yearInt, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+            Intent intent = new Intent(LaunchActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(intent);
+        }
+    };
 
     private int getYear() {
         int yearInt;
@@ -148,4 +162,22 @@ public class LaunchActivity extends AppCompatActivity {
         return yearInt;
     }
 
+    @Override
+    public void onBackPressed() {
+        if (exit) {
+            finish(); // finish activity
+        } else {
+            Toast.makeText(this, "Press Back again to Exit.",
+                    Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
+
+        }
+
+    }
 }
