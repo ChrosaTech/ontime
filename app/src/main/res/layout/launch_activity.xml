@@ -66,14 +66,6 @@
         android:layout_centerHorizontal="true"
         />
 
-    <TextView
-        android:layout_below="@+id/year"
-        android:id="@+id/idTest"
-        android:textSize="20sp"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="wrap_content"

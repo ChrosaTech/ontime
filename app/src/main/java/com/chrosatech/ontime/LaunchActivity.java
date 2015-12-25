@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,7 +23,6 @@ public class LaunchActivity extends AppCompatActivity {
     // String sample1[]={"IT","Cse","Ece","EEE"};
     private Spinner branch, group, year;
     private Button btnSubmit;
-    private TextView ID;
     private SharedPreferences.Editor editor;
     private String firstLaunch = "firstLaunch";
     private Boolean exit = false;
@@ -119,17 +117,16 @@ public class LaunchActivity extends AppCompatActivity {
                     "' AND Shift = 1 AND Tutorial = '2' AND Practical = '2'";
             // String whereClause = "College = 'BVP' AND YEAR = 3 AND Branch = 'IT' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
 
-            ID = (TextView) findViewById(R.id.idTest);
             SelectionDatabase db = new SelectionDatabase(LaunchActivity.this);
-            String id = db.getID(whereClause);;
-            ID.setText(id);
+            String id = db.getID(whereClause);
             //MainActivity.sharedpreferences = getPreferences(Context.MODE_PRIVATE);
             editor = MainActivity.sharedpreferences.edit();
             editor.putBoolean(firstLaunch, false);
+            editor.putString("ID", id);
             editor.commit();
 
-            Toast.makeText(LaunchActivity.this, "OnClickListner : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
-                    "\nSpinner 2:" + String.valueOf(group.getSelectedItem()) + yearInt, Toast.LENGTH_SHORT).show();
+            /*Toast.makeText(LaunchActivity.this, "OnClickListner : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
+                    "\nSpinner 2:" + String.valueOf(group.getSelectedItem()) + yearInt, Toast.LENGTH_SHORT).show();*/
 
             Intent intent = new Intent(LaunchActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

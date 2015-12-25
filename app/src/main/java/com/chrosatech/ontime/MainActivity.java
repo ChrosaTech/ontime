@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (sharedpreferences.getBoolean(firstLaunch, true)) {
             //the app is being launched for first time, do something
-            Log.d("Comments", "First time");
             Intent intent = new Intent(this, LaunchActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

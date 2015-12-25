@@ -26,7 +26,6 @@ public class UniversalFragment extends Fragment {
 
     public UniversalFragment() {
         // Required empty public constructor
-        day="NULL";
     }
 
     @Override
@@ -38,7 +37,6 @@ public class UniversalFragment extends Fragment {
 
         Bundle bundle = this.getArguments();
         day = bundle.getString("day");
-        Log.d("DAY", day);
         fill(day);
 
         return view;
