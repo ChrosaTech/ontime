@@ -1,29 +1,17 @@
 package com.chrosatech.ontime;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -90,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         viewPager = (ViewPager) findViewById(R.id.pager);
         setupViewPager(viewPager);
+        viewPager.setOffscreenPageLimit(5);
         /*tabLayout = (TabLayout) findViewById(R.id.tabanim_tabs);
         tabLayout.setupWithViewPager(viewPager);*/
 
@@ -105,12 +94,35 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new UniversalFragment("MONDAY"), "MONDAY");
-        adapter.addFrag(new UniversalFragment("TUESDAY"), "TUESDAY");
-        adapter.addFrag(new UniversalFragment("WEDNESDAY"), "WEDNESDAY");
-        adapter.addFrag(new UniversalFragment("THURSDAY"), "THURSDAY");
-        adapter.addFrag(new UniversalFragment("FRIDAY"), "FRIDAY");
-        adapter.addFrag(new UniversalFragment("SATURDAY"), "SATURDAY");
+        Bundle bundle = new Bundle();
+
+        UniversalFragment monday = new UniversalFragment();
+        UniversalFragment tuesday = new UniversalFragment();
+        UniversalFragment wednesday = new UniversalFragment();
+        UniversalFragment thursday = new UniversalFragment();
+        UniversalFragment friday = new UniversalFragment();
+        UniversalFragment saturday = new UniversalFragment();
+
+        bundle.putString("day", "MONDAY");
+        monday.setArguments(new Bundle(bundle));
+        bundle.putString("day", "TUESDAY");
+        tuesday.setArguments(new Bundle(bundle));
+        bundle.putString("day", "WEDNESDAY");
+        wednesday.setArguments(new Bundle(bundle));
+        bundle.putString("day", "THURSDAY");
+        thursday.setArguments(new Bundle(bundle));
+        bundle.putString("day", "FRIDAY");
+        friday.setArguments(new Bundle(bundle));
+        bundle.putString("day", "SATURDAY");
+        saturday.setArguments(new Bundle(bundle));
+
+
+        adapter.addFrag(monday, "MONDAY");
+        adapter.addFrag(tuesday, "TUESDAY");
+        adapter.addFrag(wednesday, "WEDNESDAY");
+        adapter.addFrag(thursday, "THURSDAY");
+        adapter.addFrag(friday, "FRIDAY");
+        adapter.addFrag(saturday, "SATURDAY");
         viewPager.setAdapter(adapter);
     }
 

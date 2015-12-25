@@ -1,17 +1,11 @@
 package com.chrosatech.ontime;
 
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -127,8 +121,7 @@ public class LaunchActivity extends AppCompatActivity {
 
             ID = (TextView) findViewById(R.id.idTest);
             SelectionDatabase db = new SelectionDatabase(LaunchActivity.this);
-            Cursor cursor = db.getID(whereClause);
-            String id = cursor.getString(0);
+            String id = db.getID(whereClause);;
             ID.setText(id);
             //MainActivity.sharedpreferences = getPreferences(Context.MODE_PRIVATE);
             editor = MainActivity.sharedpreferences.edit();
