@@ -14,12 +14,14 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 public class DatabaseContents extends SQLiteAssetHelper {
 
     private static final String DATABASE_NAME = "selecttest.db";
+    //just update the Databse verion to update the database in both databaseContents.java and SelectionDatabase.java
     private static final int DATABASE_VERSION = 1;
     private SharedPreferences.Editor editor;
 
 
     public DatabaseContents(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        setForcedUpgrade();
     }
 
     public Cursor getCursor(String day) {

@@ -17,6 +17,7 @@ public class SelectionDatabase extends SQLiteAssetHelper {
 
     public SelectionDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        setForcedUpgrade();
     }
 
     public String getID(String whereClause) {

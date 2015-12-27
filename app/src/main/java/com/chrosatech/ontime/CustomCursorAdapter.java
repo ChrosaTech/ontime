@@ -2,7 +2,6 @@ package com.chrosatech.ontime;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,8 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+
+import java.util.StringTokenizer;
 
 /**
  * Created by mayank on 25/12/15.
@@ -42,7 +43,23 @@ class CustomCursorAdapter extends CursorAdapter {
 
         startTime.setText(cursor.getString(1));
         endTime.setText(cursor.getString(2));
-        subject.setText(cursor.getString(3));
+
+        String subjectFullForm = cursor.getString(3);
+        String subjectShortForm = "";
+        if (subjectFullForm.contains(" ")){
+            StringTokenizer stringTokenizer = new StringTokenizer(subjectFullForm, " &");
+
+            while (stringTokenizer.hasMoreTokens()){
+                subjectShortForm = subjectShortForm + stringTokenizer.nextToken().toUpperCase().charAt(0) + ".";
+            }
+
+            subject.setText(subjectShortForm);
+        }
+        else
+            subject.setText(subjectFullForm);
+
+
+        //subject.setText(cursor.getString(3));
         room.setText(cursor.getString(4));
 
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
