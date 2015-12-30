@@ -20,4 +20,6 @@
     <string name="first">First</string>
     <string name="last">Last</string>
     <string name="title_activity_second">secondActivity</string>
+
+    <string name="arrow_forward">&#xe204;</string>
 </resources>

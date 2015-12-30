@@ -2,8 +2,11 @@ package com.chrosatech.ontime;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,6 +15,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +41,17 @@ public class LaunchActivity extends AppCompatActivity {
         branch = (Spinner) findViewById(R.id.branch);
         group = (Spinner) findViewById(R.id.group);
         year = (Spinner) findViewById(R.id.year);
-        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+       // btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        FloatingActionButton fabSubmit = (FloatingActionButton) findViewById(R.id.fabSubmit);
+
+        Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/OnTime.ttf");
+
+        TextDrawable textDrawable = TextDrawable.builder()
+                .beginConfig()
+                .useFont(typeface)
+                .endConfig()
+                .buildRound(getString(R.string.arrow_forward), Color.TRANSPARENT);
+        fabSubmit.setImageDrawable(textDrawable);
         /*actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.indigo)));
@@ -56,8 +72,8 @@ public class LaunchActivity extends AppCompatActivity {
         addItemsOnSpinnerBatch();
         addListnerOnSpinnerItemSelection();
         addItemsOnSpinnerYear();
-        btnSubmit.setOnClickListener(submitClick);
-
+        //btnSubmit.setOnClickListener(submitClick);
+        fabSubmit.setOnClickListener(submitClick);
     }
 
 

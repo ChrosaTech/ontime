@@ -14,7 +14,6 @@
             android:id="@+id/tabanim_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/ColorPrimary"
            />
 
         <!--<android.support.design.widget.TabLayout
@@ -26,7 +25,6 @@
             android:id="@+id/tabs"
             android:layout_width="fill_parent"
             android:layout_height="48dp"
-            android:background="@color/indigo"
             android:textColor="#ffffff"
             app:pstsDividerColor="#ffffff"
             app:pstsIndicatorColor="#ffffff"

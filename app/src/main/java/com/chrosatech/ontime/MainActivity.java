@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int num_pages = 6;
 
     private ViewPager viewPager;
-
+    private ViewPagerAdapter adapter;
     private PagerAdapter pagerAdapter;
     private Button last;
     private Button first;
@@ -91,10 +91,25 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        Bundle bundle = new Bundle();
 
-        UniversalFragment monday = new UniversalFragment();
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        Bundle bundle = new Bundle();
+        DatabaseContents dbContents = new DatabaseContents(this);
+        String days[] = dbContents.getWorkingDaysOfWeek();
+        int noOfDays = days.length;
+        UniversalFragment universalFragment[] = new UniversalFragment[noOfDays];
+
+        for (int i = 0; i<noOfDays; i++){
+
+            universalFragment[i] = new UniversalFragment();
+            bundle.putString("day", days[i]);
+            universalFragment[i].setArguments(new Bundle(bundle));
+            adapter.addFrag(universalFragment[i], days[i]);
+        }
+
+        viewPager.setAdapter(adapter);
+
+        /*UniversalFragment monday = new UniversalFragment();
         UniversalFragment tuesday = new UniversalFragment();
         UniversalFragment wednesday = new UniversalFragment();
         UniversalFragment thursday = new UniversalFragment();
@@ -121,14 +136,28 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFrag(thursday, "THURSDAY");
         adapter.addFrag(friday, "FRIDAY");
         adapter.addFrag(saturday, "SATURDAY");
-        viewPager.setAdapter(adapter);
+        viewPager.setAdapter(adapter);*/
     }
 
     private void setCurrentPage() {
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
         Date d = new Date();
         String dayOfTheWeek = sdf.format(d);
-        switch (dayOfTheWeek){
+        int flag = 0;
+
+        for (int i = 0; i<adapter.getCount(); i++){
+            if (dayOfTheWeek.toUpperCase().equals(adapter.getPageTitle(i))){
+                viewPager.setCurrentItem(i);
+                flag = 1;
+                break;
+            }
+        }
+
+        if (flag == 0){
+            viewPager.setCurrentItem(0);
+        }
+
+        /*switch (dayOfTheWeek){
             case "Monday"    : viewPager.setCurrentItem(0);
                 break;
             case "Tuesday"   : viewPager.setCurrentItem(1);
@@ -142,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
             case "Saturday"  : viewPager.setCurrentItem(5);
                 break;
             default          : viewPager.setCurrentItem(0);
-        }
+        }*/
     }
 
     /*@Override
