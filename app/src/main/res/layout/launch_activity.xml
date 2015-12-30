@@ -1,89 +1,96 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
     android:padding="@dimen/activity_horizontal_margin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bright_foreground_inverse_material_light"
     android:id="@+id/view">
 
-    <!--TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceLarge"
-    android:text="enter your branch"
-    android:id="@+id/textView"
-    android:layout_alignBottom="@+id/autoCompleteTextView1"
-    android:layout_centerHorizontal="true"
-    android:layout_marginBottom="61dp" /!-->
-
-    <TextView
-        android:id="@+id/branch_text"
+        <!--TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Branch"
-        android:layout_centerHorizontal="true" />
-
-    <Spinner
-        android:id="@+id/branch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/branch_text"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/group_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Practical"
-        android:layout_below="@+id/branch"
-        android:layout_centerHorizontal="true"  />
-
-    <Spinner
-        android:id="@+id/group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/group_text"
+        android:text="enter your branch"
+        android:id="@+id/textView"
+        android:layout_alignBottom="@+id/autoCompleteTextView1"
         android:layout_centerHorizontal="true"
-        />
+        android:layout_marginBottom="61dp" /!-->
 
-    <TextView
-        android:id="@+id/year_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Year"
-        android:layout_below="@+id/group"
-        android:layout_centerHorizontal="true"
-        />
+        <TextView
+            android:id="@+id/branch_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Branch"
+            android:layout_centerHorizontal="true" />
 
-    <Spinner
-        android:id="@+id/year"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/year_text"
-        android:layout_centerHorizontal="true"
-        />
+        <Spinner
+            android:id="@+id/branch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/branch_text"
+            android:layout_centerHorizontal="true" />
 
-    <!--<Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />-->
+        <TextView
+            android:id="@+id/group_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Practical"
+            android:layout_below="@+id/branch"
+            android:layout_centerHorizontal="true"  />
 
+        <Spinner
+            android:id="@+id/group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/group_text"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            android:id="@+id/year_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Year"
+            android:layout_below="@+id/group"
+            android:layout_centerHorizontal="true"
+            />
+
+        <Spinner
+            android:id="@+id/year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/year_text"
+            android:layout_centerHorizontal="true"
+            />
+
+        <!--<Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />-->
+
+
+    </RelativeLayout>
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fabSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="bottom"
         android:layout_margin="@dimen/fab_margin"
         fab:fab_colorNormal="@color/ColorPrimary"
-        fab:fab_colorPressed="@color/ColorPrimaryDark"
-         />
+        fab:fab_colorPressed="@color/ColorPrimaryDark" />
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

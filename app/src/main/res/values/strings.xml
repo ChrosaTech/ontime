@@ -22,4 +22,6 @@
     <string name="title_activity_second">secondActivity</string>
 
     <string name="arrow_forward">&#xe204;</string>
+
+    <string name="notFound">Sorry! No Time Table found for current combination</string>
 </resources>

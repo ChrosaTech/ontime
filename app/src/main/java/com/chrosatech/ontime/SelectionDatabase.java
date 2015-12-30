@@ -34,7 +34,9 @@ public class SelectionDatabase extends SQLiteAssetHelper {
                 null, null, null);
 
         c.moveToFirst();
-        return c.getString(0);
-
+        if (c.getCount() == 0)
+            return null;
+        else
+            return c.getString(0);
     }
 }

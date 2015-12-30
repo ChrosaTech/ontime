@@ -6,9 +6,11 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+//import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,6 +34,7 @@ public class LaunchActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private String firstLaunch = "firstLaunch";
     private Boolean exit = false;
+    private Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,10 @@ public class LaunchActivity extends AppCompatActivity {
                 .endConfig()
                 .buildRound(getString(R.string.arrow_forward), Color.TRANSPARENT);
         fabSubmit.setImageDrawable(textDrawable);
+
+        CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) fabSubmit.getLayoutParams();
+        p.setBehavior(new FABbehavior());
+        fabSubmit.setLayoutParams(p);
         /*actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.indigo)));
@@ -135,20 +142,26 @@ public class LaunchActivity extends AppCompatActivity {
 
             SelectionDatabase db = new SelectionDatabase(LaunchActivity.this);
             String id = db.getID(whereClause);
-            //MainActivity.sharedpreferences = getPreferences(Context.MODE_PRIVATE);
-            editor = MainActivity.sharedpreferences.edit();
-            editor.putBoolean(firstLaunch, false);
-            editor.putString("ID", id);
-            editor.commit();
+            if (id != null){
+                //MainActivity.sharedpreferences = getPreferences(Context.MODE_PRIVATE);
+                editor = MainActivity.sharedpreferences.edit();
+                editor.putBoolean(firstLaunch, false);
+                editor.putString("ID", id);
+                editor.commit();
 
             /*Toast.makeText(LaunchActivity.this, "OnClickListner : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
                     "\nSpinner 2:" + String.valueOf(group.getSelectedItem()) + yearInt, Toast.LENGTH_SHORT).show();*/
 
-            Intent intent = new Intent(LaunchActivity.this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            startActivity(intent);
+                Intent intent = new Intent(LaunchActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+            } else {
+                snackbar = Snackbar.make(v, getString(R.string.notFound), Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+
         }
     };
 
@@ -170,6 +183,8 @@ public class LaunchActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if (snackbar.isShown())
+            snackbar.dismiss();
         if (exit) {
             finish(); // finish activity
         } else {
