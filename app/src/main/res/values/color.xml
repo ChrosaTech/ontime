@@ -2,4 +2,26 @@
 <resources>
     <color name="ColorPrimary">#3F51BF</color>
     <color name="ColorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <color name="colorPrimaryBlack">#F44336</color>
+    <color name="colorPrimaryBlackDark">#D32F2F</color>
+    <color name="colorBlackAccent">#FF5252</color>
+    <color name="colorPrimaryBlackLight">#FFCDD2</color>
+
+    <color name="colorPrimaryOrange">#FF5722</color>
+    <color name="colorPrimaryOrangeDark">#E64A19</color>
+    <color name="colorOrangeAccent">#FF5722</color>
+    <color name="colorPrimaryOrangeLight">#FFCCBC</color>
+
+    <color name="colorPrimaryRed">#F44336</color>
+    <color name="colorPrimaryRedDark">#D32F2F</color>
+    <color name="colorRedAccent">#FF5252</color>
+    <color name="colorPrimaryRedLight">#FFCDD2</color>
+
+    <color name="colorPrimaryGreen">#4CAF50</color>
+    <color name="colorPrimaryGreenDark">#388E3C</color>
+    <color name="colorGreenAccent">#4CAF50</color>
+    <color name="colorPrimaryGreenLight">#C8E6C9</color>
 </resources>

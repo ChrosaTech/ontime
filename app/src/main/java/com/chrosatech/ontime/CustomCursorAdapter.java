@@ -1,7 +1,10 @@
 package com.chrosatech.ontime;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,20 +47,27 @@ class CustomCursorAdapter extends CursorAdapter {
         startTime.setText(cursor.getString(1));
         endTime.setText(cursor.getString(2));
 
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        String subjectForm = sharedPref.getString("example_appearance", "1");
+        Log.d("SubjectForm",subjectForm);
         String subjectFullForm = cursor.getString(3);
-        String subjectShortForm = "";
-        if (subjectFullForm.contains(" ")){
-            StringTokenizer stringTokenizer = new StringTokenizer(subjectFullForm, " &");
 
-            while (stringTokenizer.hasMoreTokens()){
-                subjectShortForm = subjectShortForm + stringTokenizer.nextToken().toUpperCase().charAt(0) + ".";
-            }
-
-            subject.setText(subjectShortForm);
-        }
-        else
+        if (subjectForm.equals("1")){
             subject.setText(subjectFullForm);
+        }else {
+            Log.d("SubjectForm","in short");
+            String subjectShortForm = "";
+            if (subjectFullForm.contains(" ")) {
+                StringTokenizer stringTokenizer = new StringTokenizer(subjectFullForm, " &");
 
+                while (stringTokenizer.hasMoreTokens()) {
+                    subjectShortForm = subjectShortForm + stringTokenizer.nextToken().toUpperCase().charAt(0) + ".";
+                }
+
+                subject.setText(subjectShortForm);
+            } else
+                subject.setText(subjectFullForm);
+        }
 
         //subject.setText(cursor.getString(3));
         room.setText(cursor.getString(4));

@@ -3,23 +3,33 @@ package com.chrosatech.ontime;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.astuetz.PagerSlidingTabStrip;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
+   // Toolbar toolbar;
     TabLayout tabLayout;
     private Boolean exit = false;
 
@@ -39,9 +49,38 @@ public class MainActivity extends AppCompatActivity {
     private float MIN_DISTANCE = 10;*/
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setAppTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setElevation(0);
+        }
 
        /* actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -72,8 +111,9 @@ public class MainActivity extends AppCompatActivity {
            // editor.apply();
         }
 
-        toolbar = (Toolbar) findViewById(R.id.tabanim_toolbar);
-        setSupportActionBar(toolbar);
+       // toolbar = (Toolbar) findViewById(R.id.tabanim_toolbar);
+       // setSupportActionBar(toolbar);
+
         viewPager = (ViewPager) findViewById(R.id.pager);
         setupViewPager(viewPager);
         viewPager.setOffscreenPageLimit(5);
@@ -86,6 +126,27 @@ public class MainActivity extends AppCompatActivity {
         setCurrentPage();
 
 
+
+    }
+
+    private void setAppTheme(){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String themeColor = sharedPref.getString("example_theme", "");
+
+        Log.d("Theme", themeColor);
+
+        switch (themeColor){
+
+            case "Black"  :
+                break;
+            case "Orange" : setTheme(R.style.OrangeTheme);
+                break;
+            case "Red"    : setTheme(R.style.RedTheme);
+                break;
+            case "Green"  : setTheme(R.style.GreenTheme);
+                break;
+            default:
+        }
 
     }
 
