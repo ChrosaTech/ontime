@@ -29,7 +29,7 @@ public class LaunchActivity extends AppCompatActivity {
     private ActionBar actionBar;
     // private AutoCompleteTextView autoCompleteTextView;
     // String sample1[]={"IT","Cse","Ece","EEE"};
-    private Spinner branch, group, year;
+    private Spinner branchSpinner, groupSpinner, yearSpinner,collegeSpinner,tutSpinner;
     private Button btnSubmit;
     private SharedPreferences.Editor editor;
     private String firstLaunch = "firstLaunch";
@@ -41,9 +41,11 @@ public class LaunchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.launch_activity);
 
-        branch = (Spinner) findViewById(R.id.branch);
-        group = (Spinner) findViewById(R.id.group);
-        year = (Spinner) findViewById(R.id.year);
+        branchSpinner = (Spinner) findViewById(R.id.branch);
+        groupSpinner = (Spinner) findViewById(R.id.group);
+        yearSpinner = (Spinner) findViewById(R.id.year);
+        collegeSpinner=(Spinner)findViewById(R.id.college_spinner);
+        tutSpinner=(Spinner)findViewById(R.id.tut_spinner);
        // btnSubmit = (Button) findViewById(R.id.btnSubmit);
         FloatingActionButton fabSubmit = (FloatingActionButton) findViewById(R.id.fabSubmit);
 
@@ -79,6 +81,8 @@ public class LaunchActivity extends AppCompatActivity {
         addItemsOnSpinnerBatch();
         addListnerOnSpinnerItemSelection();
         addItemsOnSpinnerYear();
+        addItemsOnSpinnerTut();
+        addItemsOnSpinnerCollege();
         //btnSubmit.setOnClickListener(submitClick);
         fabSubmit.setOnClickListener(submitClick);
     }
@@ -92,7 +96,7 @@ public class LaunchActivity extends AppCompatActivity {
         list.add("EEE");
         ArrayAdapter<String> dataApdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,list);
         dataApdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        branch.setAdapter(dataApdapter);
+        branchSpinner.setAdapter(dataApdapter);
     }
 
     public void addItemsOnSpinnerBatch(){
@@ -102,7 +106,26 @@ public class LaunchActivity extends AppCompatActivity {
         list.add("P3");
         ArrayAdapter<String> dataApdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,list);
         dataApdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        group.setAdapter(dataApdapter);
+        groupSpinner.setAdapter(dataApdapter);
+    }
+    public void addItemsOnSpinnerCollege()
+    {
+        List<String> list=new ArrayList<>();
+        list.add("BVCOE");
+        ArrayAdapter<String> dataAdapter=new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,list);
+        dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        collegeSpinner.setAdapter(dataAdapter);
+    }
+
+    public void addItemsOnSpinnerTut()
+    {
+        List<String> list=new ArrayList<>();
+        list.add("T1");
+        list.add("T2");
+        ArrayAdapter<String> dataAdapter=new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,list);
+        dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        tutSpinner.setAdapter(dataAdapter);
+
     }
 
     public void addItemsOnSpinnerYear(){
@@ -113,11 +136,11 @@ public class LaunchActivity extends AppCompatActivity {
         list.add("Fourth Year");
         ArrayAdapter<String> dataApdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,list);
         dataApdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        year.setAdapter(dataApdapter);
+        yearSpinner.setAdapter(dataApdapter);
     }
 
     public void addListnerOnSpinnerItemSelection(){
-        branch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        branchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -136,7 +159,7 @@ public class LaunchActivity extends AppCompatActivity {
             int yearInt = getYear();
             String whereClause = "College = 'BVP' " +
                     "AND YEAR = " + yearInt +
-                    " AND Branch = '"+String.valueOf(branch.getSelectedItem())+
+                    " AND Branch = '"+String.valueOf(branchSpinner.getSelectedItem())+
                     "' AND Shift = 1 AND Tutorial = '2' AND Practical = '2'";
             // String whereClause = "College = 'BVP' AND YEAR = 3 AND Branch = 'IT' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
 
@@ -167,7 +190,7 @@ public class LaunchActivity extends AppCompatActivity {
 
     private int getYear() {
         int yearInt;
-        switch (String.valueOf(year.getSelectedItem())){
+        switch (String.valueOf(yearSpinner.getSelectedItem())){
             case "First Year" : yearInt = 1;
                 break;
             case "Second Year" : yearInt = 2;

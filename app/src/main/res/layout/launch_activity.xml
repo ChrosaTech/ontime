@@ -29,7 +29,8 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Branch"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/year"/>
 
         <Spinner
             android:id="@+id/branch"
@@ -54,6 +55,37 @@
             android:layout_below="@+id/group_text"
             android:layout_centerHorizontal="true"
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tutorial"
+            android:id="@+id/tut_text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_below="@+id/group"
+            android:layout_centerHorizontal="true"
+            />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tut_text"
+            android:id="@+id/tut_spinner">
+
+        </Spinner>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/college_text"
+            android:layout_centerHorizontal="true"
+            android:text="College"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/college_spinner"
+            android:layout_below="@+id/college_text"
+            >
+
+        </Spinner>
 
         <TextView
             android:id="@+id/year_text"
@@ -61,7 +93,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Year"
-            android:layout_below="@+id/group"
+            android:layout_below="@+id/college_spinner"
             android:layout_centerHorizontal="true"
             />
 
