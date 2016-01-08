@@ -19,8 +19,11 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -175,8 +178,26 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
                /* || DataSyncPreferenceFragment.class.getName().equals(fragmentName)*/
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName)
-                || CreditFragment.class.getName().equals(fragmentName)
-                || AboutFragment.class.getName().equals(fragmentName);
+                || CreditFragment.class.getName().equals(fragmentName);
+    }
+
+    @Override
+    public void onHeaderClick(Header header, int position) {
+        Log.d("header",position+"");
+        if (position == 3){
+
+            /*Intent i = new Intent(Intent.ACTION_SEND);
+            i.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{ "chrosatech@gmail.com" });
+            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Feedback");
+            i.putExtra(android.content.Intent.EXTRA_TEXT, "Add a feature");
+            startActivity(Intent.createChooser(i, "Send email"));*/
+            Intent i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                    "mailto", "chrosatech@gmail.com", null));
+            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Feedback");
+            i.putExtra(android.content.Intent.EXTRA_TEXT, "Add a feature");
+            startActivity(Intent.createChooser(i, "Send email"));
+        }
+        super.onHeaderClick(header, position);
     }
 
     /**
@@ -298,7 +319,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_about);
-            setHasOptionsMenu(true);
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are

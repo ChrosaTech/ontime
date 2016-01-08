@@ -33,7 +33,6 @@
             android:text="08:40 a.m."
             android:textSize="16sp"
             android:padding="5dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
 
             />
 
@@ -44,7 +43,6 @@
             android:text="09:35 a.m."
             android:textSize="16sp"
             android:padding="5dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
 
             />
 
@@ -64,7 +62,6 @@
             android:text="Subject"
             android:textSize="16sp"
             android:padding="5dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
 
 
             />
@@ -76,7 +73,6 @@
             android:text="Room"
             android:textSize="16sp"
             android:padding="5dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
 
             />
 

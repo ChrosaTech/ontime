@@ -26,7 +26,6 @@
     <header
         android:title="About"
         android:icon="@drawable/about"
-        android:fragment="com.chrosatech.ontime.SettingsActivity$AboutFragment"
         />
 
 
