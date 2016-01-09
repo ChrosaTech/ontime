@@ -137,13 +137,13 @@ public class MainActivity extends AppCompatActivity {
 
         switch (themeColor){
 
-            case "Black"  :
+            case "Bubblegum Pink"  : setTheme(R.style.PinkTheme);
                 break;
-            case "Orange" : setTheme(R.style.OrangeTheme);
+            case "Hot Orange" : setTheme(R.style.OrangeTheme);
                 break;
-            case "Red"    : setTheme(R.style.RedTheme);
+            case "Rose Red"    : setTheme(R.style.RedTheme);
                 break;
-            case "Green"  : setTheme(R.style.GreenTheme);
+            case "Forest Green"  : setTheme(R.style.GreenTheme);
                 break;
             default:
         }
