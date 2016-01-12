@@ -157,10 +157,12 @@ public class LaunchActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             int yearInt = getYear();
+
+            //TODO update where clause
             String whereClause = "College = 'BVP' " +
                     "AND YEAR = " + yearInt +
                     " AND Branch = '"+String.valueOf(branchSpinner.getSelectedItem())+
-                    "' AND Shift = 1 AND Tutorial = '2' AND Practical = '2'";
+                    "' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
             // String whereClause = "College = 'BVP' AND YEAR = 3 AND Branch = 'IT' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
 
             SelectionDatabase db = new SelectionDatabase(LaunchActivity.this);
