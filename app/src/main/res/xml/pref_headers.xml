@@ -19,12 +19,12 @@
         android:title="@string/pref_header_data_sync"
         android:icon="@drawable/ic_sync_black_24dp" />-->
     <header
-        android:title="Credits"
+        android:title="Credit"
         android:icon="@drawable/credit"
         android:fragment="com.chrosatech.ontime.SettingsActivity$CreditFragment"
         />
     <header
-        android:title="About"
+        android:title="Feedback"
         android:icon="@drawable/about"
         />
 

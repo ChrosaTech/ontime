@@ -33,10 +33,10 @@
 
     <string-array name="pref_theme_entries">
         <item>Default</item>
-        <item>Black</item>
-        <item>Orange</item>
-        <item>Red</item>
-        <item>Green</item>
+        <item>Bubblegum Pink</item>
+        <item>Hot Orange</item>
+        <item>Rose Red</item>
+        <item>Forest Green</item>
     </string-array>
 
 
