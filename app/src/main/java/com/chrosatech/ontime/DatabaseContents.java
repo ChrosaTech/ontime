@@ -5,14 +5,10 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
-import android.util.Log;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Set;
 
 /**
  * Created by mayank on 25/12/15.
@@ -37,7 +33,7 @@ public class DatabaseContents extends SQLiteAssetHelper {
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-        String [] sqlSelect = {"rowid _id", "StartTime", "EndTime", "Lecture", "Room"};
+        String [] sqlSelect = {"rowid _id", "StartTime", "EndTime", "ClassType", "Lecture", "Room", "Teacher"};
         String sqlTables = "TimeTable";
         String whereClause = "ID = '" + id + "' AND UPPER(Day) = UPPER('" + day + "') ";
 
@@ -78,11 +74,9 @@ public class DatabaseContents extends SQLiteAssetHelper {
                 daysHashed.add(c.getString(0).toUpperCase());
             }
             days = daysHashed.toArray(new String[daysHashed.size()]);
-            Log.d("daysHAs",daysHashed+"");
         } else{
             days = new String[]{"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
         }
-        Log.d("days", Arrays.toString(days) +"");
         return days;
     }
 }

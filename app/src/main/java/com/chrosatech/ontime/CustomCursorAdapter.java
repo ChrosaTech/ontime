@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
-import android.util.Log;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,24 +38,34 @@ class CustomCursorAdapter extends CursorAdapter {
         // Get all the values
         // Use it however you need to
 
+        CardView cardView = (CardView) view.findViewById(R.id.cursor_adapter_cardview);
         final ImageView imageView = (ImageView) view.findViewById(R.id.image_view);
         TextView startTime = (TextView) view.findViewById(R.id.start_time);
         TextView endTime = (TextView) view.findViewById(R.id.end_time);
         TextView subject = (TextView) view.findViewById(R.id.subject);
         TextView room = (TextView) view.findViewById(R.id.room);
+        TextView classType = (TextView) view.findViewById(R.id.class_type);
+        TextView teacherName = (TextView) view.findViewById(R.id.teacher_name);
 
         startTime.setText(cursor.getString(1));
         endTime.setText(cursor.getString(2));
+        String type = "(" + cursor.getString(3) + ")";
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         String subjectForm = sharedPref.getString("example_appearance", "1");
-        Log.d("SubjectForm",subjectForm);
-        String subjectFullForm = cursor.getString(3);
+        String subjectFullForm = cursor.getString(4);
+
+        if (subjectFullForm.equals("Break")){
+            room.setVisibility(View.GONE);
+            classType.setVisibility(View.GONE);
+            teacherName.setVisibility(View.GONE);
+            cardView.setCardBackgroundColor(R.attr.colorControlHighlight);
+        }
 
         if (subjectForm.equals("1")){
             subject.setText(subjectFullForm);
+            classType.setText(type);
         }else {
-            Log.d("SubjectForm","in short");
             String subjectShortForm = "";
             if (subjectFullForm.contains(" ")) {
                 StringTokenizer stringTokenizer = new StringTokenizer(subjectFullForm, " &");
@@ -65,12 +75,18 @@ class CustomCursorAdapter extends CursorAdapter {
                 }
 
                 subject.setText(subjectShortForm);
-            } else
+
+                String typeShort = type.substring(0,2) + String.valueOf(type.charAt(type.length()-1));
+                classType.setText(typeShort);
+            } else {
                 subject.setText(subjectFullForm);
+                classType.setText(type);
+            }
         }
 
         //subject.setText(cursor.getString(3));
-        room.setText(cursor.getString(4));
+        room.setText(cursor.getString(5));
+        teacherName.setText(cursor.getString(6));
 
         ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
         // generate random color
@@ -81,7 +97,7 @@ class CustomCursorAdapter extends CursorAdapter {
 
         //to set image size to equal height and width
 
-        ViewTreeObserver vto = imageView.getViewTreeObserver();
+       /* ViewTreeObserver vto = imageView.getViewTreeObserver();
         vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             public boolean onPreDraw() {
                 int x;
@@ -90,7 +106,7 @@ class CustomCursorAdapter extends CursorAdapter {
                 imageView.setLayoutParams(new LinearLayout.LayoutParams(x, x));
                 return true;
             }
-        });
+        });*/
 
     }
 

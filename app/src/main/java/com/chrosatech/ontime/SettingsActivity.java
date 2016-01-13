@@ -19,11 +19,7 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.MenuItem;
-import android.widget.Toast;
 
-import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -183,7 +179,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     @Override
     public void onHeaderClick(Header header, int position) {
-        Log.d("header",position+"");
         if (position == 3){
 
             /*Intent i = new Intent(Intent.ACTION_SEND);
