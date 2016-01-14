@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.flaviofaria.kenburnsview.KenBurnsView;
+import com.flaviofaria.kenburnsview.Transition;
 
 import java.util.StringTokenizer;
 
@@ -47,6 +49,8 @@ class CustomCursorAdapter extends CursorAdapter {
         TextView classType = (TextView) view.findViewById(R.id.class_type);
         TextView teacherName = (TextView) view.findViewById(R.id.teacher_name);
 
+
+
         startTime.setText(cursor.getString(1));
         endTime.setText(cursor.getString(2));
         String type = "(" + cursor.getString(3) + ")";
@@ -60,6 +64,23 @@ class CustomCursorAdapter extends CursorAdapter {
             classType.setVisibility(View.GONE);
             teacherName.setVisibility(View.GONE);
             cardView.setCardBackgroundColor(R.attr.colorControlHighlight);
+           // cardView.setId(R.id.);
+            //cardView.setId(R.id.kenBurnView);
+
+            KenBurnsView kenBurnsView=(KenBurnsView)view.findViewById(R.id.kenBurnView);
+            kenBurnsView.setMaxHeight(view.getHeight());
+            kenBurnsView.setVisibility(View.VISIBLE);
+            kenBurnsView.setTransitionListener(new KenBurnsView.TransitionListener() {
+                @Override
+                public void onTransitionStart(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionEnd(Transition transition) {
+
+                }
+            });
         }
 
         if (subjectForm.equals("1")){
