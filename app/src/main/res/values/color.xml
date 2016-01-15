@@ -32,4 +32,6 @@
     <color name="colorPrimaryPinkDark">#ff1493</color>
     <color name="colorPinkAccent">#ffc0cb</color>
     <color name="colorPrimaryPinkLight">#ffb6c1</color>
+
+    <color name="transparent_white">#99ffffff</color>
 </resources>

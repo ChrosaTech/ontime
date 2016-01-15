@@ -8,16 +8,13 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.flaviofaria.kenburnsview.KenBurnsView;
-import com.flaviofaria.kenburnsview.Transition;
 
 import java.util.StringTokenizer;
 
@@ -40,7 +37,7 @@ class CustomCursorAdapter extends CursorAdapter {
         // Get all the values
         // Use it however you need to
 
-        CardView cardView = (CardView) view.findViewById(R.id.cursor_adapter_cardview);
+        final CardView cardView = (CardView) view.findViewById(R.id.cursor_adapter_cardview);
         final ImageView imageView = (ImageView) view.findViewById(R.id.image_view);
         TextView startTime = (TextView) view.findViewById(R.id.start_time);
         TextView endTime = (TextView) view.findViewById(R.id.end_time);
@@ -63,24 +60,13 @@ class CustomCursorAdapter extends CursorAdapter {
             room.setVisibility(View.GONE);
             classType.setVisibility(View.GONE);
             teacherName.setVisibility(View.GONE);
-            cardView.setCardBackgroundColor(R.attr.colorControlHighlight);
-           // cardView.setId(R.id.);
-            //cardView.setId(R.id.kenBurnView);
+            cardView.setCardBackgroundColor(context.getResources().getColor(R.color.transparent_white));
 
-            KenBurnsView kenBurnsView=(KenBurnsView)view.findViewById(R.id.kenBurnView);
-            kenBurnsView.setMaxHeight(view.getHeight());
-            kenBurnsView.setVisibility(View.VISIBLE);
-            kenBurnsView.setTransitionListener(new KenBurnsView.TransitionListener() {
-                @Override
-                public void onTransitionStart(Transition transition) {
+            final KenBurnsView foodImage=(KenBurnsView)view.findViewById(R.id.cardview_bg_img_food);
+            foodImage.setVisibility(View.VISIBLE);
+            foodImage.setAdjustViewBounds(true);
+            foodImage.setMaxHeight(cardView.getMeasuredHeight());
 
-                }
-
-                @Override
-                public void onTransitionEnd(Transition transition) {
-
-                }
-            });
         }
 
         if (subjectForm.equals("1")){
