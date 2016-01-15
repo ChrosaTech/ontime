@@ -18,8 +18,6 @@ public class DatabaseContents extends SQLiteAssetHelper {
     private static final String DATABASE_NAME = "selecttest.db";
     //just update the Databse verion to update the database in both databaseContents.java and SelectionDatabase.java
     private static final int DATABASE_VERSION = 1;
-    private SharedPreferences.Editor editor;
-
 
     public DatabaseContents(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -78,5 +76,25 @@ public class DatabaseContents extends SQLiteAssetHelper {
             days = new String[]{"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
         }
         return days;
+    }
+
+    public String getID(String whereClause) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+
+        String [] sqlSelect = {"ID"};
+        String sqlTables = "College";
+        //String whereClause = "College = 'BVP' AND YEAR = 1 AND Branch = 'IT' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
+
+        qb.setTables(sqlTables);
+        Cursor c = qb.query(db, sqlSelect, whereClause, null,
+                null, null, null);
+
+        c.moveToFirst();
+        if (c.getCount() == 0)
+            return null;
+        else
+            return c.getString(0);
     }
 }

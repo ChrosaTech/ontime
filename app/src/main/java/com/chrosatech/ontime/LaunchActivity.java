@@ -165,7 +165,7 @@ public class LaunchActivity extends AppCompatActivity {
                     "' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
             // String whereClause = "College = 'BVP' AND YEAR = 3 AND Branch = 'IT' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
 
-            SelectionDatabase db = new SelectionDatabase(LaunchActivity.this);
+            DatabaseContents db = new DatabaseContents(LaunchActivity.this);
             String id = db.getID(whereClause);
             if (id != null){
                 //MainActivity.sharedpreferences = getPreferences(Context.MODE_PRIVATE);

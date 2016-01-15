@@ -60,7 +60,7 @@ class CustomCursorAdapter extends CursorAdapter {
             room.setVisibility(View.GONE);
             classType.setVisibility(View.GONE);
             teacherName.setVisibility(View.GONE);
-            cardView.setCardBackgroundColor(context.getResources().getColor(R.color.transparent_white));
+           // cardView.setCardBackgroundColor(context.getResources().getColor(R.color.transparent_white));
 
             final KenBurnsView foodImage=(KenBurnsView)view.findViewById(R.id.cardview_bg_img_food);
             foodImage.setVisibility(View.VISIBLE);
