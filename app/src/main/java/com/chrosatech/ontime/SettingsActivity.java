@@ -2,6 +2,7 @@ package com.chrosatech.ontime;
 
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,7 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -29,6 +31,8 @@ import java.util.List;
  * the list of settings.
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
+
+    AlertDialog.Builder builder;
 
     static SettingsActivity th;
     @Override
@@ -42,7 +46,19 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         //Get reference for static members
         th = this;
+
+
+        /*TextView tv = new TextView(this);
+        tv.setText(getVersionNumber());
+        setListFooter(tv);*/
+
     }
+
+    /*private String getVersionNumber() {
+        String versionNumber = "Thanks for your support";
+        // lots of code that gets the actual version number
+        return "Crafted with Love ".concat(versionNumber);
+    }*/
 
     private void setAppTheme(){
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -179,7 +195,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     @Override
     public void onHeaderClick(Header header, int position) {
-        if (position == 3){
+        if (position == 3)
+        {
 
             /*Intent i = new Intent(Intent.ACTION_SEND);
             i.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{ "chrosatech@gmail.com" });
@@ -192,8 +209,20 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             i.putExtra(android.content.Intent.EXTRA_TEXT, "Add a feature");
             startActivity(Intent.createChooser(i, "Send email"));
         }
+        else if (position==2)
+        {
+            builder=new AlertDialog.Builder(this,R.style.MyAlertDialogStyle);
+            builder.setTitle("About");
+            builder.setMessage("/*Custom_message*/");
+            builder.setPositiveButton("Ok", null);
+            // builder.setNegativeButton("cancel", null);
+            builder.show();
+            //builder.setIcon(R.drawable.ic_launcher);
+        }
         super.onHeaderClick(header, position);
+
     }
+
 
     /**
      * This fragment shows general preferences only. It is used when the
