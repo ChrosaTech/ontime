@@ -38,6 +38,22 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/branch_text"
             android:layout_centerHorizontal="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_shift"
+            android:text="Shift"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_below="@+id/branch"
+            android:layout_centerHorizontal="true"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_shift"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/text_shift">
+
+        </Spinner>
 
         <TextView
             android:id="@+id/group_text"
@@ -45,7 +61,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Practical"
-            android:layout_below="@+id/branch"
+            android:layout_below="@+id/spinner_shift"
             android:layout_centerHorizontal="true"  />
 
         <Spinner

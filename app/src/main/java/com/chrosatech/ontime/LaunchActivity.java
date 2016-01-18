@@ -29,7 +29,7 @@ public class LaunchActivity extends AppCompatActivity {
     private ActionBar actionBar;
     // private AutoCompleteTextView autoCompleteTextView;
     // String sample1[]={"IT","Cse","Ece","EEE"};
-    private Spinner branchSpinner, groupSpinner, yearSpinner,collegeSpinner,tutSpinner;
+    private Spinner branchSpinner, groupSpinner, yearSpinner,collegeSpinner,tutSpinner,shiftSpinner;
     private Button btnSubmit;
     private SharedPreferences.Editor editor;
     private String firstLaunch = "firstLaunch";
@@ -46,7 +46,9 @@ public class LaunchActivity extends AppCompatActivity {
         yearSpinner = (Spinner) findViewById(R.id.year);
         collegeSpinner=(Spinner)findViewById(R.id.college_spinner);
         tutSpinner=(Spinner)findViewById(R.id.tut_spinner);
+        shiftSpinner=(Spinner)findViewById(R.id.spinner_shift);
        // btnSubmit = (Button) findViewById(R.id.btnSubmit);
+
         FloatingActionButton fabSubmit = (FloatingActionButton) findViewById(R.id.fabSubmit);
 
         Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/OnTime.ttf");
@@ -83,10 +85,21 @@ public class LaunchActivity extends AppCompatActivity {
         addItemsOnSpinnerYear();
         addItemsOnSpinnerTut();
         addItemsOnSpinnerCollege();
+        addItemsOnSpinnerShift();
         //btnSubmit.setOnClickListener(submitClick);
         fabSubmit.setOnClickListener(submitClick);
     }
 
+
+    public void addItemsOnSpinnerShift(){
+        List<String> list=new ArrayList<String>();
+        list.add("Morning Shift");
+        list.add("Evening Shift");
+
+        ArrayAdapter<String> dataApdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,list);
+        dataApdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        shiftSpinner.setAdapter(dataApdapter);
+    }
 
     public void addItemsOnSpinnerBranch(){
         List<String> list=new ArrayList<String>();
