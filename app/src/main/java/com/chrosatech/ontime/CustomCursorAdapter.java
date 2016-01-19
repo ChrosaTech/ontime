@@ -46,7 +46,7 @@ class CustomCursorAdapter extends CursorAdapter {
         TextView classType = (TextView) view.findViewById(R.id.class_type);
         TextView teacherName = (TextView) view.findViewById(R.id.teacher_name);
 
-
+        ViewHolder viewHolder = (ViewHolder)view.getTag();
 
         startTime.setText(cursor.getString(1));
         endTime.setText(cursor.getString(2));
@@ -95,11 +95,14 @@ class CustomCursorAdapter extends CursorAdapter {
         room.setText(cursor.getString(5));
         teacherName.setText(cursor.getString(6));
 
-        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
-        // generate random color
-        int color1 = generator.getRandomColor();
+        if (!viewHolder.isColored) {
+            ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+            // generate random color
+            viewHolder.color = generator.getRandomColor();
+            viewHolder.isColored = true;
+        }
         final TextDrawable drawable = TextDrawable.builder()
-                .buildRound(String.valueOf(subject.getText().charAt(0)), color1);
+                .buildRound(String.valueOf(subject.getText().charAt(0)), viewHolder.color);
         imageView.setImageDrawable(drawable);
 
         //to set image size to equal height and width
@@ -122,8 +125,17 @@ class CustomCursorAdapter extends CursorAdapter {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.custom_cursor_adapter, parent, false);
+        ViewHolder viewHolder = new ViewHolder();
+        view.setTag(viewHolder);
 
         return view;
+    }
+
+    //TODO try to implement with list instead of holder
+
+    public class ViewHolder{
+        int color;
+        boolean isColored = false;
     }
 }
 

@@ -8,14 +8,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 //import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -24,7 +30,7 @@ import com.melnykov.fab.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LaunchActivity extends AppCompatActivity {
+public class LaunchFragment extends Fragment {
 
     private ActionBar actionBar;
     // private AutoCompleteTextView autoCompleteTextView;
@@ -37,21 +43,23 @@ public class LaunchActivity extends AppCompatActivity {
     private Snackbar snackbar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.launch_activity);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.launch_activity, container, false);
+        snackbar = Snackbar.make(view, getString(R.string.notFound), Snackbar.LENGTH_LONG);
 
-        branchSpinner = (Spinner) findViewById(R.id.branch);
-        groupSpinner = (Spinner) findViewById(R.id.group);
-        yearSpinner = (Spinner) findViewById(R.id.year);
-        collegeSpinner=(Spinner)findViewById(R.id.college_spinner);
-        tutSpinner=(Spinner)findViewById(R.id.tut_spinner);
-        shiftSpinner=(Spinner)findViewById(R.id.spinner_shift);
+        branchSpinner = (Spinner) view.findViewById(R.id.branch);
+        groupSpinner = (Spinner) view.findViewById(R.id.group);
+        yearSpinner = (Spinner) view.findViewById(R.id.year);
+        collegeSpinner = (Spinner)view.findViewById(R.id.college_spinner);
+        tutSpinner = (Spinner)view.findViewById(R.id.tut_spinner);
+        shiftSpinner = (Spinner)view.findViewById(R.id.spinner_shift);
        // btnSubmit = (Button) findViewById(R.id.btnSubmit);
 
-        FloatingActionButton fabSubmit = (FloatingActionButton) findViewById(R.id.fabSubmit);
+        FloatingActionButton fabSubmit = (FloatingActionButton) view.findViewById(R.id.fabSubmit);
 
-        Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/OnTime.ttf");
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/OnTime.ttf");
 
         TextDrawable textDrawable = TextDrawable.builder()
                 .beginConfig()
@@ -63,12 +71,6 @@ public class LaunchActivity extends AppCompatActivity {
         CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) fabSubmit.getLayoutParams();
         p.setBehavior(new FABbehavior());
         fabSubmit.setLayoutParams(p);
-        /*actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.indigo)));
-            actionBar.setElevation(0);
-
-        }*/
 
         // ArrayAdapter<String> adap=null;
         // adap = new ArrayAdapter<String>(getApplicationContext(),R.layout.autocomplete,sample1);
@@ -78,7 +80,7 @@ public class LaunchActivity extends AppCompatActivity {
         // autoCompleteTextView.setThreshold(0);
 
 
-        //Spinner
+        //Spinners
         addItemsOnSpinnerBranch();
         addItemsOnSpinnerBatch();
         addListnerOnSpinnerItemSelection();
@@ -88,6 +90,7 @@ public class LaunchActivity extends AppCompatActivity {
         addItemsOnSpinnerShift();
         //btnSubmit.setOnClickListener(submitClick);
         fabSubmit.setOnClickListener(submitClick);
+        return view;
     }
 
 
@@ -96,7 +99,7 @@ public class LaunchActivity extends AppCompatActivity {
         list.add("Morning Shift");
         list.add("Evening Shift");
 
-        ArrayAdapter<String> dataApdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,list);
+        ArrayAdapter<String> dataApdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
         dataApdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         shiftSpinner.setAdapter(dataApdapter);
     }
@@ -107,17 +110,17 @@ public class LaunchActivity extends AppCompatActivity {
         list.add("IT");
         list.add("ECE");
         list.add("EEE");
-        ArrayAdapter<String> dataApdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,list);
+        ArrayAdapter<String> dataApdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
         dataApdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         branchSpinner.setAdapter(dataApdapter);
     }
 
     public void addItemsOnSpinnerBatch(){
-        List<String> list=new ArrayList<String>();
+        List<String> list= new ArrayList<>();
         list.add("P1");
         list.add("P2");
         list.add("P3");
-        ArrayAdapter<String> dataApdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,list);
+        ArrayAdapter<String> dataApdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
         dataApdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         groupSpinner.setAdapter(dataApdapter);
     }
@@ -125,7 +128,7 @@ public class LaunchActivity extends AppCompatActivity {
     {
         List<String> list=new ArrayList<>();
         list.add("BVCOE");
-        ArrayAdapter<String> dataAdapter=new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,list);
+        ArrayAdapter<String> dataAdapter= new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, list);
         dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         collegeSpinner.setAdapter(dataAdapter);
     }
@@ -135,19 +138,19 @@ public class LaunchActivity extends AppCompatActivity {
         List<String> list=new ArrayList<>();
         list.add("T1");
         list.add("T2");
-        ArrayAdapter<String> dataAdapter=new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,list);
+        ArrayAdapter<String> dataAdapter= new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, list);
         dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         tutSpinner.setAdapter(dataAdapter);
 
     }
 
     public void addItemsOnSpinnerYear(){
-        List<String> list=new ArrayList<String>();
+        List<String> list= new ArrayList<>();
         list.add("First Year");
         list.add("Second Year");
         list.add("Third Year");
         list.add("Fourth Year");
-        ArrayAdapter<String> dataApdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,list);
+        ArrayAdapter<String> dataApdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
         dataApdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         yearSpinner.setAdapter(dataApdapter);
     }
@@ -178,7 +181,7 @@ public class LaunchActivity extends AppCompatActivity {
                     "' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
             // String whereClause = "College = 'BVP' AND YEAR = 3 AND Branch = 'IT' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
 
-            DatabaseContents db = new DatabaseContents(LaunchActivity.this);
+            DatabaseContents db = new DatabaseContents(getContext());
             String id = db.getID(whereClause);
             if (id != null){
                 //MainActivity.sharedpreferences = getPreferences(Context.MODE_PRIVATE);
@@ -187,16 +190,15 @@ public class LaunchActivity extends AppCompatActivity {
                 editor.putString("ID", id);
                 editor.commit();
 
-            /*Toast.makeText(LaunchActivity.this, "OnClickListner : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
+            /*Toast.makeText(LaunchFragment.this, "OnClickListner : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
                     "\nSpinner 2:" + String.valueOf(group.getSelectedItem()) + yearInt, Toast.LENGTH_SHORT).show();*/
 
-                Intent intent = new Intent(LaunchActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
+                //TODO
+                //getActivity().getSupportFragmentManager().popBackStack();
             } else {
-                snackbar = Snackbar.make(v, getString(R.string.notFound), Snackbar.LENGTH_LONG);
+                View view = snackbar.getView();
+                TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+                tv.setTextColor(Color.WHITE);
                 snackbar.show();
             }
 
@@ -219,14 +221,15 @@ public class LaunchActivity extends AppCompatActivity {
         return yearInt;
     }
 
-    @Override
-    public void onBackPressed() {
+    public boolean onBackPressed() {
+        Log.d("First","confirm");
         if (snackbar.isShown())
             snackbar.dismiss();
         if (exit) {
-            finish(); // finish activity
+            return true;
+            //getActivity().finish(); // finish activity
         } else {
-            Toast.makeText(this, "Press Back again to Exit.",
+            Toast.makeText(getContext(), "Press Back again to Exit.",
                     Toast.LENGTH_SHORT).show();
             exit = true;
             new Handler().postDelayed(new Runnable() {
@@ -235,7 +238,7 @@ public class LaunchActivity extends AppCompatActivity {
                     exit = false;
                 }
             }, 3 * 1000);
-
+            return false;
         }
 
     }

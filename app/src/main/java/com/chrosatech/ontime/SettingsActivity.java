@@ -254,21 +254,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 if (key.equals("example_theme")) {
 
                     //Restart the app on changing theme.
-                    //startActivity(IntentCompat.makeRestartActivityTask(getActivity().getComponentName()));
-
-
-                    //th.recreate();
                     th.finish();
                     Intent i = new Intent(th.getApplicationContext(), MainActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     th.getApplicationContext().startActivity(i);
-                   /* th.finish();
-                    Intent i = th.getBaseContext().getPackageManager()
-                            .getLaunchIntentForPackage( th.getBaseContext().getPackageName() );
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(i);*/
                 }
             }
         };

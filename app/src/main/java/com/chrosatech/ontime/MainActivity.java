@@ -6,10 +6,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -63,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setAppTheme();
@@ -90,34 +95,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (sharedpreferences.getBoolean(firstLaunch, true)) {
-            //the app is being launched for first time, do something
-            Intent intent = new Intent(this, LaunchActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            startActivity(intent);
-            // first time task
+            Log.d("First Launch","true");
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.container, new LaunchFragment(), "launchFragment");
+            fragmentTransaction.addToBackStack("launchFragment");
+            fragmentTransaction.commit();
+        }else {
 
-            // record the fact that the app has been started at least once
-          //  editor.putBoolean(firstLaunch, false);
-           // editor.apply();
-        }
-
-       // toolbar = (Toolbar) findViewById(R.id.tabanim_toolbar);
-       // setSupportActionBar(toolbar);
-
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        setupViewPager(viewPager);
-        viewPager.setOffscreenPageLimit(5);
+            viewPager = (ViewPager) findViewById(R.id.pager);
+            setupViewPager(viewPager);
+            viewPager.setOffscreenPageLimit(5);
         /*tabLayout = (TabLayout) findViewById(R.id.tabanim_tabs);
         tabLayout.setupWithViewPager(viewPager);*/
 
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        tabs.setViewPager(viewPager);
+            PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+            tabs.setViewPager(viewPager);
 
-        setCurrentPage();
-
-
+            setCurrentPage();
+        }
 
     }
 
@@ -225,27 +220,6 @@ public class MainActivity extends AppCompatActivity {
         }*/
     }
 
-    /*@Override
-    public void onBackPressed() {
-        if (exit) {
-            finish(); // finish activity
-        } else {
-            Toast.makeText(this, "Press Back again to Exit.",
-                    Toast.LENGTH_SHORT).show();
-            exit = true;
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    exit = false;
-                }
-            }, 3 * 1000);
-
-        }
-
-    }*/
-
-
-
 /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -268,4 +242,27 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }*/
+
+    @Override
+    public void onBackPressed() {
+
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0){
+            super.onBackPressed();
+        }
+
+        Fragment fragment = getCurrentFragment();
+        if (fragment instanceof LaunchFragment) {
+            if(((LaunchFragment) fragment).onBackPressed()){
+                finish();
+            }
+        }
+    }
+
+    public Fragment getCurrentFragment(){
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            return null;
+        }
+        String tag = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName();
+        return getSupportFragmentManager().findFragmentByTag(tag);
+    }
 }
