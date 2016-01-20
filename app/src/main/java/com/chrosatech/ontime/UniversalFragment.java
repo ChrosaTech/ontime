@@ -21,7 +21,7 @@ import android.widget.ListView;
 public class UniversalFragment extends Fragment {
 
     private String day;
-    ListView listView;
+    private ListView listView;
 
     public UniversalFragment() {
         // Required empty public constructor
@@ -45,7 +45,7 @@ public class UniversalFragment extends Fragment {
 
         DatabaseContents dbContents = new DatabaseContents(getActivity());
         Cursor cursor = dbContents.getCursor(title);
-        CustomCursorAdapter adapter = new CustomCursorAdapter(getActivity(), cursor, false);
+        CustomCursorAdapter adapter = new CustomCursorAdapter(getActivity(), cursor);
         listView.setAdapter(adapter);
 
     }

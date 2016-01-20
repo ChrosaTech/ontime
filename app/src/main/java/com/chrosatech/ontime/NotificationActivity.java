@@ -14,9 +14,10 @@ public class NotificationActivity extends AppCompatActivity {
 
 
 
-    NotificationManager manager;
-    Notification myNotication;
-    Button btnShow, btnClear;
+    private NotificationManager manager;
+    Notification myNotification;
+    private Button btnShow;
+    private Button btnClear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +57,8 @@ public class NotificationActivity extends AppCompatActivity {
                                 PendingIntent.FLAG_UPDATE_CURRENT
                         );
                 mBuilder.setContentIntent(resultPendingIntent);
-                myNotication =   mBuilder.build();
-                manager.notify(1, myNotication);
+                myNotification =   mBuilder.build();
+                manager.notify(1, myNotification);
 
             /*
             //API level 8

@@ -1,6 +1,5 @@
 package com.chrosatech.ontime;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -10,8 +9,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-//import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +25,8 @@ import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+//import android.support.design.widget.FloatingActionButton;
 
 public class LaunchFragment extends Fragment {
 
@@ -69,21 +67,21 @@ public class LaunchFragment extends Fragment {
         fabSubmit.setImageDrawable(textDrawable);
 
         CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) fabSubmit.getLayoutParams();
-        p.setBehavior(new FABbehavior());
+        p.setBehavior(new FabBehavior());
         fabSubmit.setLayoutParams(p);
 
-        // ArrayAdapter<String> adap=null;
-        // adap = new ArrayAdapter<String>(getApplicationContext(),R.layout.autocomplete,sample1);
+        // ArrayAdapter<String> adapter=null;
+        // adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.autocomplete,sample1);
         // autoCompleteTextView=(AutoCompleteTextView)findViewById(R.id.autoCompleteTextView1);
 
-        // autoCompleteTextView.setAdapter(adap);
+        // autoCompleteTextView.setAdapter(adapter);
         // autoCompleteTextView.setThreshold(0);
 
 
         //Spinners
         addItemsOnSpinnerBranch();
         addItemsOnSpinnerBatch();
-        addListnerOnSpinnerItemSelection();
+        addListenerOnSpinnerItemSelection();
         addItemsOnSpinnerYear();
         addItemsOnSpinnerTut();
         addItemsOnSpinnerCollege();
@@ -94,37 +92,37 @@ public class LaunchFragment extends Fragment {
     }
 
 
-    public void addItemsOnSpinnerShift(){
-        List<String> list=new ArrayList<String>();
+    private void addItemsOnSpinnerShift(){
+        List<String> list= new ArrayList<>();
         list.add("Morning Shift");
         list.add("Evening Shift");
 
-        ArrayAdapter<String> dataApdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
-        dataApdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        shiftSpinner.setAdapter(dataApdapter);
+        ArrayAdapter<String> dataAdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        shiftSpinner.setAdapter(dataAdapter);
     }
 
-    public void addItemsOnSpinnerBranch(){
-        List<String> list=new ArrayList<String>();
+    private void addItemsOnSpinnerBranch(){
+        List<String> list= new ArrayList<>();
         list.add("CSE");
         list.add("IT");
         list.add("ECE");
         list.add("EEE");
-        ArrayAdapter<String> dataApdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
-        dataApdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        branchSpinner.setAdapter(dataApdapter);
+        ArrayAdapter<String> dataAdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        branchSpinner.setAdapter(dataAdapter);
     }
 
-    public void addItemsOnSpinnerBatch(){
+    private void addItemsOnSpinnerBatch(){
         List<String> list= new ArrayList<>();
         list.add("P1");
         list.add("P2");
         list.add("P3");
-        ArrayAdapter<String> dataApdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
-        dataApdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        groupSpinner.setAdapter(dataApdapter);
+        ArrayAdapter<String> dataAdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        groupSpinner.setAdapter(dataAdapter);
     }
-    public void addItemsOnSpinnerCollege()
+    private void addItemsOnSpinnerCollege()
     {
         List<String> list=new ArrayList<>();
         list.add("BVCOE");
@@ -133,7 +131,7 @@ public class LaunchFragment extends Fragment {
         collegeSpinner.setAdapter(dataAdapter);
     }
 
-    public void addItemsOnSpinnerTut()
+    private void addItemsOnSpinnerTut()
     {
         List<String> list=new ArrayList<>();
         list.add("T1");
@@ -144,18 +142,18 @@ public class LaunchFragment extends Fragment {
 
     }
 
-    public void addItemsOnSpinnerYear(){
+    private void addItemsOnSpinnerYear(){
         List<String> list= new ArrayList<>();
         list.add("First Year");
         list.add("Second Year");
         list.add("Third Year");
         list.add("Fourth Year");
-        ArrayAdapter<String> dataApdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
-        dataApdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        yearSpinner.setAdapter(dataApdapter);
+        ArrayAdapter<String> dataAdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        yearSpinner.setAdapter(dataAdapter);
     }
 
-    public void addListnerOnSpinnerItemSelection(){
+    public void addListenerOnSpinnerItemSelection(){
         branchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -190,7 +188,7 @@ public class LaunchFragment extends Fragment {
                 editor.putString("ID", id);
                 editor.commit();
 
-            /*Toast.makeText(LaunchFragment.this, "OnClickListner : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
+            /*Toast.makeText(LaunchFragment.this, "OnClickListener : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
                     "\nSpinner 2:" + String.valueOf(group.getSelectedItem()) + yearInt, Toast.LENGTH_SHORT).show();*/
 
                 //TODO

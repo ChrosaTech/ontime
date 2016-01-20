@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/tools"
     android:fitsSystemWindows="true">
 
     <RelativeLayout
@@ -28,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Branch"
+            android:text="@string/branch"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/year"/>
 
@@ -42,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/text_shift"
-            android:text="Shift"
+            android:text="@string/shift"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_below="@+id/branch"
             android:layout_centerHorizontal="true"/>
@@ -60,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Practical"
+            android:text="@string/practical"
             android:layout_below="@+id/spinner_shift"
             android:layout_centerHorizontal="true"  />
 
@@ -74,7 +73,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tutorial"
+            android:text="@string/tutorial"
             android:id="@+id/tut_text"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_below="@+id/group"
@@ -93,7 +92,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/college_text"
             android:layout_centerHorizontal="true"
-            android:text="College"/>
+            android:text="@string/college"/>
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -108,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Year"
+            android:text="@string/year"
             android:layout_below="@+id/college_spinner"
             android:layout_centerHorizontal="true"
             />

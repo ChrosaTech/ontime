@@ -1,7 +1,6 @@
 package com.chrosatech.ontime;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
@@ -16,7 +15,7 @@ import java.util.LinkedHashSet;
 public class DatabaseContents extends SQLiteAssetHelper {
 
     private static final String DATABASE_NAME = "selecttest.db";
-    //just update the Databse verion to update the database in both databaseContents.java and SelectionDatabase.java
+    //just update the Database version to update the database in both databaseContents.java and SelectionDatabase.java
     private static final int DATABASE_VERSION = 1;
 
     public DatabaseContents(Context context) {
@@ -64,8 +63,7 @@ public class DatabaseContents extends SQLiteAssetHelper {
         c.moveToFirst();
 
         if (c.getCount() != 0){
-            daysHashed = new LinkedHashSet<String>(c.getCount());
-            int i = 0;
+            daysHashed = new LinkedHashSet<>(c.getCount());
             daysHashed.add(c.getString(0).toUpperCase());
 
             while (c.moveToNext()){

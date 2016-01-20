@@ -44,7 +44,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:id="@+id/image_view"
-                    android:contentDescription="Text"
+                    android:contentDescription="@string/subChatAt0"
                     android:padding="10dp"
                     android:layout_gravity="center"
                     />
@@ -62,7 +62,7 @@
                         android:id="@+id/subject"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
-                        android:text="Subject"
+                        android:text="@string/subject"
                         android:textSize="18sp"
                         android:layout_marginBottom="5dp"
                         android:paddingLeft="5dp"
@@ -80,7 +80,7 @@
                             android:id="@+id/start_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="08:40 a.m."
+                            android:text="@string/startTime"
 
                             />
 
@@ -88,7 +88,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="-"
+                            android:text="@string/dash"
 
                             />
 
@@ -96,7 +96,7 @@
                             android:id="@+id/end_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="09:35 a.m."
+                            android:text="@string/endTime"
 
                             />
 
@@ -106,7 +106,7 @@
                         android:id="@+id/room"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:text="Room"
+                        android:text="@string/room"
                         android:paddingLeft="5dp"
                         />
 
@@ -120,7 +120,7 @@
                             android:id="@+id/teacher_name"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
-                            android:text="Teacher Name"
+                            android:text="@string/teacherName"
                             />
 
                         <TextView
@@ -128,7 +128,7 @@
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
                             android:paddingLeft="5dp"
-                            android:text="(L)"
+                            android:text="@string/classType"
                             android:layout_gravity="right"
                             android:layout_alignParentTop="true"
                             android:layout_alignParentRight="true"

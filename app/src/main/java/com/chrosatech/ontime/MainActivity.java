@@ -26,15 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
    // Toolbar toolbar;
     TabLayout tabLayout;
-    private Boolean exit = false;
 
     private static final int num_pages = 6;
 
     private ViewPager viewPager;
     private ViewPagerAdapter adapter;
     private PagerAdapter pagerAdapter;
-    private Button last;
-    private Button first;
     private ActionBar actionBar;
     public static SharedPreferences sharedpreferences;
     private SharedPreferences.Editor editor;
@@ -258,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public Fragment getCurrentFragment(){
+    private Fragment getCurrentFragment(){
         if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
             return null;
         }

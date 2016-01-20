@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +24,16 @@ import java.util.StringTokenizer;
  */
 class CustomCursorAdapter extends CursorAdapter {
 
-    public CustomCursorAdapter(Context context, Cursor c, boolean autoRequery) {
+    private static int foodHeight =0;
+
+    /*public CustomCursorAdapter(Context context, Cursor c, boolean autoRequery) {
         super(context, c, autoRequery);
-    }
+    }*/
     // CursorAdapter will handle all the moveToFirst(), getCount() logic for you :)
 
-    /*public CustomCursorAdapter(Context context, Cursor c) {
-        super(context, c);
-    }*/
+    public CustomCursorAdapter(Context context, Cursor c) {
+        super(context, c, false);
+    }
 
     public void bindView(View view, Context context, Cursor cursor) {
 
@@ -54,19 +57,25 @@ class CustomCursorAdapter extends CursorAdapter {
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         String subjectForm = sharedPref.getString("example_appearance", "1");
-        String subjectFullForm = cursor.getString(4);
+        String subjectFullForm = cursor.getString(4).trim();
 
-        if (subjectFullForm.equals("Break")){
+        if (subjectFullForm.toLowerCase().equals("break")){
             room.setVisibility(View.GONE);
             classType.setVisibility(View.GONE);
             teacherName.setVisibility(View.GONE);
            // cardView.setCardBackgroundColor(context.getResources().getColor(R.color.transparent_white));
-
-            final KenBurnsView foodImage=(KenBurnsView)view.findViewById(R.id.cardview_bg_img_food);
+            final KenBurnsView foodImage = (KenBurnsView) view.findViewById(R.id.cardview_bg_img_food);
             foodImage.setVisibility(View.VISIBLE);
             foodImage.setAdjustViewBounds(true);
-            foodImage.setMaxHeight(cardView.getMeasuredHeight());
+            if (cardView.getMeasuredHeight() != 0) {
 
+                foodImage.setMaxHeight(cardView.getMeasuredHeight());
+                Log.d("Ken", cardView.getMeasuredHeight() + "");
+                if (foodHeight == 0)
+                    foodHeight = cardView.getMeasuredHeight();
+            }else {
+                foodImage.setMaxHeight(foodHeight);
+            }
         }
 
         if (subjectForm.equals("1")){

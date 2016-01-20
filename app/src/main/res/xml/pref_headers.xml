@@ -16,10 +16,6 @@
         android:icon="@drawable/ic_notifications_black_24dp"
         android:summary="When and How."/>
 
-  <!--  <header
-        android:fragment="com.example.anshul.ontimesetting.SettingsActivity$DataSyncPreferenceFragment"
-        android:title="@string/pref_header_data_sync"
-        android:icon="@drawable/ic_sync_black_24dp" />-->
     <header
         android:title="About"
         android:icon="@drawable/credit"

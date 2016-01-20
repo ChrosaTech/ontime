@@ -20,7 +20,6 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -32,7 +31,7 @@ import java.util.List;
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
-    AlertDialog.Builder builder;
+    private AlertDialog.Builder builder;
 
     static SettingsActivity th;
     @Override
