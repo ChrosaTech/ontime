@@ -11,6 +11,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -43,6 +45,8 @@ public class LaunchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        setHasOptionsMenu(true);
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.launch_activity, container, false);
         snackbar = Snackbar.make(view, getString(R.string.notFound), Snackbar.LENGTH_LONG);
@@ -89,6 +93,12 @@ public class LaunchFragment extends Fragment {
         //btnSubmit.setOnClickListener(submitClick);
         fabSubmit.setOnClickListener(submitClick);
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.findItem(R.id.menu_settings).setVisible(false);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
 

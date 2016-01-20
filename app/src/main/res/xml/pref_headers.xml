@@ -7,7 +7,7 @@
     <header
         android:fragment="com.chrosatech.ontime.SettingsActivity$GeneralPreferenceFragment"
         android:title="@string/pref_header_general"
-        android:icon="@drawable/ic_info_black_24dp"
+        android:icon="@drawable/ic_build_black_24dp"
         android:summary="Customise!! Whatever your mood says." />
 
     <header
@@ -18,13 +18,13 @@
 
     <header
         android:title="About"
-        android:icon="@drawable/credit"
+        android:icon="@drawable/ic_info_black_24dp"
         android:summary="Know your developers."
 
         />
     <header
         android:title="Feedback"
-        android:icon="@drawable/about"
+        android:icon="@drawable/ic_feedback_black_24dp"
         android:summary="Love or Hate!! let us know Why??"
         />
     <!-- Footer -->
