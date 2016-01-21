@@ -1,4 +1,4 @@
-package com.chrosatech.ontime;
+package com.chrosatech.ontime.Fragments;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -23,14 +23,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.chrosatech.ontime.Database.DatabaseContents;
+import com.chrosatech.ontime.Behaviors.FabBehavior;
+import com.chrosatech.ontime.Activities.MainActivity;
+import com.chrosatech.ontime.R;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//import android.support.design.widget.FloatingActionButton;
-
-public class LaunchFragment extends Fragment {
+public class FirstLaunchFragment extends Fragment {
 
     private ActionBar actionBar;
     // private AutoCompleteTextView autoCompleteTextView;
@@ -192,18 +194,19 @@ public class LaunchFragment extends Fragment {
             DatabaseContents db = new DatabaseContents(getContext());
             String id = db.getID(whereClause);
             if (id != null){
-                //MainActivity.sharedpreferences = getPreferences(Context.MODE_PRIVATE);
-                editor = MainActivity.sharedpreferences.edit();
+                //MainActivity.sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+                editor = MainActivity.sharedPreferences.edit();
                 editor.putBoolean(firstLaunch, false);
                 editor.putString("ID", id);
                 editor.commit();
 
-            /*Toast.makeText(LaunchFragment.this, "OnClickListener : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
+            /*Toast.makeText(FirstLaunchFragment.this, "OnClickListener : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
                     "\nSpinner 2:" + String.valueOf(group.getSelectedItem()) + yearInt, Toast.LENGTH_SHORT).show();*/
 
                 //TODO
                 //getActivity().getSupportFragmentManager().popBackStack();
             } else {
+                snackbar = Snackbar.make(v, getString(R.string.notFound), Snackbar.LENGTH_LONG);
                 View view = snackbar.getView();
                 TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
                 tv.setTextColor(Color.WHITE);

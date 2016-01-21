@@ -1,10 +1,11 @@
-package com.chrosatech.ontime;
+package com.chrosatech.ontime.Database;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 
+import com.chrosatech.ontime.Activities.MainActivity;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.LinkedHashSet;
@@ -25,7 +26,7 @@ public class DatabaseContents extends SQLiteAssetHelper {
 
     public Cursor getCursor(String day) {
 
-        String id = MainActivity.sharedpreferences.getString("ID", "0");
+        String id = MainActivity.sharedPreferences.getString("ID", "0");
 
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
@@ -45,7 +46,7 @@ public class DatabaseContents extends SQLiteAssetHelper {
 
     public String[] getWorkingDaysOfWeek(){
 
-        String id = MainActivity.sharedpreferences.getString("ID", "0");
+        String id = MainActivity.sharedPreferences.getString("ID", "0");
 
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();

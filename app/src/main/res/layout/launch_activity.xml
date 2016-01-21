@@ -3,133 +3,142 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bright_foreground_inverse_material_light"
     android:fitsSystemWindows="true">
 
-    <RelativeLayout
-    android:padding="@dimen/activity_horizontal_margin"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bright_foreground_inverse_material_light"
-    android:id="@+id/view">
-
-        <!--TextView
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="enter your branch"
-        android:id="@+id/textView"
-        android:layout_alignBottom="@+id/autoCompleteTextView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="61dp" /!-->
+        android:layout_marginBottom="80dp"
+        >
 
-        <TextView
-            android:id="@+id/branch_text"
+        <RelativeLayout
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view">
+
+            <!--TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/branch"
+            android:text="enter your branch"
+            android:id="@+id/textView"
+            android:layout_alignBottom="@+id/autoCompleteTextView1"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/year"/>
+            android:layout_marginBottom="61dp" /!-->
 
-        <Spinner
-            android:id="@+id/branch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/branch_text"
-            android:layout_centerHorizontal="true" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/text_shift"
-            android:text="@string/shift"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_below="@+id/branch"
-            android:layout_centerHorizontal="true"/>
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinner_shift"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/text_shift">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/college_text"
+                android:layout_centerHorizontal="true"
+                android:text="@string/college"/>
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/college_spinner"
+                android:layout_below="@+id/college_text"
+                >
 
-        </Spinner>
+            </Spinner>
 
-        <TextView
-            android:id="@+id/group_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/practical"
-            android:layout_below="@+id/spinner_shift"
-            android:layout_centerHorizontal="true"  />
+            <TextView
+                android:id="@+id/year_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/year"
+                android:layout_below="@+id/college_spinner"
+                android:layout_centerHorizontal="true"
+                />
 
-        <Spinner
-            android:id="@+id/group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/group_text"
-            android:layout_centerHorizontal="true"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tutorial"
-            android:id="@+id/tut_text"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_below="@+id/group"
-            android:layout_centerHorizontal="true"
-            />
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tut_text"
-            android:id="@+id/tut_spinner">
-
-        </Spinner>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/college_text"
-            android:layout_centerHorizontal="true"
-            android:text="@string/college"/>
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/college_spinner"
-            android:layout_below="@+id/college_text"
-            >
-
-        </Spinner>
-
-        <TextView
-            android:id="@+id/year_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/year"
-            android:layout_below="@+id/college_spinner"
-            android:layout_centerHorizontal="true"
-            />
-
-        <Spinner
-            android:id="@+id/year"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/year_text"
-            android:layout_centerHorizontal="true"
-            />
-
-        <!--<Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />-->
+            <Spinner
+                android:id="@+id/year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/year_text"
+                android:layout_centerHorizontal="true"
+                />
 
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/branch_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/branch"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/year"/>
+
+            <Spinner
+                android:id="@+id/branch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/branch_text"
+                android:layout_centerHorizontal="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_shift"
+                android:text="@string/shift"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_below="@+id/branch"
+                android:layout_centerHorizontal="true"/>
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_shift"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/text_shift">
+
+            </Spinner>
+
+            <TextView
+                android:id="@+id/group_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/practical"
+                android:layout_below="@+id/spinner_shift"
+                android:layout_centerHorizontal="true"  />
+
+            <Spinner
+                android:id="@+id/group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/group_text"
+                android:layout_centerHorizontal="true"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tutorial"
+                android:id="@+id/tut_text"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_below="@+id/group"
+                android:layout_centerHorizontal="true"
+                />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tut_text"
+                android:id="@+id/tut_spinner">
+
+            </Spinner>
+
+            <!--<Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />-->
+
+        </RelativeLayout>
+
+    </ScrollView>
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fabSubmit"

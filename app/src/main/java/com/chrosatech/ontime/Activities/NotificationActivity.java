@@ -1,4 +1,4 @@
-package com.chrosatech.ontime;
+package com.chrosatech.ontime.Activities;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -9,6 +9,8 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
+import com.chrosatech.ontime.R;
 
 public class NotificationActivity extends AppCompatActivity {
 

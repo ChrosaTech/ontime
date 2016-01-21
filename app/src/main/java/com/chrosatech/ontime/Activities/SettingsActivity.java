@@ -1,4 +1,4 @@
-package com.chrosatech.ontime;
+package com.chrosatech.ontime.Activities;
 
 
 import android.annotation.TargetApi;
@@ -20,6 +20,8 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
+
+import com.chrosatech.ontime.R;
 
 import java.util.List;
 

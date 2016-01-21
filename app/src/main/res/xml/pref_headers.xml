@@ -5,13 +5,13 @@
 
 
     <header
-        android:fragment="com.chrosatech.ontime.SettingsActivity$GeneralPreferenceFragment"
+        android:fragment="com.chrosatech.ontime.Activities.SettingsActivity$GeneralPreferenceFragment"
         android:title="@string/pref_header_general"
         android:icon="@drawable/ic_build_black_24dp"
         android:summary="Customise!! Whatever your mood says." />
 
     <header
-        android:fragment="com.chrosatech.ontime.SettingsActivity$NotificationPreferenceFragment"
+        android:fragment="com.chrosatech.ontime.Activities.SettingsActivity$NotificationPreferenceFragment"
         android:title="@string/pref_header_notifications"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:summary="When and How."/>

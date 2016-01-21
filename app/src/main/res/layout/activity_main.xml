@@ -1,49 +1,6 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/container"
     >
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        >
-
-       <!-- <android.support.v7.widget.Toolbar
-            android:id="@+id/tabanim_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-           />-->
-
-        <!--<android.support.design.widget.TabLayout
-            android:id="@+id/tabanim_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />-->
-
-        <com.astuetz.PagerSlidingTabStrip
-            android:id="@+id/tabs"
-            android:layout_width="fill_parent"
-            android:layout_height="48dp"
-            android:textColor="#ffffff"
-            app:pstsDividerColor="#ffffff"
-            app:pstsIndicatorColor="#ffffff"
-            app:pstsTabTextAlpha="150"
-            app:pstsIndicatorHeight="2dp"
-            />
-        <!--app:layout_scrollFlags="scroll|enterAlways"-->
-
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.view.ViewPager
-
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/tabs"
-        android:background="@color/bright_foreground_inverse_material_light"
-        android:id="@+id/pager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
 </android.support.design.widget.CoordinatorLayout>

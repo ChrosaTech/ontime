@@ -1,4 +1,4 @@
-package com.chrosatech.ontime;
+package com.chrosatech.ontime.Activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

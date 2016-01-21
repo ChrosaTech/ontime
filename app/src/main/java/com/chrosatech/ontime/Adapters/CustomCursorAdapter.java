@@ -1,8 +1,9 @@
-package com.chrosatech.ontime;
+package com.chrosatech.ontime.Adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.chrosatech.ontime.R;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 
 import java.util.StringTokenizer;
@@ -22,9 +24,7 @@ import java.util.StringTokenizer;
 /**
  * Created by mayank on 25/12/15.
  */
-class CustomCursorAdapter extends CursorAdapter {
-
-    private static int foodHeight =0;
+public class CustomCursorAdapter extends CursorAdapter {
 
     /*public CustomCursorAdapter(Context context, Cursor c, boolean autoRequery) {
         super(context, c, autoRequery);
@@ -35,7 +35,7 @@ class CustomCursorAdapter extends CursorAdapter {
         super(context, c, false);
     }
 
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(final View view, Context context, Cursor cursor) {
 
         // Get all the values
         // Use it however you need to
@@ -45,9 +45,9 @@ class CustomCursorAdapter extends CursorAdapter {
         TextView startTime = (TextView) view.findViewById(R.id.start_time);
         TextView endTime = (TextView) view.findViewById(R.id.end_time);
         TextView subject = (TextView) view.findViewById(R.id.subject);
-        TextView room = (TextView) view.findViewById(R.id.room);
-        TextView classType = (TextView) view.findViewById(R.id.class_type);
-        TextView teacherName = (TextView) view.findViewById(R.id.teacher_name);
+        final TextView room = (TextView) view.findViewById(R.id.room);
+        final TextView classType = (TextView) view.findViewById(R.id.class_type);
+        final TextView teacherName = (TextView) view.findViewById(R.id.teacher_name);
 
         ViewHolder viewHolder = (ViewHolder)view.getTag();
 
@@ -57,25 +57,32 @@ class CustomCursorAdapter extends CursorAdapter {
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         String subjectForm = sharedPref.getString("example_appearance", "1");
-        String subjectFullForm = cursor.getString(4).trim();
+        final String subjectFullForm = cursor.getString(4).trim();
+
+        //To correctly display KenBurnsView
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (subjectFullForm.toLowerCase().equals("break")){
+                    final KenBurnsView foodImage = (KenBurnsView) view.findViewById(R.id.cardview_bg_img_food);
+                    foodImage.setVisibility(View.VISIBLE);
+                    foodImage.setAdjustViewBounds(true);
+                    if (cardView.getMeasuredHeight() != 0) {
+
+                        foodImage.setMaxHeight(cardView.getMeasuredHeight());
+                        Log.d("Ken", cardView.getMeasuredHeight() + "");
+                    }else {
+                        run();
+                    }
+                }
+            }
+        },1);
 
         if (subjectFullForm.toLowerCase().equals("break")){
+            Log.d("Break","aknl");
             room.setVisibility(View.GONE);
             classType.setVisibility(View.GONE);
             teacherName.setVisibility(View.GONE);
-           // cardView.setCardBackgroundColor(context.getResources().getColor(R.color.transparent_white));
-            final KenBurnsView foodImage = (KenBurnsView) view.findViewById(R.id.cardview_bg_img_food);
-            foodImage.setVisibility(View.VISIBLE);
-            foodImage.setAdjustViewBounds(true);
-            if (cardView.getMeasuredHeight() != 0) {
-
-                foodImage.setMaxHeight(cardView.getMeasuredHeight());
-                Log.d("Ken", cardView.getMeasuredHeight() + "");
-                if (foodHeight == 0)
-                    foodHeight = cardView.getMeasuredHeight();
-            }else {
-                foodImage.setMaxHeight(foodHeight);
-            }
         }
 
         if (subjectForm.equals("1")){

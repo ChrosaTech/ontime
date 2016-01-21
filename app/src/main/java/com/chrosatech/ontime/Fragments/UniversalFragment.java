@@ -1,4 +1,4 @@
-package com.chrosatech.ontime;
+package com.chrosatech.ontime.Fragments;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -7,6 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import com.chrosatech.ontime.Adapters.CustomCursorAdapter;
+import com.chrosatech.ontime.Database.DatabaseContents;
+import com.chrosatech.ontime.R;
 
 
 /*
@@ -20,7 +24,6 @@ import android.widget.ListView;
 */
 public class UniversalFragment extends Fragment {
 
-    private String day;
     private ListView listView;
 
     public UniversalFragment() {
@@ -35,7 +38,7 @@ public class UniversalFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.listView);
 
         Bundle bundle = this.getArguments();
-        day = bundle.getString("day");
+        String day = bundle.getString("day");
         fill(day);
 
         return view;
