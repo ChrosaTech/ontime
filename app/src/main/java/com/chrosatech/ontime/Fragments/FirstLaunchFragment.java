@@ -1,5 +1,9 @@
 package com.chrosatech.ontime.Fragments;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -27,9 +31,11 @@ import com.chrosatech.ontime.Database.DatabaseContents;
 import com.chrosatech.ontime.Behaviors.FabBehavior;
 import com.chrosatech.ontime.Activities.MainActivity;
 import com.chrosatech.ontime.R;
+import com.chrosatech.ontime.Receivers.myBroadcastReciever;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class FirstLaunchFragment extends Fragment {
@@ -50,7 +56,7 @@ public class FirstLaunchFragment extends Fragment {
 
         setHasOptionsMenu(true);
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.launch_activity, container, false);
+        View view = inflater.inflate(R.layout.fragment_launch, container, false);
         snackbar = Snackbar.make(view, getString(R.string.notFound), Snackbar.LENGTH_LONG);
 
         branchSpinner = (Spinner) view.findViewById(R.id.branch);
@@ -200,10 +206,12 @@ public class FirstLaunchFragment extends Fragment {
                 editor.putString("ID", id);
                 editor.commit();
 
+                setFirstNotification(db.getNextNotificationTime(getContext()));
+
             /*Toast.makeText(FirstLaunchFragment.this, "OnClickListener : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
                     "\nSpinner 2:" + String.valueOf(group.getSelectedItem()) + yearInt, Toast.LENGTH_SHORT).show();*/
 
-                //TODO
+                //TODO open time table fragment
                 //getActivity().getSupportFragmentManager().popBackStack();
             } else {
                 snackbar = Snackbar.make(v, getString(R.string.notFound), Snackbar.LENGTH_LONG);
@@ -215,6 +223,17 @@ public class FirstLaunchFragment extends Fragment {
 
         }
     };
+
+    private void setFirstNotification(Calendar calendar) {
+        Intent intent = new Intent(getContext(), myBroadcastReciever.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                getContext(), 234324243, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        Toast.makeText(getContext(), "Alarm set in " + calendar.get(Calendar.HOUR) + " Day "+ calendar.get(Calendar.DAY_OF_WEEK),
+                Toast.LENGTH_SHORT).show();
+    }
 
     private int getYear() {
         int yearInt;

@@ -34,7 +34,7 @@ public class UniversalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment, container, false);
+        View view = inflater.inflate(R.layout.list_view, container, false);
         listView = (ListView) view.findViewById(R.id.listView);
 
         Bundle bundle = this.getArguments();

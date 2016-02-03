@@ -1,14 +1,21 @@
 package com.chrosatech.ontime.Database;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.util.Log;
 
 import com.chrosatech.ontime.Activities.MainActivity;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashSet;
+import java.util.Locale;
+import java.util.StringTokenizer;
 
 /**
  * Created by mayank on 25/12/15.
@@ -95,5 +102,82 @@ public class DatabaseContents extends SQLiteAssetHelper {
             return null;
         else
             return c.getString(0);
+    }
+
+    public Calendar getNextNotificationTime(Context context){
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("OnTimePreferences",Context.MODE_PRIVATE);
+
+        String id = sharedPreferences.getString("ID", "0");
+
+        SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+
+        String [] sqlSelect = {"StartTime"};
+        String sqlTables = "TimeTable";
+
+        Calendar dateCalendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.getDefault());
+        boolean found = false;
+        Calendar calendar = Calendar.getInstance();
+
+        while (!found) {
+            Date d = dateCalendar.getTime();
+            String dayOfTheWeek = sdf.format(d);
+
+            String whereClause = "ID = '" + id + "' AND UPPER(Day) = UPPER('" + dayOfTheWeek + "') ";
+
+            qb.setTables(sqlTables);
+            Cursor c = qb.query(db, sqlSelect, whereClause, null,
+                    null, null, null);
+
+            c.moveToFirst();
+
+            Calendar currentCalendar = Calendar.getInstance();
+            int hours = currentCalendar.get(Calendar.HOUR);
+            int amPm = currentCalendar.get(Calendar.AM_PM);
+
+            while (c.getPosition() < c.getCount()) {
+                String time = c.getString(0).toLowerCase();
+                if (time.endsWith("am")) {
+                    calendar.set(Calendar.AM_PM, Calendar.AM);
+                    time = time.replace("am", "");
+                } else {
+                    calendar.set(Calendar.AM_PM, Calendar.PM);
+                    time = time.replace("pm", "");
+                }
+                StringTokenizer tokenizer = new StringTokenizer(time, ":", false);
+                String hour = tokenizer.nextToken();
+                Log.d("Calender hour", hour);
+
+                //Because 12 is at index 0
+                int hrs = Integer.parseInt(hour);
+                if (hrs == 12)
+                    hrs = 0;
+                calendar.set(Calendar.HOUR, hrs);
+                String minutes = tokenizer.nextToken();
+                Log.d("Calender minutes",minutes);
+                calendar.set(Calendar.MINUTE, Integer.parseInt(minutes));
+                calendar.set(Calendar.SECOND, 0);
+                Log.d("Calender",calendar.getTime()+"  "+currentCalendar.getTime());
+
+                if (calendar.getTimeInMillis() > currentCalendar.getTimeInMillis()) {
+                    Log.d("Calender","Found");
+                    found = true;
+                    break;
+                }
+
+                c.moveToNext();
+            }
+
+            if (!found) {
+                Log.d("Calender"," Not Found");
+                dateCalendar.add(Calendar.DATE, 1);
+                calendar.add(Calendar.DATE, 1);
+            }
+        }
+        Log.d("Calender",calendar+"");
+
+        return calendar;
     }
 }

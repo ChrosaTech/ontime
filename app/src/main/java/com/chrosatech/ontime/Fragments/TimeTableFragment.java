@@ -3,6 +3,7 @@ package com.chrosatech.ontime.Fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,9 @@ import com.chrosatech.ontime.R;
 import com.chrosatech.ontime.Adapters.ViewPagerAdapter;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by mayank on 21/1/16.
@@ -92,20 +95,21 @@ public class TimeTableFragment extends Fragment {
     }
 
     private void setCurrentPage() {
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
-        Date d = new Date();
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.getDefault());
+        Date d = calendar.getTime();
         String dayOfTheWeek = sdf.format(d);
-        int flag = 0;
+        Boolean flag = false;
 
         for (int i = 0; i<adapter.getCount(); i++){
             if (dayOfTheWeek.toUpperCase().equals(adapter.getPageTitle(i))){
                 viewPager.setCurrentItem(i);
-                flag = 1;
+                flag = true;
                 break;
             }
         }
 
-        if (flag == 0){
+        if (!flag){
             viewPager.setCurrentItem(0);
         }
 

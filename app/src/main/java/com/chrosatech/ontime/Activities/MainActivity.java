@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         }*/
 
-        sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("OnTimePreferences",Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
         if(!sharedPreferences.contains(firstLaunch)){
