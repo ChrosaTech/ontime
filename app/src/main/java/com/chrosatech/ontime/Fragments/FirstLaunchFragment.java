@@ -27,9 +27,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
-import com.chrosatech.ontime.Database.DatabaseContents;
-import com.chrosatech.ontime.Behaviors.FabBehavior;
 import com.chrosatech.ontime.Activities.MainActivity;
+import com.chrosatech.ontime.Behaviors.FabBehavior;
+import com.chrosatech.ontime.Database.DatabaseContents;
+import com.chrosatech.ontime.Helper.OpenerAndHelper;
 import com.chrosatech.ontime.R;
 import com.chrosatech.ontime.Receivers.myBroadcastReciever;
 import com.melnykov.fab.FloatingActionButton;
@@ -206,12 +207,13 @@ public class FirstLaunchFragment extends Fragment {
                 editor.putString("ID", id);
                 editor.commit();
 
-                setFirstNotification(db.getNextNotificationTime(getContext()));
+                setFirstNotification(db.getNextNotificationTime());
 
             /*Toast.makeText(FirstLaunchFragment.this, "OnClickListener : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
                     "\nSpinner 2:" + String.valueOf(group.getSelectedItem()) + yearInt, Toast.LENGTH_SHORT).show();*/
 
-                //TODO open time table fragment
+                //TODO Find alternative
+                OpenerAndHelper.restartApp();
                 //getActivity().getSupportFragmentManager().popBackStack();
             } else {
                 snackbar = Snackbar.make(v, getString(R.string.notFound), Snackbar.LENGTH_LONG);

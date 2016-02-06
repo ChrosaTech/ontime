@@ -3,15 +3,14 @@ package com.chrosatech.ontime.Fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.chrosatech.ontime.Adapters.ViewPagerAdapter;
 import com.chrosatech.ontime.Database.DatabaseContents;
 import com.chrosatech.ontime.R;
-import com.chrosatech.ontime.Adapters.ViewPagerAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

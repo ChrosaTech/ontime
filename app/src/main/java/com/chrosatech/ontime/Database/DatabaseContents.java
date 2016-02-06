@@ -26,8 +26,11 @@ public class DatabaseContents extends SQLiteAssetHelper {
     //just update the Database version to update the database in both databaseContents.java and SelectionDatabase.java
     private static final int DATABASE_VERSION = 1;
 
+    private static Context context1;
+
     public DatabaseContents(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        context1 = context;
         setForcedUpgrade();
     }
 
@@ -104,9 +107,9 @@ public class DatabaseContents extends SQLiteAssetHelper {
             return c.getString(0);
     }
 
-    public Calendar getNextNotificationTime(Context context){
+    public Calendar getNextNotificationTime(){
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences("OnTimePreferences",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context1.getSharedPreferences("OnTimePreferences",Context.MODE_PRIVATE);
 
         String id = sharedPreferences.getString("ID", "0");
 

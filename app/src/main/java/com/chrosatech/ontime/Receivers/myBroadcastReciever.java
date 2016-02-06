@@ -1,6 +1,5 @@
 package com.chrosatech.ontime.Receivers;
 
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -39,7 +38,7 @@ public class myBroadcastReciever extends BroadcastReceiver  {
     private void setNextAlarm(Context context) {
 
         DatabaseContents db = new DatabaseContents(context);
-        Calendar calendar = db.getNextNotificationTime(context);
+        Calendar calendar = db.getNextNotificationTime();
 
         Intent intent = new Intent(context, myBroadcastReciever.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(

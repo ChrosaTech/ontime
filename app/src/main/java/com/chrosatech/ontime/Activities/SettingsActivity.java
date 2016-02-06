@@ -21,6 +21,7 @@ import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 
+import com.chrosatech.ontime.Helper.OpenerAndHelper;
 import com.chrosatech.ontime.R;
 
 import java.util.List;
@@ -35,18 +36,20 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     private AlertDialog.Builder builder;
 
-    static SettingsActivity th;
+   // static SettingsActivity th;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        setAppTheme();
+        OpenerAndHelper.setContext(this);
+
+        OpenerAndHelper.setAppTheme();
 
         super.onCreate(savedInstanceState);
 
         setupActionBar();
 
         //Get reference for static members
-        th = this;
+       // th = this;
 
 
         /*TextView tv = new TextView(this);
@@ -60,25 +63,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         // lots of code that gets the actual version number
         return "Crafted with Love ".concat(versionNumber);
     }*/
-
-    private void setAppTheme(){
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String themeColor = sharedPref.getString("example_theme", "");
-
-        switch (themeColor){
-
-            case "Bubblegum Pink"  :  setTheme(R.style.PinkTheme);
-                break;
-            case "Hot Orange" : setTheme(R.style.OrangeTheme);
-                break;
-            case "Rose Red"    : setTheme(R.style.RedTheme);
-                break;
-            case "Forest Green"  : setTheme(R.style.GreenTheme);
-                break;
-            default:
-        }
-
-    }
 
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
@@ -255,11 +239,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 if (key.equals("example_theme")) {
 
                     //Restart the app on changing theme.
-                    th.finish();
-                    Intent i = new Intent(th.getApplicationContext(), MainActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    th.getApplicationContext().startActivity(i);
+                    //getActivity().finish();
+                    OpenerAndHelper.restartApp();
+
                 }
             }
         };

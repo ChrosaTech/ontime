@@ -1,13 +1,10 @@
 package com.chrosatech.ontime.Activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -16,10 +13,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.chrosatech.ontime.Adapters.ViewPagerAdapter;
 import com.chrosatech.ontime.Fragments.FirstLaunchFragment;
 import com.chrosatech.ontime.Fragments.TimeTableFragment;
+import com.chrosatech.ontime.Helper.OpenerAndHelper;
 import com.chrosatech.ontime.R;
-import com.chrosatech.ontime.Adapters.ViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,8 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            OpenerAndHelper.openSettingsActivity();
+           /* Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);*/
         }
 
         return super.onOptionsItemSelected(item);
@@ -66,9 +65,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setAppTheme();
+        OpenerAndHelper.setContext(this);
+        OpenerAndHelper.setAppTheme();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -92,16 +93,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (sharedPreferences.getBoolean(firstLaunch, true)) {
             Log.d("First Launch","true");
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.container, new FirstLaunchFragment(), "launchFragment");
-            fragmentTransaction.addToBackStack("launchFragment");
-            fragmentTransaction.commit();
+            OpenerAndHelper.openFirstLaunchFragment();
         }else {
 
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.container, new TimeTableFragment(), "timetable");
-            fragmentTransaction.addToBackStack("timetable");
-            fragmentTransaction.commit();
+            OpenerAndHelper.openTimeTableFragment();
           /*  viewPager = (ViewPager) findViewById(R.id.pager);
             setupViewPager(viewPager);
             viewPager.setOffscreenPageLimit(5);
@@ -116,24 +111,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setAppTheme(){
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        String themeColor = sharedPref.getString("example_theme", "");
-
-        switch (themeColor){
-
-            case "Bubblegum Pink"  : setTheme(R.style.PinkTheme);
-                break;
-            case "Hot Orange" : setTheme(R.style.OrangeTheme);
-                break;
-            case "Rose Red"    : setTheme(R.style.RedTheme);
-                break;
-            case "Forest Green"  : setTheme(R.style.GreenTheme);
-                break;
-            default:
-        }
-
-    }
 
     @Override
     public void onBackPressed() {
@@ -142,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
 
-        Fragment fragment = getCurrentFragment();
+        Fragment fragment = OpenerAndHelper.getCurrentFragment();
         if (fragment instanceof FirstLaunchFragment) {
             if(((FirstLaunchFragment) fragment).onBackPressed()){
                 finish();
@@ -152,11 +129,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private Fragment getCurrentFragment(){
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-            return null;
-        }
-        String tag = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName();
-        return getSupportFragmentManager().findFragmentByTag(tag);
-    }
 }

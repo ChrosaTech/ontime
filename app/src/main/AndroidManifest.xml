@@ -22,11 +22,6 @@
             android:parentActivityName=".Activities.MainActivity">
         </activity>
 
-        <activity
-            android:name=".Activities.NotificationActivity"
-            android:label="@string/title_activity_notification" >
-        </activity>
-
         <receiver android:name=".Receivers.myBroadcastReciever" />
 
     </application>
