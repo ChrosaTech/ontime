@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private ActionBar actionBar;
     public static SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private String firstLaunch = "firstLaunch";
+    public static String firstLaunch = "firstLaunch";
+    public static String changeTimeTable = "changeTimeTable";
     /*private float x1;
     private float x2;
     private float MIN_DISTANCE = 10;*/
@@ -88,10 +89,11 @@ public class MainActivity extends AppCompatActivity {
 
         if(!sharedPreferences.contains(firstLaunch)){
             editor.putBoolean(firstLaunch, true);
+            editor.putBoolean(changeTimeTable, false);
             editor.apply();
         }
 
-        if (sharedPreferences.getBoolean(firstLaunch, true)) {
+        if (sharedPreferences.getBoolean(firstLaunch, true) || sharedPreferences.getBoolean(changeTimeTable, true)) {
             Log.d("First Launch","true");
             OpenerAndHelper.openFirstLaunchFragment();
         }else {

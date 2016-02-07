@@ -49,7 +49,7 @@ public class OpenerAndHelper {
     public static void setAppTheme(){
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        String themeColor = sharedPref.getString("example_theme", "");
+        String themeColor = sharedPref.getString("theme", "");
 
         switch (themeColor){
 
@@ -68,7 +68,7 @@ public class OpenerAndHelper {
 
     public static void openSettingsActivity(){
         Intent intent = new Intent(context, SettingsActivity.class);
-        context.startActivity(intent);
+        activity.startActivity(intent);
     }
 
     public static void openFirstLaunchFragment(){

@@ -257,6 +257,11 @@ public class FirstLaunchFragment extends Fragment {
         Log.d("First","confirm");
         if (snackbar.isShown())
             snackbar.dismiss();
+        if (MainActivity.sharedPreferences.getBoolean(MainActivity.changeTimeTable, true)){
+            MainActivity.sharedPreferences.edit().putBoolean(MainActivity.changeTimeTable, false).apply();
+            OpenerAndHelper.restartApp();
+            return true;
+        }
         if (exit) {
             return true;
             //getActivity().finish(); // finish activity

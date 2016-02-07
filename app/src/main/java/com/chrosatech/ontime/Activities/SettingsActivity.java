@@ -3,6 +3,8 @@ package com.chrosatech.ontime.Activities;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -173,36 +175,38 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-               /* || DataSyncPreferenceFragment.class.getName().equals(fragmentName)*/
-                || NotificationPreferenceFragment.class.getName().equals(fragmentName)
-                || CreditFragment.class.getName().equals(fragmentName);
+                || NotificationPreferenceFragment.class.getName().equals(fragmentName);
+              //  || CreditFragment.class.getName().equals(fragmentName);
     }
 
     @Override
     public void onHeaderClick(Header header, int position) {
-        if (position == 3)
-        {
+
+        if (header.title != null) {
+            if (header.title.equals("Feedback")) {
 
             /*Intent i = new Intent(Intent.ACTION_SEND);
             i.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{ "chrosatech@gmail.com" });
             i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Feedback");
             i.putExtra(android.content.Intent.EXTRA_TEXT, "Add a feature");
             startActivity(Intent.createChooser(i, "Send email"));*/
-            Intent i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                    "mailto", "chrosatech@gmail.com", null));
-            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Feedback");
-            i.putExtra(android.content.Intent.EXTRA_TEXT, "Add a feature");
-            startActivity(Intent.createChooser(i, "Send email"));
-        }
-        else if (position==2)
-        {
-            builder=new AlertDialog.Builder(this,R.style.MyAlertDialogStyle);
-            builder.setTitle("About");
-            builder.setMessage("/*Custom_message*/");
-            builder.setPositiveButton("Ok", null);
-            // builder.setNegativeButton("cancel", null);
-            builder.show();
-            //builder.setIcon(R.drawable.ic_launcher);
+                Intent i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto", "chrosatech@gmail.com", null));
+                i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Feedback");
+                i.putExtra(android.content.Intent.EXTRA_TEXT, "Add a feature");
+                startActivity(Intent.createChooser(i, "Send email"));
+            } else if (header.title.equals("About")) {
+                builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+                builder.setTitle("About");
+                builder.setMessage("/*Custom_message*/");
+                builder.setPositiveButton("Ok", null);
+                // builder.setNegativeButton("cancel", null);
+                builder.show();
+                //builder.setIcon(R.drawable.ic_launcher);
+            } else if (header.title.equals("Change time table")){
+                MainActivity.sharedPreferences.edit().putBoolean(MainActivity.changeTimeTable, true).apply();
+                OpenerAndHelper.restartApp();
+            }
         }
         super.onHeaderClick(header, position);
 
@@ -227,8 +231,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
            /* bindPreferenceSummaryToValue(findPreference("example_text"));
             bindPreferenceSummaryToValue(findPreference("example_list"));*/
             bindPreferenceSummaryToValue(findPreference("example_appearance"));
-            bindPreferenceSummaryToValue(findPreference("example_theme"));
-            findPreference("example_theme").getSharedPreferences().registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+            bindPreferenceSummaryToValue(findPreference("theme"));
+            findPreference("theme").getSharedPreferences().registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         }
 
 
@@ -236,7 +240,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                if (key.equals("example_theme")) {
+                if (key.equals("theme")) {
 
                     //Restart the app on changing theme.
                     //getActivity().finish();
@@ -267,48 +271,23 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class CreditFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_credits);
-        }
+  /*  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class CreditFragment extends Fragment {
 
-    }
-
-
-    /**
-     * This fragment shows data and sync preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    /*@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class DataSyncPreferenceFragment extends PreferenceFragment
-    {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_data_sync);
-            setHasOptionsMenu(true);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("sync_frequency"));
-        }
 
         @Override
-        public boolean onOptionsItemSelected(MenuItem item)
-        {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
+        public void onStart() {
+            super.onStart();
+            Intent i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                    "mailto", "chrosatech@gmail.com", null));
+            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Feedback");
+            i.putExtra(android.content.Intent.EXTRA_TEXT, "Add a feature");
+            startActivity(Intent.createChooser(i, "Send email"));
+            getActivity().finish();
         }
+
     }*/
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class AboutFragment extends PreferenceFragment
     {
