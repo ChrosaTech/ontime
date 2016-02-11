@@ -4,7 +4,7 @@
          when checked/unchecked. -->
     <SwitchPreference
         android:key="notifications_new_message"
-        android:title="Turn Notification On/off"
+        android:title="Alert"
         android:defaultValue="true" />
 
     <!-- Allows the user to choose a ringtone in the 'notification' category. -->
