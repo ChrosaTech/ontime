@@ -7,7 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -21,7 +20,7 @@ import java.util.Calendar;
 /**
  * Created by anshul on 25/1/16.
  */
-public class myBroadcastReciever extends BroadcastReceiver  {
+public class MyBroadcastReciever extends BroadcastReceiver  {
     /*MainActivity mainActivity=new MainActivity();*/
     @Override
     public void onReceive(Context context, Intent intent)
@@ -43,12 +42,12 @@ public class myBroadcastReciever extends BroadcastReceiver  {
     }
 
 
-    private void setNextAlarm(Context context) {
+    public static void setNextAlarm(Context context) {
 
         DatabaseContents db = new DatabaseContents(context);
         Calendar calendar = db.getNextNotificationTime();
 
-        Intent intent = new Intent(context, myBroadcastReciever.class);
+        Intent intent = new Intent(context, MyBroadcastReciever.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, 234324243, intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

@@ -32,7 +32,7 @@ import com.chrosatech.ontime.Behaviors.FabBehavior;
 import com.chrosatech.ontime.Database.DatabaseContents;
 import com.chrosatech.ontime.Helper.OpenerAndHelper;
 import com.chrosatech.ontime.R;
-import com.chrosatech.ontime.Receivers.myBroadcastReciever;
+import com.chrosatech.ontime.Receivers.MyBroadcastReciever;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -227,7 +227,7 @@ public class FirstLaunchFragment extends Fragment {
     };
 
     private void setFirstNotification(Calendar calendar) {
-        Intent intent = new Intent(getContext(), myBroadcastReciever.class);
+        Intent intent = new Intent(getContext(), MyBroadcastReciever.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 getContext(), 234324243, intent, 0);
         AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);

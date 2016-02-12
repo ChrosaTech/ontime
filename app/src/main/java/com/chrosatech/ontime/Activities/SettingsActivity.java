@@ -2,9 +2,11 @@ package com.chrosatech.ontime.Activities;
 
 
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +30,7 @@ import android.widget.Toast;
 
 import com.chrosatech.ontime.Helper.OpenerAndHelper;
 import com.chrosatech.ontime.R;
+import com.chrosatech.ontime.Receivers.MyBroadcastReciever;
 
 import java.util.List;
 
@@ -281,15 +284,23 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 alertOption.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object isAlertEnabled) {
-                       boolean isAlertOn=((Boolean) isAlertEnabled ).booleanValue();
+                       boolean isAlertOn= (Boolean) isAlertEnabled;
 
                         if (isAlertOn)
                         {
-
+                            MyBroadcastReciever.setNextAlarm(OpenerAndHelper.getContext());
                             Toast.makeText(getActivity(),"checked",Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
+                            Context context = OpenerAndHelper.getContext();
+                            Intent intent = new Intent(context, MyBroadcastReciever.class);
+                            PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                                    context, 234324243, intent, 0);
+                            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                            if (alarmManager!= null) {
+                                alarmManager.cancel(pendingIntent);
+                            }
                             Toast.makeText(getActivity(),"unchecked",Toast.LENGTH_SHORT).show();
                         }
                         return true;

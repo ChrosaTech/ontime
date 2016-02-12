@@ -22,7 +22,7 @@
             android:parentActivityName=".Activities.MainActivity">
         </activity>
 
-        <receiver android:name=".Receivers.myBroadcastReciever" />
+        <receiver android:name=".Receivers.MyBroadcastReciever" />
 
     </application>
 
