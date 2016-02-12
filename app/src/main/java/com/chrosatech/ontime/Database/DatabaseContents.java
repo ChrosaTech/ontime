@@ -110,13 +110,14 @@ public class DatabaseContents extends SQLiteAssetHelper {
     public Calendar getNextNotificationTime(){
 
         SharedPreferences sharedPreferences = context1.getSharedPreferences("OnTimePreferences",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
         String id = sharedPreferences.getString("ID", "0");
 
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-        String [] sqlSelect = {"StartTime"};
+        String [] sqlSelect = {"StartTime", "ClassType", "Lecture", "Room"};
         String sqlTables = "TimeTable";
 
         Calendar dateCalendar = Calendar.getInstance();
@@ -137,8 +138,8 @@ public class DatabaseContents extends SQLiteAssetHelper {
             c.moveToFirst();
 
             Calendar currentCalendar = Calendar.getInstance();
-            int hours = currentCalendar.get(Calendar.HOUR);
-            int amPm = currentCalendar.get(Calendar.AM_PM);
+            /*int hours = currentCalendar.get(Calendar.HOUR);
+            int amPm = currentCalendar.get(Calendar.AM_PM);*/
 
             while (c.getPosition() < c.getCount()) {
                 String time = c.getString(0).toLowerCase();
@@ -166,6 +167,10 @@ public class DatabaseContents extends SQLiteAssetHelper {
 
                 if (calendar.getTimeInMillis() > currentCalendar.getTimeInMillis()) {
                     Log.d("Calender","Found");
+                    editor.putString("ClassType", c.getString(1));
+                    editor.putString("Subject",c.getString(2));
+                    editor.putString("Room", c.getString(3));
+                    editor.apply();
                     found = true;
                     break;
                 }

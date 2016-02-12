@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -46,28 +47,31 @@ public class myBroadcastReciever extends BroadcastReceiver  {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-        Toast.makeText(context, "Alarm set in " + 5 + " seconds",
-                Toast.LENGTH_SHORT).show();
+        /*Toast.makeText(context, "Alarm set in " + 5 + " seconds",
+                Toast.LENGTH_SHORT).show();*/
        /* mainActivity.getToast(context);*/
     }
 
 
     private void showNotification(Context context) {
-            PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
-                    new Intent(context, MainActivity.class), 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
+                new Intent(context, MainActivity.class), 0);
 
-            /*Random random = new Random();
-            int m = random.nextInt(9999 - 1000) + 1000;*/
-            NotificationCompat.Builder mBuilder =
-                    new NotificationCompat.Builder(context)
-                            .setSmallIcon(R.mipmap.ic_launcher)
-                            .setContentTitle("My notification")
-                            .setContentText("Hello World!");
-            mBuilder.setContentIntent(contentIntent);
-            //mBuilder.setDefaults(Notification.DEFAULT_SOUND);
-            mBuilder.setAutoCancel(true);
-            NotificationManager mNotificationManager =
-                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(123456, mBuilder.build());
+        SharedPreferences sharedPreferences = context.getSharedPreferences("OnTimePreferences", Context.MODE_PRIVATE);
+
+        /*Random random = new Random();
+        int m = random.nextInt(9999 - 1000) + 1000;*/
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(sharedPreferences.getString("Subject","Subject"))
+                        .setContentText(sharedPreferences.getString("Room", "Room") +
+                                " (" + sharedPreferences.getString("ClassType", "ClassType") + ")");
+        mBuilder.setContentIntent(contentIntent);
+        //mBuilder.setDefaults(Notification.DEFAULT_SOUND);
+        mBuilder.setAutoCancel(true);
+        NotificationManager mNotificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(123456, mBuilder.build());
     }
 }
