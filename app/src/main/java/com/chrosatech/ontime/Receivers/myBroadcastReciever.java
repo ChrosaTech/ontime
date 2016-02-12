@@ -38,6 +38,7 @@ public class myBroadcastReciever extends BroadcastReceiver  {
 
 
 
+
     }
 
 
@@ -63,6 +64,7 @@ public class myBroadcastReciever extends BroadcastReceiver  {
                     new Intent(context, MainActivity.class), 0);
 
 
+
             /*Random random = new Random();
             int m = random.nextInt(9999 - 1000) + 1000;*/
             NotificationCompat.Builder mBuilder =
@@ -70,7 +72,8 @@ public class myBroadcastReciever extends BroadcastReceiver  {
                             .setSmallIcon(R.mipmap.ic_launcher)
                             .setContentTitle("My notification")
                             .setContentText("Hello World!")
-                            ;
+                            .addAction(R.drawable.mute_notification,"mute",contentIntent);
+
             mBuilder.setContentIntent(contentIntent);
             //mBuilder.setDefaults(Notification.DEFAULT_SOUND);
             mBuilder.setAutoCancel(true);
