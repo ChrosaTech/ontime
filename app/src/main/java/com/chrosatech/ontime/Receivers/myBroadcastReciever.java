@@ -24,17 +24,24 @@ import java.util.Calendar;
 public class myBroadcastReciever extends BroadcastReceiver  {
     /*MainActivity mainActivity=new MainActivity();*/
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context context, Intent intent)
+    {
         Log.d("OnTimeBroadcast","onreceive");
         Toast.makeText(context,"Time!!1",Toast.LENGTH_SHORT).show();
         showNotification(context);
         //TODO remove this vibrator
-        Vibrator vibrator=(Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(500);
+
+
+        //Vibrator vibrator=(Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+        //vibrator.vibrate(500);
 
         setNextAlarm(context);
 
+
+
+
     }
+
 
     private void setNextAlarm(Context context) {
 
@@ -66,12 +73,14 @@ public class myBroadcastReciever extends BroadcastReceiver  {
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle(sharedPreferences.getString("Subject","Subject"))
                         .setContentText(sharedPreferences.getString("Room", "Room") +
-                                " (" + sharedPreferences.getString("ClassType", "ClassType") + ")");
+                                " (" + sharedPreferences.getString("ClassType", "ClassType") + ")")
+                        .addAction(R.drawable.mute_notification,"mute",contentIntent);
         mBuilder.setContentIntent(contentIntent);
         //mBuilder.setDefaults(Notification.DEFAULT_SOUND);
         mBuilder.setAutoCancel(true);
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(123456, mBuilder.build());
+
     }
 }

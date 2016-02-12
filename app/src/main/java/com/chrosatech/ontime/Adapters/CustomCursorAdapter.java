@@ -117,7 +117,7 @@ public class CustomCursorAdapter extends CursorAdapter {
             viewHolder.color = generator.getRandomColor();
             viewHolder.isColored = true;
         }
-        final TextDrawable drawable = TextDrawable.builder()
+         final  TextDrawable drawable = TextDrawable.builder()
                 .buildRound(String.valueOf(subject.getText().charAt(0)), viewHolder.color);
         imageView.setImageDrawable(drawable);
 

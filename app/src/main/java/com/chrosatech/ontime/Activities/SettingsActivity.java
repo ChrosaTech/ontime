@@ -20,8 +20,11 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.preference.SwitchPreference;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.chrosatech.ontime.Helper.OpenerAndHelper;
 import com.chrosatech.ontime.R;
@@ -37,6 +40,7 @@ import java.util.List;
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
     private AlertDialog.Builder builder;
+
 
    // static SettingsActivity th;
     @Override
@@ -93,6 +97,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void onBuildHeaders(List<PreferenceActivity.Header> target) {
         loadHeadersFromResource(R.xml.pref_headers, target);
+
     }
 
     /**
@@ -268,6 +273,54 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
             bindPreferenceSummaryToValue(findPreference("notification_before_time"));
+
+            //***switch Prefrence for vibration***
+            SwitchPreference alertOption=(SwitchPreference) findPreference("notifications_new_message");
+            if (alertOption!=null)
+            {
+                alertOption.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object isAlertEnabled) {
+                       boolean isAlertOn=((Boolean) isAlertEnabled ).booleanValue();
+
+                        if (isAlertOn)
+                        {
+
+                            Toast.makeText(getActivity(),"checked",Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(getActivity(),"unchecked",Toast.LENGTH_SHORT).show();
+                        }
+                        return true;
+                    }
+                });
+            }
+
+            //***switch Prefrence for vibration***
+            SwitchPreference vibrateOption=(SwitchPreference) findPreference("notifications_new_message_vibrate");
+            if (vibrateOption!=null)
+            {
+                vibrateOption.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object isVibrateEnabled) {
+                        boolean isVibrateOn=((Boolean)isVibrateEnabled).booleanValue();
+                        if (isVibrateOn)
+                        {
+                            Toast.makeText(getActivity(),"Enabled",Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(getActivity(),"Disabled",Toast.LENGTH_SHORT).show();
+                        }
+                    return true;
+                    }
+                });
+            }
+            else
+            {
+                Toast.makeText(getActivity(),"sdsd",Toast.LENGTH_LONG).show();
+            }
         }
     }
 
