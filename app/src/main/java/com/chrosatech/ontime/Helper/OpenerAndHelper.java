@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.chrosatech.ontime.Activities.AppCompatPreferenceActivity;
 import com.chrosatech.ontime.Activities.MainActivity;
@@ -60,6 +62,22 @@ public class OpenerAndHelper {
             case "Rose Red"    : context.setTheme(R.style.RedTheme);
                 break;
             case "Forest Green"  : context.setTheme(R.style.GreenTheme);
+                break;
+            default:
+        }
+
+    }
+    public static void setBeforeTime(){
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        String timeBefore = sharedPref.getString("notification_before_time", "");
+        switch (timeBefore)
+        {
+            case "5 mins":
+                Log.d("a","cj");
+                Toast.makeText(getActivity(),"1",Toast.LENGTH_SHORT).show();
+                break;
+            case "10 mins":
+                Toast.makeText(getActivity(),"1",Toast.LENGTH_SHORT).show();
                 break;
             default:
         }

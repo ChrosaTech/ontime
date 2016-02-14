@@ -30,7 +30,8 @@
 
     <header
         android:title="Change time table"
-        android:icon="@drawable/ic_feedback_black_24dp"
+        android:summary=""
+        android:icon="@drawable/timetable_update"
         />
     <!-- Footer -->
 

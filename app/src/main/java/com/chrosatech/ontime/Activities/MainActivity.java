@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         OpenerAndHelper.setContext(this);
         OpenerAndHelper.setAppTheme();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

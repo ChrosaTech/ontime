@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.chrosatech.ontime.Activities.MainActivity;
 import com.chrosatech.ontime.Database.DatabaseContents;
+import com.chrosatech.ontime.Helper.OpenerAndHelper;
 import com.chrosatech.ontime.R;
 
 import java.util.Calendar;
@@ -35,6 +36,7 @@ public class MyBroadcastReciever extends BroadcastReceiver  {
         //vibrator.vibrate(500);
 
         setNextAlarm(context);
+
 
 
 
@@ -65,6 +67,16 @@ public class MyBroadcastReciever extends BroadcastReceiver  {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("OnTimePreferences", Context.MODE_PRIVATE);
 
+
+        /*Context context12 = OpenerAndHelper.getContext();
+        Intent intent = new Intent(context12, MyBroadcastReciever.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context, 234324243, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager!= null) {
+            alarmManager.cancel(pendingIntent);
+        }*/
+
         /*Random random = new Random();
         int m = random.nextInt(9999 - 1000) + 1000;*/
         NotificationCompat.Builder mBuilder =
@@ -73,7 +85,8 @@ public class MyBroadcastReciever extends BroadcastReceiver  {
                         .setContentTitle(sharedPreferences.getString("Subject","Subject"))
                         .setContentText(sharedPreferences.getString("Room", "Room") +
                                 " (" + sharedPreferences.getString("ClassType", "ClassType") + ")")
-                        .addAction(R.drawable.mute_notification,"mute",contentIntent);
+                       /* .addAction(R.drawable.mute_notification,"mute",pendingIntent)*/
+                        ;
         mBuilder.setContentIntent(contentIntent);
         //mBuilder.setDefaults(Notification.DEFAULT_SOUND);
         mBuilder.setAutoCancel(true);
