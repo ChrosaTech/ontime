@@ -78,6 +78,8 @@ public class CustomCursorAdapter extends CursorAdapter {
             }
         },1);
 
+
+
         if (subjectFullForm.toLowerCase().equals("break")){
             Log.d("Break","aknl");
             room.setVisibility(View.GONE);

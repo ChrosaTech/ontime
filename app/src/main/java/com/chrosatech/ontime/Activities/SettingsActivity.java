@@ -53,6 +53,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         OpenerAndHelper.setAppTheme();
 
+
+
         super.onCreate(savedInstanceState);
 
         setupActionBar();
@@ -245,7 +247,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
 
 
-        private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener()
+        {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                 if (key.equals("theme")) {
@@ -264,7 +267,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      * activity is showing a two-pane settings UI.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class NotificationPreferenceFragment extends PreferenceFragment {
+    public static class NotificationPreferenceFragment extends PreferenceFragment
+    {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -276,6 +280,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
             bindPreferenceSummaryToValue(findPreference("notification_before_time"));
+            findPreference("notification_before_time").getSharedPreferences().registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+
+
+            //**prefrence for before time**//
+
 
             //***switch Prefrence for vibration***
             SwitchPreference alertOption=(SwitchPreference) findPreference("notifications_new_message");
@@ -333,6 +342,20 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 Toast.makeText(getActivity(),"sdsd",Toast.LENGTH_LONG).show();
             }
         }
+
+        private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener()
+        {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                if (key.equals("notification_before_time")) {
+
+                    //Restart the app on changing theme.
+                    //getActivity().finish();
+                    OpenerAndHelper.setBeforeTime();
+
+                }
+            }
+        };
     }
 
   /*  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
