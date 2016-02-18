@@ -34,6 +34,7 @@
 
     <string-array name="pref_theme_entries">
         <item>Default</item>
+        <item>Black</item>
         <item>Bubblegum Pink</item>
         <item>Hot Orange</item>
         <item>Rose Red</item>
@@ -55,10 +56,10 @@
         <item>5 mins </item>
         <item>10 mins </item>
     </string-array>
-    <string-array name="pref_before_time_values">
+    <!--<string-array name="pref_before_time_values">
         <item>1</item>
         <item>0</item>
 
-    </string-array>
+    </string-array>-->
 
 </resources>

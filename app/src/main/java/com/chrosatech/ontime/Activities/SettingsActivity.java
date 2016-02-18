@@ -299,6 +299,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         {
                             MyBroadcastReciever.setNextAlarm(OpenerAndHelper.getContext());
                             Toast.makeText(getActivity(),"checked",Toast.LENGTH_SHORT).show();
+                            OpenerAndHelper.enableBootReceiver();
                         }
                         else
                         {
@@ -311,6 +312,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                                 alarmManager.cancel(pendingIntent);
                             }
                             Toast.makeText(getActivity(),"unchecked",Toast.LENGTH_SHORT).show();
+                            OpenerAndHelper.disableBootReceiver();
                         }
                         return true;
                     }

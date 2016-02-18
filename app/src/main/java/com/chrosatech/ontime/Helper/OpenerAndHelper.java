@@ -1,9 +1,11 @@
 package com.chrosatech.ontime.Helper;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +20,7 @@ import com.chrosatech.ontime.Activities.SettingsActivity;
 import com.chrosatech.ontime.Fragments.FirstLaunchFragment;
 import com.chrosatech.ontime.Fragments.TimeTableFragment;
 import com.chrosatech.ontime.R;
+import com.chrosatech.ontime.Receivers.BootReceiver;
 
 /**
  * Created by mayank on 7/2/16.
@@ -55,6 +58,8 @@ public class OpenerAndHelper {
 
         switch (themeColor){
 
+            case "Black" : context.setTheme(R.style.BlackTheme);
+                break;
             case "Bubblegum Pink"  : context.setTheme(R.style.PinkTheme);
                 break;
             case "Hot Orange" : context.setTheme(R.style.OrangeTheme);
@@ -116,5 +121,23 @@ public class OpenerAndHelper {
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(i);
+    }
+
+    public static void enableBootReceiver(){
+        ComponentName receiver = new ComponentName(context, BootReceiver.class);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+    }
+
+    public static void disableBootReceiver(){
+        ComponentName receiver = new ComponentName(context, BootReceiver.class);
+        PackageManager pm = context.getPackageManager();
+
+        pm.setComponentEnabledSetting(receiver,
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
     }
 }

@@ -7,6 +7,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -86,12 +88,20 @@ public class MyBroadcastReciever extends BroadcastReceiver  {
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle(sharedPreferences.getString("Subject","Subject"))
                         .setContentText(sharedPreferences.getString("Room", "Room") +
-                                " (" + sharedPreferences.getString("ClassType", "ClassType") + ")")
+                                " (" + sharedPreferences.getString("ClassType", "ClassType") + ")");
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+        Boolean isVibrateOn = sharedPref.getBoolean("notifications_new_message_vibrate", true);
+        if (isVibrateOn) {
+            mBuilder.setDefaults(NotificationCompat.DEFAULT_VIBRATE);
+        }
+        String notificationSound = sharedPref.getString("notifications_new_message_ringtone", "content://settings/system/notification_sound");
+        mBuilder.setSound(Uri.parse(notificationSound));
+        mBuilder.setAutoCancel(true);
                        /* .addAction(R.drawable.mute_notification,"mute",pendingIntent)*/
-                        ;
+
         mBuilder.setContentIntent(contentIntent);
         //mBuilder.setDefaults(Notification.DEFAULT_SOUND);
-        mBuilder.setAutoCancel(true);
         NotificationManager mNotificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(123456, mBuilder.build());

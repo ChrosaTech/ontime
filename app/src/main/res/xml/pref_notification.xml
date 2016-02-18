@@ -21,7 +21,7 @@
         android:defaultValue="1"
         android:key="notification_before_time"
         android:entries="@array/pref_time_values"
-        android:entryValues="@array/pref_before_time_values"
+        android:entryValues="@array/pref_time_values"
 
         />
     <RingtonePreference

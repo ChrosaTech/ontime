@@ -207,7 +207,7 @@ public class FirstLaunchFragment extends Fragment {
                 editor.putString("ID", id);
                 editor.commit();
 
-                setFirstNotification(db.getNextNotificationTime());
+                setFirstNotification();
 
             /*Toast.makeText(FirstLaunchFragment.this, "OnClickListener : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
                     "\nSpinner 2:" + String.valueOf(group.getSelectedItem()) + yearInt, Toast.LENGTH_SHORT).show();*/
@@ -226,15 +226,18 @@ public class FirstLaunchFragment extends Fragment {
         }
     };
 
-    private void setFirstNotification(Calendar calendar) {
-        Intent intent = new Intent(getContext(), MyBroadcastReciever.class);
+    private void setFirstNotification() {
+        MyBroadcastReciever.setNextAlarm(getContext());
+        /*Intent intent = new Intent(getContext(), MyBroadcastReciever.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 getContext(), 234324243, intent, 0);
         AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         Toast.makeText(getContext(), "Alarm set in " + calendar.get(Calendar.HOUR) + " Day "+ calendar.get(Calendar.DAY_OF_WEEK),
-                Toast.LENGTH_SHORT).show();
+                Toast.LENGTH_SHORT).show();*/
+
+        OpenerAndHelper.enableBootReceiver();
     }
 
     private int getYear() {

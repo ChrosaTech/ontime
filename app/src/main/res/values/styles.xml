@@ -10,12 +10,9 @@
         <item name="android:textColor">@color/ColorPrimaryText</item>
     </style>
 
-    <style name="BlackTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="BlackTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimaryRed</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryRedDark</item>
-        <item name="colorAccent">@color/colorRedAccent</item>
-        <item name="android:textColor">@color/ColorPrimaryText</item>
+
     </style>
 
     <style name="OrangeTheme" parent="Theme.AppCompat.Light.DarkActionBar">

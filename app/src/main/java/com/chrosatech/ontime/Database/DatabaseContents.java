@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.chrosatech.ontime.Activities.MainActivity;
@@ -165,6 +166,13 @@ public class DatabaseContents extends SQLiteAssetHelper {
                 calendar.set(Calendar.SECOND, 0);
                 Log.d("Calender",calendar.getTime()+"  "+currentCalendar.getTime());
 
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context1);
+                String timeBefore = sharedPref.getString("notification_before_time", "5 mins");
+                StringTokenizer stringTokenizer = new StringTokenizer(timeBefore);
+                if (stringTokenizer.hasMoreTokens()) {
+                    calendar.roll(Calendar.MINUTE, -(Integer.parseInt(stringTokenizer.nextToken())));
+                }
+
                 if (calendar.getTimeInMillis() > currentCalendar.getTimeInMillis()) {
                     Log.d("Calender","Found");
                     editor.putString("ClassType", c.getString(1));
@@ -185,6 +193,7 @@ public class DatabaseContents extends SQLiteAssetHelper {
             }
         }
         Log.d("Calender",calendar+"");
+
 
         return calendar;
     }
