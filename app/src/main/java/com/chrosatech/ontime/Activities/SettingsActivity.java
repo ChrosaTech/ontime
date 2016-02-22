@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -133,8 +134,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     preference.setSummary(R.string.pref_ringtone_silent);
 
                 } else {
-                    Ringtone ringtone = RingtoneManager.getRingtone(
-                            preference.getContext(), Uri.parse(stringValue));
+                    Ringtone ringtone = RingtoneManager.getRingtone(preference.getContext(), Uri.parse(stringValue));
 
                     if (ringtone == null) {
                         // Clear the summary if there was a lookup error.
@@ -188,6 +188,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
               //  || CreditFragment.class.getName().equals(fragmentName);
     }
 
+    public static String getApplicationName(Context context) {
+        int stringId = context.getApplicationInfo().labelRes;
+        return context.getString(stringId);
+    }
     @Override
     public void onHeaderClick(Header header, int position) {
 
@@ -209,9 +213,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 startActivity(Intent.createChooser(i, "Send email"));
                 break;
             case "About":
+                int versionCode = BuildConfig.VERSION_CODE;
+                String versionName = BuildConfig.VERSION_NAME;
+
                 builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
                 builder.setTitle("About");
-                builder.setMessage("/*Custom_message*/");
+                builder.setMessage(getApplicationName(this)+"\nVersion"+versionName+versionCode);
                 builder.setPositiveButton("Ok", null);
                 // builder.setNegativeButton("cancel", null);
                 builder.show();

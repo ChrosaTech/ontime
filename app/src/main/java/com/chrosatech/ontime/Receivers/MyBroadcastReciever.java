@@ -7,6 +7,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -69,6 +71,10 @@ public class MyBroadcastReciever extends BroadcastReceiver  {
         SharedPreferences sharedPreferences = context.getSharedPreferences("OnTimePreferences", Context.MODE_PRIVATE);
 
 
+        Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.ic_launcher);
+
+
         /*Context context12 = OpenerAndHelper.getContext();
         Intent intent = new Intent(context12, MyBroadcastReciever.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
@@ -82,10 +88,14 @@ public class MyBroadcastReciever extends BroadcastReceiver  {
         int m = random.nextInt(9999 - 1000) + 1000;*/
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        /*.setSmallIcon(R.mipmap.ic_launcher)*/
+                        .setLargeIcon(icon)
+                        //Set action for mute
                         .setContentTitle(sharedPreferences.getString("Subject","Subject"))
                         .setContentText(sharedPreferences.getString("Room", "Room") +
-                                " (" + sharedPreferences.getString("ClassType", "ClassType") + ")");
+                                " (" + sharedPreferences.getString("ClassType", "ClassType") + ")")
+                /*.addAction(R.drawable.mute_notification,"sds",contentIntent)*/
+                ;
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         Boolean isVibrateOn = sharedPref.getBoolean(Values.keyNotificationVibrate, true);
@@ -95,7 +105,7 @@ public class MyBroadcastReciever extends BroadcastReceiver  {
         String notificationSound = sharedPref.getString(Values.keyNotificationRingtone, "content://settings/system/notification_sound");
         mBuilder.setSound(Uri.parse(notificationSound));
         mBuilder.setAutoCancel(true);
-                       /* .addAction(R.drawable.mute_notification,"mute",pendingIntent)*/
+
 
         mBuilder.setContentIntent(contentIntent);
         //mBuilder.setDefaults(Notification.DEFAULT_SOUND);
