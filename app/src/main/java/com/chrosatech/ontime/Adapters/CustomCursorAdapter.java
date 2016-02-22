@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.chrosatech.ontime.Helper.Values;
 import com.chrosatech.ontime.R;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 
@@ -56,7 +57,7 @@ public class CustomCursorAdapter extends CursorAdapter {
         String type = "(" + cursor.getString(3) + ")";
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        String subjectForm = sharedPref.getString("example_appearance", "1");
+        String subjectForm = sharedPref.getString(Values.keyAppearance, "1");
         final String subjectFullForm = cursor.getString(4).trim();
 
         //To correctly display KenBurnsView

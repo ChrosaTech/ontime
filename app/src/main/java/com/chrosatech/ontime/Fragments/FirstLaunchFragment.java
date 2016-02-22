@@ -1,9 +1,5 @@
 package com.chrosatech.ontime.Fragments;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -31,12 +27,12 @@ import com.chrosatech.ontime.Activities.MainActivity;
 import com.chrosatech.ontime.Behaviors.FabBehavior;
 import com.chrosatech.ontime.Database.DatabaseContents;
 import com.chrosatech.ontime.Helper.OpenerAndHelper;
+import com.chrosatech.ontime.Helper.Values;
 import com.chrosatech.ontime.R;
 import com.chrosatech.ontime.Receivers.MyBroadcastReciever;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class FirstLaunchFragment extends Fragment {
@@ -47,7 +43,6 @@ public class FirstLaunchFragment extends Fragment {
     private Spinner branchSpinner, groupSpinner, yearSpinner,collegeSpinner,tutSpinner,shiftSpinner;
     private Button btnSubmit;
     private SharedPreferences.Editor editor;
-    private String firstLaunch = "firstLaunch";
     private Boolean exit = false;
     private Snackbar snackbar;
 
@@ -66,7 +61,10 @@ public class FirstLaunchFragment extends Fragment {
         collegeSpinner = (Spinner)view.findViewById(R.id.college_spinner);
         tutSpinner = (Spinner)view.findViewById(R.id.tut_spinner);
         shiftSpinner = (Spinner)view.findViewById(R.id.spinner_shift);
-       // btnSubmit = (Button) findViewById(R.id.btnSubmit);
+
+        editor = MainActivity.sharedPreferences.edit();
+
+        // btnSubmit = (Button) findViewById(R.id.btnSubmit);
 
         FloatingActionButton fabSubmit = (FloatingActionButton) view.findViewById(R.id.fabSubmit);
 
@@ -202,10 +200,10 @@ public class FirstLaunchFragment extends Fragment {
             String id = db.getID(whereClause);
             if (id != null){
                 //MainActivity.sharedPreferences = getPreferences(Context.MODE_PRIVATE);
-                editor = MainActivity.sharedPreferences.edit();
-                editor.putBoolean(firstLaunch, false);
-                editor.putString("ID", id);
-                editor.commit();
+                editor.putBoolean(Values.keyFirstLaunch, false);
+                editor.putString(Values.keyID, id);
+                editor.putBoolean(Values.keyChangeTimeTable, false);
+                editor.apply();
 
                 setFirstNotification();
 
@@ -257,12 +255,13 @@ public class FirstLaunchFragment extends Fragment {
     }
 
     public boolean onBackPressed() {
-        Log.d("First","confirm");
+
         if (snackbar.isShown())
             snackbar.dismiss();
-        if (MainActivity.sharedPreferences.getBoolean(MainActivity.changeTimeTable, true)){
-            MainActivity.sharedPreferences.edit().putBoolean(MainActivity.changeTimeTable, false).apply();
+        if (MainActivity.sharedPreferences.getBoolean(Values.keyChangeTimeTable, true)){
+            editor.putBoolean(Values.keyChangeTimeTable, false).apply();
             OpenerAndHelper.restartApp();
+            //OpenerAndHelper.openSettingsActivity();
             return true;
         }
         if (exit) {

@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.chrosatech.ontime.Activities.MainActivity;
+import com.chrosatech.ontime.Helper.Values;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.text.SimpleDateFormat;
@@ -113,7 +114,7 @@ public class DatabaseContents extends SQLiteAssetHelper {
         SharedPreferences sharedPreferences = context1.getSharedPreferences("OnTimePreferences",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        String id = sharedPreferences.getString("ID", "0");
+        String id = sharedPreferences.getString(Values.keyID, "0");
 
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
@@ -167,7 +168,7 @@ public class DatabaseContents extends SQLiteAssetHelper {
                 Log.d("Calender",calendar.getTime()+"  "+currentCalendar.getTime());
 
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context1);
-                String timeBefore = sharedPref.getString("notification_before_time", "5 mins");
+                String timeBefore = sharedPref.getString(Values.keyNotificationBeforeTime, "5 mins");
                 StringTokenizer stringTokenizer = new StringTokenizer(timeBefore);
                 if (stringTokenizer.hasMoreTokens()) {
                     calendar.roll(Calendar.MINUTE, -(Integer.parseInt(stringTokenizer.nextToken())));

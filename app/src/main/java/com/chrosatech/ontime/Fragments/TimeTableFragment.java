@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 import com.chrosatech.ontime.Adapters.ViewPagerAdapter;
 import com.chrosatech.ontime.Database.DatabaseContents;
+import com.chrosatech.ontime.Helper.Values;
 import com.chrosatech.ontime.R;
 
 import java.text.SimpleDateFormat;
@@ -51,6 +52,8 @@ public class TimeTableFragment extends Fragment {
         DatabaseContents dbContents = new DatabaseContents(getContext());
         String days[] = dbContents.getWorkingDaysOfWeek();
         int noOfDays = days.length;
+        Values.refreshData = new boolean[noOfDays];
+        Values.fragNumber = 0;
         UniversalFragment universalFragment[] = new UniversalFragment[noOfDays];
 
         for (int i = 0; i<noOfDays; i++){

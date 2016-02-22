@@ -4,8 +4,6 @@ package com.chrosatech.ontime.Activities;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -25,10 +23,11 @@ import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.chrosatech.ontime.BuildConfig;
 import com.chrosatech.ontime.Helper.OpenerAndHelper;
+import com.chrosatech.ontime.Helper.Values;
 import com.chrosatech.ontime.R;
 import com.chrosatech.ontime.Receivers.MyBroadcastReciever;
 
@@ -192,20 +191,24 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @Override
     public void onHeaderClick(Header header, int position) {
 
-        if (header.title != null) {
-            if (header.title.equals("Feedback")) {
+        String title = String.valueOf(header.title);
+        switch (title) {
+            case "Feedback":
 
-            /*Intent i = new Intent(Intent.ACTION_SEND);
-            i.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{ "chrosatech@gmail.com" });
-            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Feedback");
-            i.putExtra(android.content.Intent.EXTRA_TEXT, "Add a feature");
-            startActivity(Intent.createChooser(i, "Send email"));*/
-                Intent i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto", "chrosatech@gmail.com", null));
+                /*Intent i = new Intent(Intent.ACTION_SEND);
+                i.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{ "chrosatech@gmail.com" });
                 i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Feedback");
                 i.putExtra(android.content.Intent.EXTRA_TEXT, "Add a feature");
+                startActivity(Intent.createChooser(i, "Send email"));*/
+                Intent i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto", "chrosatech@gmail.com", null));
+                i.putExtra(Intent.EXTRA_SUBJECT, "Feedback");
+                String body = "[ " + Build.MANUFACTURER + ", " + Build.BRAND + ", " + Build.MODEL + ", " + Build.PRODUCT + ", " + Build.DEVICE
+                        + ", " + Build.VERSION.SDK_INT + ", " + Build.VERSION.RELEASE + ", " + BuildConfig.VERSION_NAME + "]\n\n";
+                i.putExtra(Intent.EXTRA_TEXT, body);
                 startActivity(Intent.createChooser(i, "Send email"));
-            } else if (header.title.equals("About")) {
+                break;
+            case "About":
                 builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
                 builder.setTitle("About");
                 builder.setMessage("/*Custom_message*/");
@@ -213,13 +216,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 // builder.setNegativeButton("cancel", null);
                 builder.show();
                 //builder.setIcon(R.drawable.ic_launcher);
-            } else if (header.title.equals("Change time table")){
-                MainActivity.sharedPreferences.edit().putBoolean(MainActivity.changeTimeTable, true).apply();
+                break;
+            case "Change time table":
+                MainActivity.sharedPreferences.edit().putBoolean(Values.keyChangeTimeTable, true).apply();
                 OpenerAndHelper.restartApp();
-            }
+                break;
         }
-        super.onHeaderClick(header, position);
 
+        super.onHeaderClick(header, position);
     }
 
 
@@ -240,27 +244,46 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
            /* bindPreferenceSummaryToValue(findPreference("example_text"));
             bindPreferenceSummaryToValue(findPreference("example_list"));*/
-            bindPreferenceSummaryToValue(findPreference("example_appearance"));
-            bindPreferenceSummaryToValue(findPreference("theme"));
-            findPreference("theme").getSharedPreferences().registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+            bindPreferenceSummaryToValue(findPreference(Values.keyAppearance));
+            bindPreferenceSummaryToValue(findPreference(Values.keyTheme));
+            findPreference(Values.keyAppearance).getSharedPreferences().registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+            findPreference(Values.keyTheme).getSharedPreferences().registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+
+            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+            // to their values. When their values change, their summaries are
+            // updated to reflect the new value, per the Android Design
+            // guidelines.
+            /*bindPreferenceSummaryToValue(findPreference("sync_frequency"));*/
         }
+    }
 
+    private static SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener()
+    {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            switch (key) {
+                case Values.keyTheme:
 
-
-        private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener()
-        {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                if (key.equals("theme")) {
-
+                    MainActivity.isThemeChanged = true;
                     //Restart the app on changing theme.
                     //getActivity().finish();
                     OpenerAndHelper.restartApp();
 
-                }
+                    break;
+                case "notification_before_time":
+
+                    OpenerAndHelper.disableBootReceiver();
+                    OpenerAndHelper.enableBootReceiver();
+
+                    break;
+                case Values.keyAppearance:
+                    for (int i = 0; i < Values.fragNumber; i++) {
+                        Values.refreshData[i] = true;
+                    }
+                    break;
             }
-        };
-    }
+        }
+    };
 
     /**
      * This fragment shows notification preferences only. It is used when the
@@ -278,16 +301,16 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
-            bindPreferenceSummaryToValue(findPreference("notification_before_time"));
-            findPreference("notification_before_time").getSharedPreferences().registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+            bindPreferenceSummaryToValue(findPreference(Values.keyNotificationRingtone));
+            bindPreferenceSummaryToValue(findPreference(Values.keyNotificationBeforeTime));
+            findPreference(Values.keyNotificationBeforeTime).getSharedPreferences().registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
 
             //**prefrence for before time**//
 
 
             //***switch Prefrence for vibration***
-            SwitchPreference alertOption=(SwitchPreference) findPreference("notifications_new_message");
+            SwitchPreference alertOption=(SwitchPreference) findPreference(Values.keyNotificationAlert);
             if (alertOption!=null)
             {
                 alertOption.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -298,7 +321,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         if (isAlertOn)
                         {
                             MyBroadcastReciever.setNextAlarm(OpenerAndHelper.getContext());
-                            Toast.makeText(getActivity(),"checked",Toast.LENGTH_SHORT).show();
                             OpenerAndHelper.enableBootReceiver();
                         }
                         else
@@ -311,7 +333,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                             if (alarmManager!= null) {
                                 alarmManager.cancel(pendingIntent);
                             }
-                            Toast.makeText(getActivity(),"unchecked",Toast.LENGTH_SHORT).show();
                             OpenerAndHelper.disableBootReceiver();
                         }
                         return true;
@@ -319,78 +340,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 });
             }
 
-            //***switch Prefrence for vibration***
-            SwitchPreference vibrateOption=(SwitchPreference) findPreference("notifications_new_message_vibrate");
-            if (vibrateOption!=null)
-            {
-                vibrateOption.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                    @Override
-                    public boolean onPreferenceChange(Preference preference, Object isVibrateEnabled) {
-                        boolean isVibrateOn=((Boolean)isVibrateEnabled).booleanValue();
-                        if (isVibrateOn)
-                        {
-                            Toast.makeText(getActivity(),"Enabled",Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            Toast.makeText(getActivity(),"Disabled",Toast.LENGTH_SHORT).show();
-                        }
-                    return true;
-                    }
-                });
-            }
-            else
-            {
-                Toast.makeText(getActivity(),"sdsd",Toast.LENGTH_LONG).show();
-            }
-        }
-
-        private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener()
-        {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                if (key.equals("notification_before_time")) {
-
-                    //Restart the app on changing theme.
-                    //getActivity().finish();
-                    OpenerAndHelper.setBeforeTime();
-
-                }
-            }
-        };
-    }
-
-  /*  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class CreditFragment extends Fragment {
-
-
-        @Override
-        public void onStart() {
-            super.onStart();
-            Intent i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                    "mailto", "chrosatech@gmail.com", null));
-            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Feedback");
-            i.putExtra(android.content.Intent.EXTRA_TEXT, "Add a feature");
-            startActivity(Intent.createChooser(i, "Send email"));
-            getActivity().finish();
-        }
-
-    }*/
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class AboutFragment extends PreferenceFragment
-    {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_about);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            /*bindPreferenceSummaryToValue(findPreference("sync_frequency"));*/
         }
 
     }
+
 }

@@ -3,6 +3,7 @@ package com.chrosatech.ontime.Fragments;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ListView;
 
 import com.chrosatech.ontime.Adapters.CustomCursorAdapter;
 import com.chrosatech.ontime.Database.DatabaseContents;
+import com.chrosatech.ontime.Helper.Values;
 import com.chrosatech.ontime.R;
 
 
@@ -25,6 +27,8 @@ import com.chrosatech.ontime.R;
 public class UniversalFragment extends Fragment {
 
     private ListView listView;
+    private CustomCursorAdapter adapter;
+    private int fragNumber;
 
     public UniversalFragment() {
         // Required empty public constructor
@@ -40,15 +44,25 @@ public class UniversalFragment extends Fragment {
         Bundle bundle = this.getArguments();
         String day = bundle.getString("day");
         fill(day);
+        fragNumber = Values.fragNumber++;
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        if (Values.refreshData[fragNumber]) {
+            adapter.notifyDataSetChanged();
+            Values.refreshData[fragNumber] = false;
+        }
+        super.onResume();
     }
 
     private void fill(String title){
 
         DatabaseContents dbContents = new DatabaseContents(getActivity());
         Cursor cursor = dbContents.getCursor(title);
-        CustomCursorAdapter adapter = new CustomCursorAdapter(getActivity(), cursor);
+        adapter = new CustomCursorAdapter(getActivity(), cursor);
         listView.setAdapter(adapter);
 
     }

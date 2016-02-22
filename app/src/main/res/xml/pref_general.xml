@@ -39,7 +39,7 @@
     <ListPreference
         android:title="Theme"
         android:key="theme"
-        android:defaultValue="-2"
+        android:defaultValue="Default"
         android:entries="@array/pref_theme_entries"
         android:entryValues="@array/pref_theme_entries"
         android:negativeButtonText="@null"
@@ -48,7 +48,7 @@
         />
     <ListPreference
         android:title="Appearance"
-        android:key="example_appearance"
+        android:key="appearance"
         android:defaultValue="1"
         android:entries="@array/pref_appearance_entries"
         android:entryValues="@array/pref_appearance_value"

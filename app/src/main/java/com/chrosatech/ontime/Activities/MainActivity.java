@@ -17,6 +17,7 @@ import com.chrosatech.ontime.Adapters.ViewPagerAdapter;
 import com.chrosatech.ontime.Fragments.FirstLaunchFragment;
 import com.chrosatech.ontime.Fragments.TimeTableFragment;
 import com.chrosatech.ontime.Helper.OpenerAndHelper;
+import com.chrosatech.ontime.Helper.Values;
 import com.chrosatech.ontime.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,8 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBar actionBar;
     public static SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    public static String firstLaunch = "firstLaunch";
-    public static String changeTimeTable = "changeTimeTable";
+    public static boolean isThemeChanged = false;
     /*private float x1;
     private float x2;
     private float MIN_DISTANCE = 10;*/
@@ -55,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_settings) {
             OpenerAndHelper.openSettingsActivity();
-           /* Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);*/
         }
 
         return super.onOptionsItemSelected(item);
@@ -88,13 +86,13 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("OnTimePreferences",Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        if(!sharedPreferences.contains(firstLaunch)){
-            editor.putBoolean(firstLaunch, true);
-            editor.putBoolean(changeTimeTable, false);
+        if(!sharedPreferences.contains(Values.keyFirstLaunch)){
+            editor.putBoolean(Values.keyFirstLaunch, true);
+            editor.putBoolean(Values.keyChangeTimeTable, false);
             editor.apply();
         }
 
-        if (sharedPreferences.getBoolean(firstLaunch, true) || sharedPreferences.getBoolean(changeTimeTable, true)) {
+        if (sharedPreferences.getBoolean(Values.keyFirstLaunch, true) || sharedPreferences.getBoolean(Values.keyChangeTimeTable, true)) {
             Log.d("First Launch","true");
             OpenerAndHelper.openFirstLaunchFragment();
         }else {
@@ -113,6 +111,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+   /* @Override
+    protected void onResume() {
+        super.onResume();
+        if (isThemeChanged) {
+            isThemeChanged = false;
+            recreate();
+        }
+    }*/
 
 
     @Override

@@ -54,7 +54,7 @@ public class OpenerAndHelper {
     public static void setAppTheme(){
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        String themeColor = sharedPref.getString("theme", "");
+        String themeColor = sharedPref.getString(Values.keyTheme, "Default");
 
         switch (themeColor){
 
@@ -67,22 +67,6 @@ public class OpenerAndHelper {
             case "Rose Red"    : context.setTheme(R.style.RedTheme);
                 break;
             case "Forest Green"  : context.setTheme(R.style.GreenTheme);
-                break;
-            default:
-        }
-
-    }
-    public static void setBeforeTime(){
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        String timeBefore = sharedPref.getString("notification_before_time", "");
-        switch (timeBefore)
-        {
-            case "5 mins":
-                Log.d("a","cj");
-                Toast.makeText(getActivity(),"1",Toast.LENGTH_SHORT).show();
-                break;
-            case "10 mins":
-                Toast.makeText(getActivity(),"1",Toast.LENGTH_SHORT).show();
                 break;
             default:
         }
@@ -117,10 +101,16 @@ public class OpenerAndHelper {
     }
 
     public static void restartApp(){
+
         Intent i = new Intent(context, MainActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(i);
+
+        //alternate method
+        /*Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage( getBaseContext().getPackageName() );
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);*/
     }
 
     public static void enableBootReceiver(){

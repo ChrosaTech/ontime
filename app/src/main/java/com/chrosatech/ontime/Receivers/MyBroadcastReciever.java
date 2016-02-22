@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.chrosatech.ontime.Activities.MainActivity;
 import com.chrosatech.ontime.Database.DatabaseContents;
 import com.chrosatech.ontime.Helper.OpenerAndHelper;
+import com.chrosatech.ontime.Helper.Values;
 import com.chrosatech.ontime.R;
 
 import java.util.Calendar;
@@ -28,20 +30,11 @@ public class MyBroadcastReciever extends BroadcastReceiver  {
     @Override
     public void onReceive(Context context, Intent intent)
     {
-        Log.d("OnTimeBroadcast","onreceive");
-        Toast.makeText(context,"Time!!1",Toast.LENGTH_SHORT).show();
+        Log.d("OnTimeBroadcast", "onreceive");
+
         showNotification(context);
-        //TODO remove this vibrator
-
-
-        //Vibrator vibrator=(Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
-        //vibrator.vibrate(500);
 
         setNextAlarm(context);
-
-
-
-
 
     }
 
@@ -56,7 +49,11 @@ public class MyBroadcastReciever extends BroadcastReceiver  {
                 context, 234324243, intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        }
         /*Toast.makeText(context, "Alarm set in " + 5 + " seconds",
                 Toast.LENGTH_SHORT).show();*/
        /* mainActivity.getToast(context);*/
@@ -91,11 +88,11 @@ public class MyBroadcastReciever extends BroadcastReceiver  {
                                 " (" + sharedPreferences.getString("ClassType", "ClassType") + ")");
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-        Boolean isVibrateOn = sharedPref.getBoolean("notifications_new_message_vibrate", true);
+        Boolean isVibrateOn = sharedPref.getBoolean(Values.keyNotificationVibrate, true);
         if (isVibrateOn) {
             mBuilder.setDefaults(NotificationCompat.DEFAULT_VIBRATE);
         }
-        String notificationSound = sharedPref.getString("notifications_new_message_ringtone", "content://settings/system/notification_sound");
+        String notificationSound = sharedPref.getString(Values.keyNotificationRingtone, "content://settings/system/notification_sound");
         mBuilder.setSound(Uri.parse(notificationSound));
         mBuilder.setAutoCancel(true);
                        /* .addAction(R.drawable.mute_notification,"mute",pendingIntent)*/
