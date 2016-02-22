@@ -32,6 +32,7 @@
     <string name="teacherName">Teacher Name</string>
     <string name="classType">(L)</string>
 
+
     <string-array name="pref_theme_entries">
         <item>Default</item>
         <item>Black</item>
