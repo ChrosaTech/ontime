@@ -1,17 +1,14 @@
 package com.chrosatech.ontime.Fragments;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,16 +21,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amulyakhare.textdrawable.TextDrawable;
 import com.chrosatech.ontime.Activities.MainActivity;
-import com.chrosatech.ontime.Activities.SettingsActivity;
 import com.chrosatech.ontime.Behaviors.FabBehavior;
 import com.chrosatech.ontime.Database.DatabaseContents;
 import com.chrosatech.ontime.Helper.OpenerAndHelper;
 import com.chrosatech.ontime.Helper.Values;
 import com.chrosatech.ontime.R;
 import com.chrosatech.ontime.Receivers.MyBroadcastReciever;
-import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,15 +64,16 @@ public class FirstLaunchFragment extends Fragment {
         // btnSubmit = (Button) findViewById(R.id.btnSubmit);
 
         FloatingActionButton fabSubmit = (FloatingActionButton) view.findViewById(R.id.fabSubmit);
+        //fabSubmit.setBackgroundTintList(getResources().getColorStateList(R.color.ColorPrimary));
 
-        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/OnTime.ttf");
+     /*   Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/OnTime.ttf");
 
         TextDrawable textDrawable = TextDrawable.builder()
                 .beginConfig()
                 .useFont(typeface)
                 .endConfig()
                 .buildRound(getString(R.string.arrow_forward), Color.TRANSPARENT);
-        fabSubmit.setImageDrawable(textDrawable);
+        fabSubmit.setImageDrawable(textDrawable);*/
 
         CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) fabSubmit.getLayoutParams();
         p.setBehavior(new FabBehavior());
@@ -104,6 +99,7 @@ public class FirstLaunchFragment extends Fragment {
         fabSubmit.setOnClickListener(submitClick);
         return view;
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -205,8 +201,8 @@ public class FirstLaunchFragment extends Fragment {
                 //MainActivity.sharedPreferences = getPreferences(Context.MODE_PRIVATE);
                 editor.putBoolean(Values.keyFirstLaunch, false);
                 editor.putString(Values.keyID, id);
-                editor.putBoolean(Values.keyChangeTimeTable, false);
                 editor.apply();
+                MainActivity.isChangeTimeTable = false;
 
                 setFirstNotification();
 
@@ -261,8 +257,8 @@ public class FirstLaunchFragment extends Fragment {
 
         if (snackbar.isShown())
             snackbar.dismiss();
-        if (MainActivity.sharedPreferences.getBoolean(Values.keyChangeTimeTable, true)){
-            editor.putBoolean(Values.keyChangeTimeTable, false).apply();
+        if (MainActivity.isChangeTimeTable){
+            MainActivity.isChangeTimeTable = false;
             /*TaskStackBuilder.create(getContext()).addParentStack(SettingsActivity.class)
                     .addNextIntent(new Intent(getContext(), SettingsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
                     .startActivities();*/

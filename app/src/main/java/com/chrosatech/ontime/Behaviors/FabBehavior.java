@@ -1,10 +1,10 @@
 package com.chrosatech.ontime.Behaviors;
 
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
-import com.melnykov.fab.FloatingActionButton;
 
 /**
  * Created by mayank on 30/12/15.

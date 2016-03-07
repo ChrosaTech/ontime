@@ -48,11 +48,11 @@ public class DatabaseContents extends SQLiteAssetHelper {
         String whereClause = "ID = '" + id + "' AND UPPER(Day) = UPPER('" + day + "') ";
 
         qb.setTables(sqlTables);
-        Cursor c = qb.query(db, sqlSelect, whereClause, null,
+        Cursor cursor = qb.query(db, sqlSelect, whereClause, null,
                 null, null, null);
 
-        c.moveToFirst();
-        return c;
+        cursor.moveToFirst();
+        return cursor;
 
     }
 
@@ -70,22 +70,23 @@ public class DatabaseContents extends SQLiteAssetHelper {
         String days[];
 
         qb.setTables(sqlTables);
-        Cursor c = qb.query(db, sqlSelect, whereClause, null,
+        Cursor cursor = qb.query(db, sqlSelect, whereClause, null,
                 null, null, null);
 
-        c.moveToFirst();
+        cursor.moveToFirst();
 
-        if (c.getCount() != 0){
-            daysHashed = new LinkedHashSet<>(c.getCount());
-            daysHashed.add(c.getString(0).toUpperCase());
+        if (cursor.getCount() != 0){
+            daysHashed = new LinkedHashSet<>(cursor.getCount());
+            daysHashed.add(cursor.getString(0).toUpperCase());
 
-            while (c.moveToNext()){
-                daysHashed.add(c.getString(0).toUpperCase());
+            while (cursor.moveToNext()){
+                daysHashed.add(cursor.getString(0).toUpperCase());
             }
             days = daysHashed.toArray(new String[daysHashed.size()]);
         } else{
             days = new String[]{"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
         }
+        cursor.close();
         return days;
     }
 
@@ -99,14 +100,14 @@ public class DatabaseContents extends SQLiteAssetHelper {
         //String whereClause = "College = 'BVP' AND YEAR = 1 AND Branch = 'IT' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
 
         qb.setTables(sqlTables);
-        Cursor c = qb.query(db, sqlSelect, whereClause, null,
+        Cursor cursor = qb.query(db, sqlSelect, whereClause, null,
                 null, null, null);
 
-        c.moveToFirst();
-        if (c.getCount() == 0)
+        cursor.moveToFirst();
+        if (cursor.getCount() == 0)
             return null;
         else
-            return c.getString(0);
+            return cursor.getString(0);
     }
 
     public Calendar getNextNotificationTime(){
@@ -134,17 +135,17 @@ public class DatabaseContents extends SQLiteAssetHelper {
             String whereClause = "ID = '" + id + "' AND UPPER(Day) = UPPER('" + dayOfTheWeek + "') ";
 
             qb.setTables(sqlTables);
-            Cursor c = qb.query(db, sqlSelect, whereClause, null,
+            Cursor cursor = qb.query(db, sqlSelect, whereClause, null,
                     null, null, null);
 
-            c.moveToFirst();
+            cursor.moveToFirst();
 
             Calendar currentCalendar = Calendar.getInstance();
             /*int hours = currentCalendar.get(Calendar.HOUR);
             int amPm = currentCalendar.get(Calendar.AM_PM);*/
 
-            while (c.getPosition() < c.getCount()) {
-                String time = c.getString(0).toLowerCase();
+            while (cursor.getPosition() < cursor.getCount()) {
+                String time = cursor.getString(0).toLowerCase();
                 if (time.endsWith("am")) {
                     calendar.set(Calendar.AM_PM, Calendar.AM);
                     time = time.replace("am", "");
@@ -176,15 +177,16 @@ public class DatabaseContents extends SQLiteAssetHelper {
 
                 if (calendar.getTimeInMillis() > currentCalendar.getTimeInMillis()) {
                     Log.d("Calender","Found");
-                    editor.putString("ClassType", c.getString(1));
-                    editor.putString("Subject",c.getString(2));
-                    editor.putString("Room", c.getString(3));
+                    editor.putString("ClassType", cursor.getString(1));
+                    editor.putString("Subject",cursor.getString(2));
+                    editor.putString("Room", cursor.getString(3));
                     editor.apply();
                     found = true;
+                    cursor.close();
                     break;
                 }
 
-                c.moveToNext();
+                cursor.moveToNext();
             }
 
             if (!found) {

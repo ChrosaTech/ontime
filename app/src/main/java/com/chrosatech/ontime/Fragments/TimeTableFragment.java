@@ -103,7 +103,8 @@ public class TimeTableFragment extends Fragment {
         String dayOfTheWeek = sdf.format(d);
         Boolean flag = false;
 
-        for (int i = 0; i<adapter.getCount(); i++){
+        int count = adapter.getCount();
+        for (int i = 0; i<count; i++){
             if (dayOfTheWeek.toUpperCase().equals(adapter.getPageTitle(i))){
                 viewPager.setCurrentItem(i);
                 flag = true;

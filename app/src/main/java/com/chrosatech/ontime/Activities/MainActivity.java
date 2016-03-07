@@ -15,7 +15,6 @@ import android.view.MenuItem;
 
 import com.chrosatech.ontime.Adapters.ViewPagerAdapter;
 import com.chrosatech.ontime.Fragments.FirstLaunchFragment;
-import com.chrosatech.ontime.Fragments.TimeTableFragment;
 import com.chrosatech.ontime.Helper.OpenerAndHelper;
 import com.chrosatech.ontime.Helper.Values;
 import com.chrosatech.ontime.R;
@@ -34,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public static SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     public static boolean isThemeChanged = false;
+    public static boolean isChangeTimeTable = false;
     /*private float x1;
     private float x2;
     private float MIN_DISTANCE = 10;*/
@@ -88,11 +88,11 @@ public class MainActivity extends AppCompatActivity {
 
         if(!sharedPreferences.contains(Values.keyFirstLaunch)){
             editor.putBoolean(Values.keyFirstLaunch, true);
-            editor.putBoolean(Values.keyChangeTimeTable, false);
+            isChangeTimeTable = false;
             editor.apply();
         }
 
-        if (sharedPreferences.getBoolean(Values.keyFirstLaunch, true) || sharedPreferences.getBoolean(Values.keyChangeTimeTable, true)) {
+        if (sharedPreferences.getBoolean(Values.keyFirstLaunch, true) || isChangeTimeTable) {
             Log.d("First Launch","true");
             OpenerAndHelper.openFirstLaunchFragment();
         }else {

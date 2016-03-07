@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.chrosatech.ontime.Helper.OpenerAndHelper;
-
 /**
  * Created by mayank on 15/2/16.
  */

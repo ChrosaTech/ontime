@@ -16,7 +16,7 @@ public class Values {
     public static final String keyNotificationBeforeTime = "notification_before_time";
     public static final String keyNotificationAlert = "notifications_alert";
     public static final String keyFirstLaunch = "keyFirstLaunch";
-    public static final String keyChangeTimeTable = "keyChangeTimeTable";
+    //public static final String keyChangeTimeTable = "keyChangeTimeTable";
     public static final String keyID = "ID";
 
 }

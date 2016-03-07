@@ -3,12 +3,10 @@ package com.chrosatech.ontime.Activities;
 
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -23,8 +21,8 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.widget.Toast;
 
 import com.chrosatech.ontime.BuildConfig;
 import com.chrosatech.ontime.Helper.OpenerAndHelper;
@@ -216,7 +214,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 int versionCode = BuildConfig.VERSION_CODE;
                 String versionName = BuildConfig.VERSION_NAME;
 
-                builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+                builder = new AlertDialog.Builder(this);
                 builder.setTitle("About");
                 builder.setMessage(getApplicationName(this)+"\nVersion"+versionName+versionCode);
                 builder.setPositiveButton("Ok", null);
@@ -225,7 +223,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 //builder.setIcon(R.drawable.ic_launcher);
                 break;
             case "Change time table":
-                MainActivity.sharedPreferences.edit().putBoolean(Values.keyChangeTimeTable, true).apply();
+                MainActivity.isChangeTimeTable = true;
                 OpenerAndHelper.openMainActivity();
                 //OpenerAndHelper.restartApp();
                 break;
@@ -285,7 +283,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
                     break;
                 case Values.keyAppearance:
-                    for (int i = 0; i < Values.fragNumber; i++) {
+                    int n = Values.fragNumber;
+                    for (int i = 0; i < n; i++) {
                         Values.refreshData[i] = true;
                     }
                     break;
