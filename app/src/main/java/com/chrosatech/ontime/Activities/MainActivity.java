@@ -130,11 +130,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Fragment fragment = OpenerAndHelper.getCurrentFragment();
-        if (fragment instanceof FirstLaunchFragment) {
+      /*  if (fragment instanceof FirstLaunchFragment) {
             if(((FirstLaunchFragment) fragment).onBackPressed()){
                 finish();
             }
-        }else if (fragment instanceof TimeTableFragment){
+        }*//*else if (fragment instanceof TimeTableFragment){
+            finish();
+        }*//* else {
+            finish();
+        }*/
+        if (!(fragment instanceof FirstLaunchFragment) || ((FirstLaunchFragment) fragment).onBackPressed()){
             finish();
         }
     }

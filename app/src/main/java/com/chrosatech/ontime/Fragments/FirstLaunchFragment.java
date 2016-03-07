@@ -1,5 +1,6 @@
 package com.chrosatech.ontime.Fragments;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -8,6 +9,7 @@ import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.chrosatech.ontime.Activities.MainActivity;
+import com.chrosatech.ontime.Activities.SettingsActivity;
 import com.chrosatech.ontime.Behaviors.FabBehavior;
 import com.chrosatech.ontime.Database.DatabaseContents;
 import com.chrosatech.ontime.Helper.OpenerAndHelper;
@@ -260,7 +263,10 @@ public class FirstLaunchFragment extends Fragment {
             snackbar.dismiss();
         if (MainActivity.sharedPreferences.getBoolean(Values.keyChangeTimeTable, true)){
             editor.putBoolean(Values.keyChangeTimeTable, false).apply();
-            OpenerAndHelper.restartApp();
+            /*TaskStackBuilder.create(getContext()).addParentStack(SettingsActivity.class)
+                    .addNextIntent(new Intent(getContext(), SettingsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+                    .startActivities();*/
+           // OpenerAndHelper.openSettingsActivity();
             //OpenerAndHelper.openSettingsActivity();
             return true;
         }

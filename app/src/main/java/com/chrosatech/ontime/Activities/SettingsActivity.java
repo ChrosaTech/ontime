@@ -226,7 +226,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 break;
             case "Change time table":
                 MainActivity.sharedPreferences.edit().putBoolean(Values.keyChangeTimeTable, true).apply();
-                OpenerAndHelper.restartApp();
+                OpenerAndHelper.openMainActivity();
+                //OpenerAndHelper.restartApp();
                 break;
         }
 

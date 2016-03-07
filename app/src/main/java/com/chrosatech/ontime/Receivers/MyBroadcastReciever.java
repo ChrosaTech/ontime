@@ -7,15 +7,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.chrosatech.ontime.Activities.MainActivity;
 import com.chrosatech.ontime.Database.DatabaseContents;
 import com.chrosatech.ontime.Helper.OpenerAndHelper;
@@ -71,10 +70,13 @@ public class MyBroadcastReciever extends BroadcastReceiver  {
         SharedPreferences sharedPreferences = context.getSharedPreferences("OnTimePreferences", Context.MODE_PRIVATE);
 
 
-        Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.ic_launcher);
-
-
+      /*  Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
+                R.mipmap.ic_launcher);*/
+        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+        // generate random color
+        int color = generator.getRandomColor();
+        TextDrawable textDrawable = TextDrawable.builder()
+                .buildRound(String.valueOf((sharedPreferences.getString("Subject", "Subject")).charAt(0)), color);
         /*Context context12 = OpenerAndHelper.getContext();
         Intent intent = new Intent(context12, MyBroadcastReciever.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
@@ -89,9 +91,10 @@ public class MyBroadcastReciever extends BroadcastReceiver  {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)
                         /*.setSmallIcon(R.mipmap.ic_launcher)*/
-                        .setLargeIcon(icon)
+                        .setLargeIcon(OpenerAndHelper.drawableToBitmap(textDrawable, context))
+                        .setSmallIcon(R.mipmap.ic_launcher)
                         //Set action for mute
-                        .setContentTitle(sharedPreferences.getString("Subject","Subject"))
+                        .setContentTitle(sharedPreferences.getString("Subject", "Subject"))
                         .setContentText(sharedPreferences.getString("Room", "Room") +
                                 " (" + sharedPreferences.getString("ClassType", "ClassType") + ")")
                 /*.addAction(R.drawable.mute_notification,"sds",contentIntent)*/
@@ -114,4 +117,5 @@ public class MyBroadcastReciever extends BroadcastReceiver  {
         mNotificationManager.notify(123456, mBuilder.build());
 
     }
+
 }

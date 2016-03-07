@@ -6,14 +6,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.widget.Toast;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.chrosatech.ontime.Activities.AppCompatPreferenceActivity;
 import com.chrosatech.ontime.Activities.MainActivity;
 import com.chrosatech.ontime.Activities.SettingsActivity;
@@ -78,6 +83,11 @@ public class OpenerAndHelper {
         activity.startActivity(intent);
     }
 
+    public static void openMainActivity(){
+        Intent intent = new Intent(context, MainActivity.class);
+        activity.startActivity(intent);
+    }
+
     public static void openFirstLaunchFragment(){
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.container, new FirstLaunchFragment(), "launchFragment");
@@ -104,6 +114,7 @@ public class OpenerAndHelper {
 
         Intent i = new Intent(context, MainActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(i);
 
@@ -129,5 +140,25 @@ public class OpenerAndHelper {
         pm.setComponentEnabledSetting(receiver,
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
+    }
+
+    public static Bitmap drawableToBitmap (TextDrawable drawable, Context context) {
+
+        //xxxhdpi pixel density for notification icon, it automatically fits smaller density screens
+        int widthHeight = (int)dipToPixels(context, 48);
+
+        Log.d("Drawable width",widthHeight+"");
+        Log.d("Drawable height", widthHeight +"");
+        Bitmap bitmap = Bitmap.createBitmap(widthHeight, widthHeight, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
+    }
+
+    public static float dipToPixels(Context context, float dipValue) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
     }
 }
