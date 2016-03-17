@@ -22,7 +22,12 @@ import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.chrosatech.ontime.BuildConfig;
 import com.chrosatech.ontime.Helper.OpenerAndHelper;
@@ -31,6 +36,7 @@ import com.chrosatech.ontime.R;
 import com.chrosatech.ontime.Receivers.MyBroadcastReciever;
 
 import java.util.List;
+import java.util.zip.Inflater;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -50,8 +56,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         OpenerAndHelper.setContext(this);
 
         OpenerAndHelper.setAppTheme();
-
-
 
         super.onCreate(savedInstanceState);
 
@@ -74,6 +78,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     }*/
 
     private void setupActionBar() {
+        ViewGroup root = (ViewGroup) findViewById(android.R.id.content).getParent();
+        Toolbar toolbar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.toolbar, root, false);
+        root.addView(toolbar,0);
+        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             // Show the Up button in the action bar.
@@ -211,12 +219,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 startActivity(Intent.createChooser(i, "Send email"));
                 break;
             case "About":
-                int versionCode = BuildConfig.VERSION_CODE;
-                String versionName = BuildConfig.VERSION_NAME;
 
                 builder = new AlertDialog.Builder(this);
                 builder.setTitle("About");
-                builder.setMessage(getApplicationName(this)+"\nVersion"+versionName+versionCode);
+                builder.setMessage(getApplicationName(this)+"\nVersion" + BuildConfig.VERSION_NAME);
                 builder.setPositiveButton("Ok", null);
                 // builder.setNegativeButton("cancel", null);
                 builder.show();

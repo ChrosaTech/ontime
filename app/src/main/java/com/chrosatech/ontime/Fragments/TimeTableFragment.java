@@ -1,8 +1,12 @@
 package com.chrosatech.ontime.Fragments;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,14 +35,23 @@ public class TimeTableFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_time_table, container, false);
 
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        AppBarLayout.LayoutParams params =
+                (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
+        params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+                | AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
+        toolbar.setLayoutParams(params);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         viewPager = (ViewPager) view.findViewById(R.id.pager);
         setupViewPager(viewPager);
         viewPager.setOffscreenPageLimit(5);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabanim_tabs);
+        tabLayout.setupWithViewPager(viewPager);
         /*tabLayout = (TabLayout) findViewById(R.id.tabanim_tabs);
         tabLayout.setupWithViewPager(viewPager);*/
 
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
-        tabs.setViewPager(viewPager);
+        /*PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
+        tabs.setViewPager(viewPager);*/
 
         setCurrentPage();
 
@@ -47,7 +60,7 @@ public class TimeTableFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
 
-        adapter = new ViewPagerAdapter(getChildFragmentManager());
+        adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         Bundle bundle = new Bundle();
         DatabaseContents dbContents = new DatabaseContents(getContext());
         String days[] = dbContents.getWorkingDaysOfWeek();

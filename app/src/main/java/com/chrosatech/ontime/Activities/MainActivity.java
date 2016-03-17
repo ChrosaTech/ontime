@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private ViewPagerAdapter adapter;
     private PagerAdapter pagerAdapter;
-    private ActionBar actionBar;
+   // private ActionBar actionBar;
     public static SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     public static boolean isThemeChanged = false;
@@ -71,10 +71,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        actionBar = getSupportActionBar();
+       /* actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setElevation(0);
-        }
+        }*/
 
        /* actionBar = getSupportActionBar();
         if (actionBar != null) {

@@ -3,6 +3,7 @@ package com.chrosatech.ontime.Fragments;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class UniversalFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.list_view, container, false);
         listView = (ListView) view.findViewById(R.id.listView);
+        ViewCompat.setNestedScrollingEnabled(listView, true);
 
         Bundle bundle = this.getArguments();
         String day = bundle.getString("day");

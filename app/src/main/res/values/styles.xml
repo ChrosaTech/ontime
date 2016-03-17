@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <!--<item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>-->
@@ -11,19 +11,19 @@
         <item name="android:textColor">@color/ColorPrimaryText</item>
     </style>
 
-    <style name="BlackTheme" parent="Theme.AppCompat">
+    <style name="BlackTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
 
     </style>
 
-    <style name="OrangeTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="OrangeTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimaryOrange</item>
         <item name="colorPrimaryDark">@color/colorPrimaryOrangeDark</item>
         <item name="colorAccent">@color/colorOrangeAccent</item>
         <item name="android:textColor">@color/ColorPrimaryText</item>
     </style>
-    <style name="PinkTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="PinkTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--Customize your theme here-->
         <item name="colorPrimary">@color/colorPrimaryPink</item>
         <item name="colorPrimaryDark">@color/colorPrimaryPinkDark</item>
@@ -31,7 +31,7 @@
         <item name="android:textColor">@color/ColorPrimaryText</item>
     </style>
 
-    <style name="RedTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="RedTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimaryRed</item>
         <item name="colorPrimaryDark">@color/colorPrimaryRedDark</item>
@@ -39,7 +39,7 @@
         <item name="android:textColor">@color/ColorPrimaryText</item>
     </style>
 
-    <style name="GreenTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="GreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimaryGreen</item>
         <item name="colorPrimaryDark">@color/colorPrimaryGreenDark</item>

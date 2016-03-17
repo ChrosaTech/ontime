@@ -9,6 +9,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,7 +36,6 @@ import java.util.List;
 
 public class FirstLaunchFragment extends Fragment {
 
-    private ActionBar actionBar;
     // private AutoCompleteTextView autoCompleteTextView;
     // String sample1[]={"IT","Cse","Ece","EEE"};
     private Spinner branchSpinner, groupSpinner, yearSpinner,collegeSpinner,tutSpinner,shiftSpinner;
@@ -51,6 +52,8 @@ public class FirstLaunchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_launch, container, false);
         snackbar = Snackbar.make(view, getString(R.string.notFound), Snackbar.LENGTH_LONG);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
         branchSpinner = (Spinner) view.findViewById(R.id.branch);
         groupSpinner = (Spinner) view.findViewById(R.id.group);
