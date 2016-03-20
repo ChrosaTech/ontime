@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
@@ -26,17 +25,12 @@ import java.util.Calendar;
 /**
  * Created by anshul on 25/1/16.
  */
-public class MyBroadcastReciever extends BroadcastReceiver  {
+public class MyBroadcastReceiver extends BroadcastReceiver  {
     /*MainActivity mainActivity=new MainActivity();*/
     @Override
-    public void onReceive(Context context, Intent intent)
-    {
-        Log.d("OnTimeBroadcast", "onreceive");
-
+    public void onReceive(Context context, Intent intent) {
         showNotification(context);
-
         setNextAlarm(context);
-
     }
 
 
@@ -45,7 +39,7 @@ public class MyBroadcastReciever extends BroadcastReceiver  {
         DatabaseContents db = new DatabaseContents(context);
         Calendar calendar = db.getNextNotificationTime();
 
-        Intent intent = new Intent(context, MyBroadcastReciever.class);
+        Intent intent = new Intent(context, MyBroadcastReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, 234324243, intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -78,7 +72,7 @@ public class MyBroadcastReciever extends BroadcastReceiver  {
         TextDrawable textDrawable = TextDrawable.builder()
                 .buildRound(String.valueOf((sharedPreferences.getString("Subject", "Subject")).charAt(0)), color);
         /*Context context12 = OpenerAndHelper.getContext();
-        Intent intent = new Intent(context12, MyBroadcastReciever.class);
+        Intent intent = new Intent(context12, MyBroadcastReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, 234324243, intent, 0);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

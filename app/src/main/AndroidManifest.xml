@@ -24,7 +24,7 @@
             android:parentActivityName=".Activities.MainActivity">
         </activity>
 
-        <receiver android:name=".Receivers.MyBroadcastReciever" />
+        <receiver android:name=".Receivers.MyBroadcastReceiver" />
 
         <receiver android:name=".Receivers.BootReceiver"
             android:enabled="false">

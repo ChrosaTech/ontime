@@ -8,17 +8,14 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Pair;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +26,7 @@ import com.chrosatech.ontime.Database.DatabaseContents;
 import com.chrosatech.ontime.Helper.OpenerAndHelper;
 import com.chrosatech.ontime.Helper.Values;
 import com.chrosatech.ontime.R;
-import com.chrosatech.ontime.Receivers.MyBroadcastReciever;
+import com.chrosatech.ontime.Receivers.MyBroadcastReceiver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +36,6 @@ public class FirstLaunchFragment extends Fragment {
     // private AutoCompleteTextView autoCompleteTextView;
     // String sample1[]={"IT","Cse","Ece","EEE"};
     private Spinner branchSpinner, groupSpinner, yearSpinner,collegeSpinner,tutSpinner,shiftSpinner;
-    private Button btnSubmit;
     private SharedPreferences.Editor editor;
     private Boolean exit = false;
     private Snackbar snackbar;
@@ -48,7 +44,6 @@ public class FirstLaunchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        setHasOptionsMenu(true);
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_launch, container, false);
         snackbar = Snackbar.make(view, getString(R.string.notFound), Snackbar.LENGTH_LONG);
@@ -64,19 +59,8 @@ public class FirstLaunchFragment extends Fragment {
 
         editor = MainActivity.sharedPreferences.edit();
 
-        // btnSubmit = (Button) findViewById(R.id.btnSubmit);
-
         FloatingActionButton fabSubmit = (FloatingActionButton) view.findViewById(R.id.fabSubmit);
         //fabSubmit.setBackgroundTintList(getResources().getColorStateList(R.color.ColorPrimary));
-
-     /*   Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(),"fonts/OnTime.ttf");
-
-        TextDrawable textDrawable = TextDrawable.builder()
-                .beginConfig()
-                .useFont(typeface)
-                .endConfig()
-                .buildRound(getString(R.string.arrow_forward), Color.TRANSPARENT);
-        fabSubmit.setImageDrawable(textDrawable);*/
 
         CoordinatorLayout.LayoutParams p = (CoordinatorLayout.LayoutParams) fabSubmit.getLayoutParams();
         p.setBehavior(new FabBehavior());
@@ -98,21 +82,12 @@ public class FirstLaunchFragment extends Fragment {
         addItemsOnSpinnerTut();
         addItemsOnSpinnerCollege();
         addItemsOnSpinnerShift();
-        //btnSubmit.setOnClickListener(submitClick);
         fabSubmit.setOnClickListener(submitClick);
         return view;
     }
 
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.findItem(R.id.menu_settings).setVisible(false);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-
     private void addItemsOnSpinnerShift(){
-        List<String> list= new ArrayList<>();
+        List<String> list= new ArrayList<>(2);
         list.add("Morning Shift");
         list.add("Evening Shift");
 
@@ -122,7 +97,7 @@ public class FirstLaunchFragment extends Fragment {
     }
 
     private void addItemsOnSpinnerBranch(){
-        List<String> list= new ArrayList<>();
+        List<String> list= new ArrayList<>(4);
         list.add("CSE");
         list.add("IT");
         list.add("ECE");
@@ -133,7 +108,7 @@ public class FirstLaunchFragment extends Fragment {
     }
 
     private void addItemsOnSpinnerBatch(){
-        List<String> list= new ArrayList<>();
+        List<String> list= new ArrayList<>(3);
         list.add("P1");
         list.add("P2");
         list.add("P3");
@@ -143,7 +118,7 @@ public class FirstLaunchFragment extends Fragment {
     }
     private void addItemsOnSpinnerCollege()
     {
-        List<String> list=new ArrayList<>();
+        List<String> list=new ArrayList<>(1);
         list.add("BVCOE");
         ArrayAdapter<String> dataAdapter= new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, list);
         dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
@@ -152,7 +127,7 @@ public class FirstLaunchFragment extends Fragment {
 
     private void addItemsOnSpinnerTut()
     {
-        List<String> list=new ArrayList<>();
+        List<String> list=new ArrayList<>(2);
         list.add("T1");
         list.add("T2");
         ArrayAdapter<String> dataAdapter= new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, list);
@@ -162,7 +137,7 @@ public class FirstLaunchFragment extends Fragment {
     }
 
     private void addItemsOnSpinnerYear(){
-        List<String> list= new ArrayList<>();
+        List<String> list= new ArrayList<>(4);
         list.add("First Year");
         list.add("Second Year");
         list.add("Third Year");
@@ -172,7 +147,7 @@ public class FirstLaunchFragment extends Fragment {
         yearSpinner.setAdapter(dataAdapter);
     }
 
-    public void addListenerOnSpinnerItemSelection(){
+    private void addListenerOnSpinnerItemSelection(){
         branchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -186,34 +161,43 @@ public class FirstLaunchFragment extends Fragment {
         });
     }
 
-    private View.OnClickListener submitClick = new View.OnClickListener() {
+    private final View.OnClickListener submitClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             int yearInt = getYear();
 
             //TODO update where clause
-            String whereClause = "College = 'BVP' " +
+            String whereClause = "College = \'" + collegeSpinner.getSelectedItem() +"\' " +
                     "AND YEAR = " + yearInt +
-                    " AND Branch = '"+String.valueOf(branchSpinner.getSelectedItem())+
-                    "' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
+                    " AND Branch = '"+ branchSpinner.getSelectedItem()+
+                    "' AND Shift = 'morning' AND Tutorial = '1' AND Practical = '2'";
             // String whereClause = "College = 'BVP' AND YEAR = 3 AND Branch = 'IT' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
 
             DatabaseContents db = new DatabaseContents(getContext());
-            String id = db.getID(whereClause);
-            if (id != null){
+            Pair<int[], String> selectedData = db.getID(whereClause);
+            if (selectedData != null){
+                int ids[] = selectedData.first;
+                int id = ids[0];
+                int altId = ids[1];
+                String college = selectedData.second;
                 //MainActivity.sharedPreferences = getPreferences(Context.MODE_PRIVATE);
                 editor.putBoolean(Values.keyFirstLaunch, false);
-                editor.putString(Values.keyID, id);
+                editor.putInt(Values.keyID, id);
+                editor.putInt(Values.keyAltID, altId);
+                editor.putString(Values.keyCollege, college);
                 editor.apply();
-                MainActivity.isChangeTimeTable = false;
 
                 setFirstNotification();
 
             /*Toast.makeText(FirstLaunchFragment.this, "OnClickListener : " + "\nSpinner 1 : " + String.valueOf(branch.getSelectedItem()) +
                     "\nSpinner 2:" + String.valueOf(group.getSelectedItem()) + yearInt, Toast.LENGTH_SHORT).show();*/
 
-                //TODO Find alternative
-                OpenerAndHelper.restartApp();
+                if (MainActivity.isChangeTimeTable) {
+                    MainActivity.isChangeTimeTable = false;
+                    OpenerAndHelper.restartApp();
+                } else {
+                    OpenerAndHelper.openTimeTableFragment();
+                }
                 //getActivity().getSupportFragmentManager().popBackStack();
             } else {
                 snackbar = Snackbar.make(v, getString(R.string.notFound), Snackbar.LENGTH_LONG);
@@ -227,16 +211,7 @@ public class FirstLaunchFragment extends Fragment {
     };
 
     private void setFirstNotification() {
-        MyBroadcastReciever.setNextAlarm(getContext());
-        /*Intent intent = new Intent(getContext(), MyBroadcastReciever.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                getContext(), 234324243, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-        Toast.makeText(getContext(), "Alarm set in " + calendar.get(Calendar.HOUR) + " Day "+ calendar.get(Calendar.DAY_OF_WEEK),
-                Toast.LENGTH_SHORT).show();*/
-
+        MyBroadcastReceiver.setNextAlarm(getContext());
         OpenerAndHelper.enableBootReceiver();
     }
 

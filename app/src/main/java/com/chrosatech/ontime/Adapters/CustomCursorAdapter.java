@@ -41,37 +41,28 @@ public class CustomCursorAdapter extends CursorAdapter {
         // Get all the values
         // Use it however you need to
 
-        final CardView cardView = (CardView) view.findViewById(R.id.cursor_adapter_cardview);
-        final ImageView imageView = (ImageView) view.findViewById(R.id.image_view);
-        TextView startTime = (TextView) view.findViewById(R.id.start_time);
-        TextView endTime = (TextView) view.findViewById(R.id.end_time);
-        TextView subject = (TextView) view.findViewById(R.id.subject);
-        final TextView room = (TextView) view.findViewById(R.id.room);
-        final TextView classType = (TextView) view.findViewById(R.id.class_type);
-        final TextView teacherName = (TextView) view.findViewById(R.id.teacher_name);
+        final ViewHolder holder = (ViewHolder)view.getTag();
 
-        ViewHolder viewHolder = (ViewHolder)view.getTag();
-
-        startTime.setText(cursor.getString(1));
-        endTime.setText(cursor.getString(2));
+        holder.startTime.setText(cursor.getString(1));
+        holder.endTime.setText(cursor.getString(2));
         String type = "(" + cursor.getString(3) + ")";
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         String subjectForm = sharedPref.getString(Values.keyAppearance, "1");
         final String subjectFullForm = cursor.getString(4).trim();
 
+        holder.foodImage.setVisibility(View.GONE        );
         //To correctly display KenBurnsView
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (subjectFullForm.toLowerCase().equals("break")){
-                    final KenBurnsView foodImage = (KenBurnsView) view.findViewById(R.id.cardview_bg_img_food);
-                    foodImage.setVisibility(View.VISIBLE);
-                    foodImage.setAdjustViewBounds(true);
-                    if (cardView.getMeasuredHeight() != 0) {
+                    holder.foodImage.setVisibility(View.VISIBLE);
+                    holder.foodImage.setAdjustViewBounds(true);
+                    if (holder.cardView.getMeasuredHeight() != 0) {
 
-                        foodImage.setMaxHeight(cardView.getMeasuredHeight());
-                        Log.d("Ken", cardView.getMeasuredHeight() + "");
+                        holder.foodImage.setMaxHeight(holder.cardView.getMeasuredHeight());
+                        Log.d("Ken", holder.cardView.getMeasuredHeight() + "");
                     }else {
                         run();
                     }
@@ -82,15 +73,14 @@ public class CustomCursorAdapter extends CursorAdapter {
 
 
         if (subjectFullForm.toLowerCase().equals("break")){
-            Log.d("Break","aknl");
-            room.setVisibility(View.GONE);
-            classType.setVisibility(View.GONE);
-            teacherName.setVisibility(View.GONE);
+            holder.room.setVisibility(View.GONE);
+            holder.classType.setVisibility(View.GONE);
+            holder.teacherName.setVisibility(View.GONE);
         }
 
         if (subjectForm.equals("1")){
-            subject.setText(subjectFullForm);
-            classType.setText(type);
+            holder.subject.setText(subjectFullForm);
+            holder.classType.setText(type);
         }else {
             String subjectShortForm = "";
             if (subjectFullForm.contains(" ")) {
@@ -100,29 +90,29 @@ public class CustomCursorAdapter extends CursorAdapter {
                     subjectShortForm = subjectShortForm + stringTokenizer.nextToken().toUpperCase().charAt(0) + ".";
                 }
 
-                subject.setText(subjectShortForm);
+                holder.subject.setText(subjectShortForm);
 
                 String typeShort = type.substring(0,2) + String.valueOf(type.charAt(type.length()-1));
-                classType.setText(typeShort);
+                holder.classType.setText(typeShort);
             } else {
-                subject.setText(subjectFullForm);
-                classType.setText(type);
+                holder.subject.setText(subjectFullForm);
+                holder.classType.setText(type);
             }
         }
 
         //subject.setText(cursor.getString(3));
-        room.setText(cursor.getString(5));
-        teacherName.setText(cursor.getString(6));
+        holder.room.setText(cursor.getString(5));
+        holder.teacherName.setText(cursor.getString(6));
 
-        if (!viewHolder.isColored) {
+        if (!holder.isColored) {
             ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
             // generate random color
-            viewHolder.color = generator.getRandomColor();
-            viewHolder.isColored = true;
+            holder.color = generator.getRandomColor();
+            holder.isColored = true;
         }
          final  TextDrawable drawable = TextDrawable.builder()
-                .buildRound(String.valueOf(subject.getText().charAt(0)), viewHolder.color);
-        imageView.setImageDrawable(drawable);
+                .buildRound(String.valueOf(holder.subject.getText().charAt(0)), holder.color);
+        holder.imageView.setImageDrawable(drawable);
 
         //to set image size to equal height and width
 
@@ -145,16 +135,33 @@ public class CustomCursorAdapter extends CursorAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.custom_cursor_adapter, parent, false);
         ViewHolder viewHolder = new ViewHolder();
+        viewHolder.cardView = (CardView) view.findViewById(R.id.cursor_adapter_cardview);
+        viewHolder.imageView = (ImageView) view.findViewById(R.id.image_view);
+        viewHolder.startTime = (TextView) view.findViewById(R.id.start_time);
+        viewHolder.endTime = (TextView) view.findViewById(R.id.end_time);
+        viewHolder.subject = (TextView) view.findViewById(R.id.subject);
+        viewHolder.room = (TextView) view.findViewById(R.id.room);
+        viewHolder.classType = (TextView) view.findViewById(R.id.class_type);
+        viewHolder.teacherName = (TextView) view.findViewById(R.id.teacher_name);
+        viewHolder.foodImage = (KenBurnsView) view.findViewById(R.id.cardview_bg_img_food);
         view.setTag(viewHolder);
-
         return view;
     }
 
     //TODO try to implement with list instead of holder
 
-    public class ViewHolder{
+    private static class ViewHolder{
         int color;
         boolean isColored = false;
+        private CardView cardView;
+        private ImageView imageView;
+        private TextView startTime;
+        private TextView endTime;
+        private TextView subject;
+        private TextView room;
+        private TextView classType;
+        private TextView teacherName;
+        private KenBurnsView foodImage;
     }
 }
 

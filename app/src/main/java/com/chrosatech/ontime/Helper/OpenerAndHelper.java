@@ -31,9 +31,9 @@ import com.chrosatech.ontime.Receivers.BootReceiver;
  */
 public class OpenerAndHelper {
 
-    static Context context;
-    static Activity activity;
-    static FragmentManager fragmentManager;
+    private static Context context;
+    private static Activity activity;
+    private static FragmentManager fragmentManager;
 
     public static void setContext(Context context1){
         context = context1;
@@ -144,7 +144,7 @@ public class OpenerAndHelper {
     public static Bitmap drawableToBitmap (TextDrawable drawable, Context context) {
 
         //xxxhdpi pixel density for notification icon, it automatically fits smaller density screens
-        int widthHeight = (int)dipToPixels(context, 48);
+        int widthHeight = (int)dipToPixels(context);
 
         Log.d("Drawable width",widthHeight+"");
         Log.d("Drawable height", widthHeight +"");
@@ -156,8 +156,8 @@ public class OpenerAndHelper {
         return bitmap;
     }
 
-    public static float dipToPixels(Context context, float dipValue) {
+    private static float dipToPixels(Context context) {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) 48, metrics);
     }
 }

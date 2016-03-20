@@ -18,5 +18,7 @@ public class Values {
     public static final String keyFirstLaunch = "keyFirstLaunch";
     //public static final String keyChangeTimeTable = "keyChangeTimeTable";
     public static final String keyID = "ID";
+    public static final String keyAltID = "AlternateID";
+    public static final String keyCollege = "College";
 
 }

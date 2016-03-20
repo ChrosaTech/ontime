@@ -8,12 +8,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.chrosatech.ontime.Adapters.ViewPagerAdapter;
 import com.chrosatech.ontime.Database.DatabaseContents;
+import com.chrosatech.ontime.Helper.OpenerAndHelper;
 import com.chrosatech.ontime.Helper.Values;
 import com.chrosatech.ontime.R;
 
@@ -33,6 +36,7 @@ public class TimeTableFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_time_table, container, false);
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -47,16 +51,33 @@ public class TimeTableFragment extends Fragment {
         viewPager.setOffscreenPageLimit(5);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabanim_tabs);
         tabLayout.setupWithViewPager(viewPager);
-        /*tabLayout = (TabLayout) findViewById(R.id.tabanim_tabs);
-        tabLayout.setupWithViewPager(viewPager);*/
-
-        /*PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
-        tabs.setViewPager(viewPager);*/
 
         setCurrentPage();
 
         return view;
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.menu_settings) {
+            OpenerAndHelper.openSettingsActivity();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     private void setupViewPager(ViewPager viewPager) {
 
@@ -78,35 +99,6 @@ public class TimeTableFragment extends Fragment {
         }
 
         viewPager.setAdapter(adapter);
-
-        /*UniversalFragment monday = new UniversalFragment();
-        UniversalFragment tuesday = new UniversalFragment();
-        UniversalFragment wednesday = new UniversalFragment();
-        UniversalFragment thursday = new UniversalFragment();
-        UniversalFragment friday = new UniversalFragment();
-        UniversalFragment saturday = new UniversalFragment();
-
-        bundle.putString("day", "MONDAY");
-        monday.setArguments(new Bundle(bundle));
-        bundle.putString("day", "TUESDAY");
-        tuesday.setArguments(new Bundle(bundle));
-        bundle.putString("day", "WEDNESDAY");
-        wednesday.setArguments(new Bundle(bundle));
-        bundle.putString("day", "THURSDAY");
-        thursday.setArguments(new Bundle(bundle));
-        bundle.putString("day", "FRIDAY");
-        friday.setArguments(new Bundle(bundle));
-        bundle.putString("day", "SATURDAY");
-        saturday.setArguments(new Bundle(bundle));
-
-
-        adapter.addFrag(monday, "MONDAY");
-        adapter.addFrag(tuesday, "TUESDAY");
-        adapter.addFrag(wednesday, "WEDNESDAY");
-        adapter.addFrag(thursday, "THURSDAY");
-        adapter.addFrag(friday, "FRIDAY");
-        adapter.addFrag(saturday, "SATURDAY");
-        viewPager.setAdapter(adapter);*/
     }
 
     private void setCurrentPage() {
@@ -128,22 +120,6 @@ public class TimeTableFragment extends Fragment {
         if (!flag){
             viewPager.setCurrentItem(0);
         }
-
-        /*switch (dayOfTheWeek){
-            case "Monday"    : viewPager.setCurrentItem(0);
-                break;
-            case "Tuesday"   : viewPager.setCurrentItem(1);
-                break;
-            case "Wednesday" : viewPager.setCurrentItem(2);
-                break;
-            case "Thursday"  : viewPager.setCurrentItem(3);
-                break;
-            case "Friday"    : viewPager.setCurrentItem(4);
-                break;
-            case "Saturday"  : viewPager.setCurrentItem(5);
-                break;
-            default          : viewPager.setCurrentItem(0);
-        }*/
     }
 
 }

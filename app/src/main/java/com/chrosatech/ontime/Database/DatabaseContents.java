@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.Pair;
 
 import com.chrosatech.ontime.Activities.MainActivity;
 import com.chrosatech.ontime.Helper.Values;
@@ -22,6 +23,8 @@ import java.util.StringTokenizer;
 /**
  * Created by mayank on 25/12/15.
  */
+
+//TODO remove this library if possible
 public class DatabaseContents extends SQLiteAssetHelper {
 
     private static final String DATABASE_NAME = "selecttest.db";
@@ -38,34 +41,36 @@ public class DatabaseContents extends SQLiteAssetHelper {
 
     public Cursor getCursor(String day) {
 
-        String id = MainActivity.sharedPreferences.getString("ID", "0");
+        int id = MainActivity.sharedPreferences.getInt("ID", 0);
+        int altID = MainActivity.sharedPreferences.getInt(Values.keyAltID, 0);
 
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-        String [] sqlSelect = {"rowid _id", "StartTime", "EndTime", "ClassType", "Lecture", "Room", "Teacher"};
-        String sqlTables = "TimeTable";
-        String whereClause = "ID = '" + id + "' AND UPPER(Day) = UPPER('" + day + "') ";
+        String [] sqlSelect = {"rowid _id",  "StartTime", "EndTime", "ClassType", "Lecture", "Room", "Teacher"};
+        String sqlTables = MainActivity.sharedPreferences.getString(Values.keyCollege, "");
+        String whereClause = "ID = " + id + " AND (AlternateID = " + id + " OR AlternateID LIKE \'%" + altID + "%\') AND UPPER(Day) = UPPER(\'" + day + "\') ";
 
         qb.setTables(sqlTables);
         Cursor cursor = qb.query(db, sqlSelect, whereClause, null,
                 null, null, null);
 
         cursor.moveToFirst();
+        Log.d("selectedData", cursor.getCount() + "");
         return cursor;
 
     }
 
     public String[] getWorkingDaysOfWeek(){
 
-        String id = MainActivity.sharedPreferences.getString("ID", "0");
+        int id = MainActivity.sharedPreferences.getInt("ID", 0);
 
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
         String [] sqlSelect = {"Day"};
-        String sqlTables = "TimeTable";
-        String whereClause = "ID = '" + id +"'";
+        String sqlTables = MainActivity.sharedPreferences.getString(Values.keyCollege, "");
+        String whereClause = "ID = " + id;
         LinkedHashSet<String> daysHashed;
         String days[];
 
@@ -90,12 +95,12 @@ public class DatabaseContents extends SQLiteAssetHelper {
         return days;
     }
 
-    public String getID(String whereClause) {
+    public Pair<int[], String> getID(String whereClause) {
 
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-        String [] sqlSelect = {"ID"};
+        String [] sqlSelect = {Values.keyID, Values.keyAltID, Values.keyCollege};
         String sqlTables = "College";
         //String whereClause = "College = 'BVP' AND YEAR = 1 AND Branch = 'IT' AND Shift = 1 AND Tutorial = '1' AND Practical = '2'";
 
@@ -104,10 +109,14 @@ public class DatabaseContents extends SQLiteAssetHelper {
                 null, null, null);
 
         cursor.moveToFirst();
-        if (cursor.getCount() == 0)
+        if (cursor.getCount() == 0) {
             return null;
-        else
-            return cursor.getString(0);
+        }
+        else {
+            int ids[] = {cursor.getInt(0), cursor.getInt(1)};
+            String college = cursor.getString(2);
+            return new Pair<>(ids, college);
+        }
     }
 
     public Calendar getNextNotificationTime(){
@@ -115,13 +124,13 @@ public class DatabaseContents extends SQLiteAssetHelper {
         SharedPreferences sharedPreferences = context1.getSharedPreferences("OnTimePreferences",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        String id = sharedPreferences.getString(Values.keyID, "0");
+        int id = sharedPreferences.getInt(Values.keyID, 0);
 
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
         String [] sqlSelect = {"StartTime", "ClassType", "Lecture", "Room"};
-        String sqlTables = "TimeTable";
+        String sqlTables = sharedPreferences.getString(Values.keyCollege, "");
 
         Calendar dateCalendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.getDefault());
@@ -132,7 +141,7 @@ public class DatabaseContents extends SQLiteAssetHelper {
             Date d = dateCalendar.getTime();
             String dayOfTheWeek = sdf.format(d);
 
-            String whereClause = "ID = '" + id + "' AND UPPER(Day) = UPPER('" + dayOfTheWeek + "') ";
+            String whereClause = "ID = " + id + " AND UPPER(Day) = UPPER('" + dayOfTheWeek + "') ";
 
             qb.setTables(sqlTables);
             Cursor cursor = qb.query(db, sqlSelect, whereClause, null,

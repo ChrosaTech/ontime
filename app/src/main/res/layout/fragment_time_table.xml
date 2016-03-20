@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,18 +22,6 @@
             app:tabMode="scrollable"
             app:tabIndicatorColor="@android:color/white"/>
 
-       <!-- <com.astuetz.PagerSlidingTabStrip
-            android:id="@+id/tabs"
-            android:layout_width="fill_parent"
-            android:layout_height="48dp"
-            android:textColor="#ffffff"
-            app:pstsDividerColor="#ffffff"
-            app:pstsIndicatorColor="#ffffff"
-            app:pstsTabTextAlpha="150"
-            app:pstsIndicatorHeight="2dp"
-            />-->
-        <!--app:layout_scrollFlags="scroll|enterAlways"-->
-
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
@@ -40,7 +29,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bright_foreground_inverse_material_light"
+        android:background="@android:color/white"
         android:id="@+id/pager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

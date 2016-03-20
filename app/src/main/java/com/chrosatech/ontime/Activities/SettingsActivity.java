@@ -25,18 +25,15 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.chrosatech.ontime.BuildConfig;
 import com.chrosatech.ontime.Helper.OpenerAndHelper;
 import com.chrosatech.ontime.Helper.Values;
 import com.chrosatech.ontime.R;
-import com.chrosatech.ontime.Receivers.MyBroadcastReciever;
+import com.chrosatech.ontime.Receivers.MyBroadcastReceiver;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -46,10 +43,8 @@ import java.util.zip.Inflater;
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
-    private AlertDialog.Builder builder;
 
-
-   // static SettingsActivity th;
+    // static SettingsActivity th;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -194,7 +189,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
               //  || CreditFragment.class.getName().equals(fragmentName);
     }
 
-    public static String getApplicationName(Context context) {
+    private static String getApplicationName(Context context) {
         int stringId = context.getApplicationInfo().labelRes;
         return context.getString(stringId);
     }
@@ -220,9 +215,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 break;
             case "About":
 
-                builder = new AlertDialog.Builder(this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("About");
-                builder.setMessage(getApplicationName(this)+"\nVersion" + BuildConfig.VERSION_NAME);
+                builder.setMessage(getApplicationName(this) + "\nVersion" + BuildConfig.VERSION_NAME);
                 builder.setPositiveButton("Ok", null);
                 // builder.setNegativeButton("cancel", null);
                 builder.show();
@@ -269,14 +264,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
-    private static SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener()
+    private static final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener()
     {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             switch (key) {
                 case Values.keyTheme:
 
-                    MainActivity.isThemeChanged = true;
+                   // MainActivity.isThemeChanged = true;
                     //Restart the app on changing theme.
                     //getActivity().finish();
                     OpenerAndHelper.restartApp();
@@ -319,10 +314,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             findPreference(Values.keyNotificationBeforeTime).getSharedPreferences().registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
 
-            //**prefrence for before time**//
+            //**preference for before time**//
 
 
-            //***switch Prefrence for vibration***
+            //***switch Preference for vibration***
             SwitchPreference alertOption=(SwitchPreference) findPreference(Values.keyNotificationAlert);
             if (alertOption!=null)
             {
@@ -333,13 +328,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
                         if (isAlertOn)
                         {
-                            MyBroadcastReciever.setNextAlarm(OpenerAndHelper.getContext());
+                            MyBroadcastReceiver.setNextAlarm(OpenerAndHelper.getContext());
                             OpenerAndHelper.enableBootReceiver();
                         }
                         else
                         {
                             Context context = OpenerAndHelper.getContext();
-                            Intent intent = new Intent(context, MyBroadcastReciever.class);
+                            Intent intent = new Intent(context, MyBroadcastReceiver.class);
                             PendingIntent pendingIntent = PendingIntent.getBroadcast(
                                     context, 234324243, intent, 0);
                             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

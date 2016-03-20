@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/bright_foreground_inverse_material_light"
-    android:fitsSystemWindows="true">
+    >
 
    <include
        layout="@layout/toolbar"/>
@@ -152,19 +151,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:elevation="6dp"
-        app:backgroundTint="@color/ColorPrimary"
+        app:backgroundTint="?attr/colorPrimary"
         android:layout_margin="@dimen/fab_margin"
         app:pressedTranslationZ="12dp"
         app:srcCompat="@drawable/ic_arrow_forward_24dp"
         />
-
-  <!--  <com.melnykov.fab.FloatingActionButton
-        android:id="@+id/fabSubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="@dimen/fab_margin"
-        fab:fab_colorNormal="@color/ColorPrimary"
-        fab:fab_colorPressed="@color/ColorPrimaryDark" />-->
 
 </android.support.design.widget.CoordinatorLayout>

@@ -30,10 +30,6 @@ public class UniversalFragment extends Fragment {
     private CustomCursorAdapter adapter;
     private int fragNumber;
 
-    public UniversalFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
