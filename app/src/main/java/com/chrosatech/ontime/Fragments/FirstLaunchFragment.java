@@ -15,7 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import com.chrosatech.ontime.Adapters.CustomSpinnerArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,8 +66,8 @@ public class FirstLaunchFragment extends Fragment {
         p.setBehavior(new FabBehavior());
         fabSubmit.setLayoutParams(p);
 
-        // ArrayAdapter<String> adapter=null;
-        // adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.autocomplete,sample1);
+        // CustomSpinnerArrayAdapter<String> adapter=null;
+        // adapter = new CustomSpinnerArrayAdapter<String>(getApplicationContext(),R.layout.autocomplete,sample1);
         // autoCompleteTextView=(AutoCompleteTextView)findViewById(R.id.autoCompleteTextView1);
 
         // autoCompleteTextView.setAdapter(adapter);
@@ -88,39 +88,43 @@ public class FirstLaunchFragment extends Fragment {
 
     private void addItemsOnSpinnerShift(){
         List<String> list= new ArrayList<>(2);
+        list.add("Select Shift");
         list.add("Morning Shift");
         list.add("Evening Shift");
 
-        ArrayAdapter<String> dataAdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
+        CustomSpinnerArrayAdapter<String> dataAdapter= new CustomSpinnerArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         shiftSpinner.setAdapter(dataAdapter);
     }
 
     private void addItemsOnSpinnerBranch(){
         List<String> list= new ArrayList<>(4);
+        list.add("Select Branch");
         list.add("CSE");
         list.add("IT");
         list.add("ECE");
         list.add("EEE");
-        ArrayAdapter<String> dataAdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
+        CustomSpinnerArrayAdapter<String> dataAdapter= new CustomSpinnerArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         branchSpinner.setAdapter(dataAdapter);
     }
 
     private void addItemsOnSpinnerBatch(){
         List<String> list= new ArrayList<>(3);
+        list.add("Select Practical Batch");
         list.add("P1");
         list.add("P2");
         list.add("P3");
-        ArrayAdapter<String> dataAdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
+        CustomSpinnerArrayAdapter<String> dataAdapter= new CustomSpinnerArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         groupSpinner.setAdapter(dataAdapter);
     }
     private void addItemsOnSpinnerCollege()
     {
         List<String> list=new ArrayList<>(1);
+        list.add("Select College");
         list.add("BVCOE");
-        ArrayAdapter<String> dataAdapter= new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, list);
+        CustomSpinnerArrayAdapter<String> dataAdapter= new CustomSpinnerArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, list);
         dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         collegeSpinner.setAdapter(dataAdapter);
     }
@@ -128,9 +132,10 @@ public class FirstLaunchFragment extends Fragment {
     private void addItemsOnSpinnerTut()
     {
         List<String> list=new ArrayList<>(2);
+        list.add("Select Tutorial Batch");
         list.add("T1");
         list.add("T2");
-        ArrayAdapter<String> dataAdapter= new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, list);
+        CustomSpinnerArrayAdapter<String> dataAdapter= new CustomSpinnerArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, list);
         dataAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         tutSpinner.setAdapter(dataAdapter);
 
@@ -138,15 +143,18 @@ public class FirstLaunchFragment extends Fragment {
 
     private void addItemsOnSpinnerYear(){
         List<String> list= new ArrayList<>(4);
+        //TODO semester instead of year
+        list.add("Select Year");
         list.add("First Year");
         list.add("Second Year");
         list.add("Third Year");
         list.add("Fourth Year");
-        ArrayAdapter<String> dataAdapter= new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
+        CustomSpinnerArrayAdapter<String> dataAdapter= new CustomSpinnerArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         yearSpinner.setAdapter(dataAdapter);
     }
 
+    //TODO remove this
     private void addListenerOnSpinnerItemSelection(){
         branchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

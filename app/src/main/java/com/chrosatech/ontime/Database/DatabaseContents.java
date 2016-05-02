@@ -136,12 +136,13 @@ public class DatabaseContents extends SQLiteAssetHelper {
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE", Locale.getDefault());
         boolean found = false;
         Calendar calendar = Calendar.getInstance();
+        int altID = sharedPreferences.getInt(Values.keyAltID, 0);
 
         while (!found) {
             Date d = dateCalendar.getTime();
             String dayOfTheWeek = sdf.format(d);
 
-            String whereClause = "ID = " + id + " AND UPPER(Day) = UPPER('" + dayOfTheWeek + "') ";
+            String whereClause = "ID = " + id + " AND (AlternateID = " + id + " OR AlternateID LIKE \'%" + altID + "%\') AND UPPER(Day) = UPPER(\'" + dayOfTheWeek + "\') ";
 
             qb.setTables(sqlTables);
             Cursor cursor = qb.query(db, sqlSelect, whereClause, null,

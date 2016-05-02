@@ -86,13 +86,18 @@ public class MyBroadcastReceiver extends BroadcastReceiver  {
                 new NotificationCompat.Builder(context)
                         /*.setSmallIcon(R.mipmap.ic_launcher)*/
                         .setLargeIcon(OpenerAndHelper.drawableToBitmap(textDrawable, context))
-                        .setSmallIcon(R.mipmap.ic_launcher)
                         //Set action for mute
                         .setContentTitle(sharedPreferences.getString("Subject", "Subject"))
                         .setContentText(sharedPreferences.getString("Room", "Room") +
                                 " (" + sharedPreferences.getString("ClassType", "ClassType") + ")")
                 /*.addAction(R.drawable.mute_notification,"sds",contentIntent)*/
                 ;
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mBuilder.setSmallIcon(R.drawable.ic_notification_small);
+        } else {
+            mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+        }
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
         Boolean isVibrateOn = sharedPref.getBoolean(Values.keyNotificationVibrate, true);

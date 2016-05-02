@@ -43,7 +43,7 @@ public class TimeTableFragment extends Fragment {
         AppBarLayout.LayoutParams params =
                 (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
         params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
-                | AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
+                | AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
         toolbar.setLayoutParams(params);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         viewPager = (ViewPager) view.findViewById(R.id.pager);
